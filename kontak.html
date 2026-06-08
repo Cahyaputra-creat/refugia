@@ -3,25 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kontak & Lapak - Kebun Refugia Magetan</title>
+  <title>Kontak - Kebun Refugia Magetan</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="kontak.css">
 </head>
 <body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Logo Refugia">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="fasilitas.html">Fasilitas</a>
+      <a href="pemesanan.html">Pemesanan</a>
+      <a href="lokasi.html">Lokasi</a>
+      <a href="kontak.html" class="active">Kontak</a>
+      <a href="faq.html">FAQ & Saran</a>
+    </div>
+  </nav>
+
   <section class="section">
     <div class="inner">
       <h2 class="sec-title">Lapak Petani & Kontak</h2>
-      <p class="sec-sub">Bawa pulang hasil panen bumi dan tanaman hias dari petani lokal Magetan.</p>
+      <p class="sec-sub">Bawa pulang oleh-oleh tanaman hias dan sayuran segar langsung dari kelompok tani lokal.</p>
+      
       <div class="lapak-grid">
         <div class="lapak-card" onclick="openModal()">
-          <div class="lapak-img" style="background-image:url('lapak1.jpg');">
+          <div class="lapak-img" style="background-image:url('images/lapak.jpg');">
             <div class="lapak-img-overlay"></div>
           </div>
           <div class="lapak-body">
             <h3>Bursa Tanaman Hias</h3>
-            <p>Aneka bibit tanaman hias dan bunga untuk pekarangan rumah Anda.</p>
-            <button class="btn-detail">Hubungi Penjual</button>
+            <p>Aneka koleksi bibit bunga hias cantik khas dataran tinggi untuk pekarangan Anda.</p>
+            <button class="btn-detail">Hubungi Pengelola Lapak</button>
           </div>
         </div>
       </div>
@@ -31,21 +45,22 @@
   <div class="overlay" id="contactModal">
     <div class="mbox">
       <div class="mhead">
-        <div class="mhead-icon" style="background:var(--g5); color:var(--g2);">🛒</div>
+        <div class="mhead-icon" style="background:var(--g5); color:var(--g2);">🛍️</div>
         <div>
-          <div class="mhead-title">Bursa Tanaman Hias</div>
-          <div class="mhead-sub">Tersedia berbagai bibit bunga berkualitas</div>
+          <div class="mhead-title">Bursa Tanaman Refugia</div>
+          <div class="mhead-sub">Terhubung langsung dengan Petani Lokal</div>
         </div>
-        <button class="mclose" onclick="closeModal()">X</button>
+        <button class="mclose" onclick="closeModal()">×</button>
       </div>
       <div class="mbody">
-        <p class="mbody-desc">Silakan hubungi petani atau pengelola lapak secara langsung melalui WhatsApp untuk menanyakan stok atau melakukan pemesanan di luar kunjungan.</p>
-        <button class="btn-wa">Chat WhatsApp Sekarang</button>
+        <p class="mbody-desc">Anda dapat menanyakan ketersediaan bibit bunga tertentu, konsultasi penanaman, atau memesan dalam jumlah besar lewat kontak WhatsApp resmi kami.</p>
+        <button class="btn-wa">Kirim Pesan WhatsApp</button>
         <button class="btn-back" onclick="closeModal()">Kembali</button>
       </div>
     </div>
   </div>
 
+  <footer class="footer"></footer>
   <script src="script.js"></script>
 </body>
 </html>

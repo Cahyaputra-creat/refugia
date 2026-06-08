@@ -1,66 +1,59 @@
-// ===== SLIDER FASILITAS =====
-const TOTAL = 2; // Ganti sesuai dengan jumlah slide yang ada
-let cur = 0;
+// ===== SLIDER FASILITAS (Hanya berjalan jika berada di halaman fasilitas.html) =====
 const track = document.getElementById('fSlider');
 const dotsWrap = document.getElementById('sDots');
 
-// Build dots
 if (track && dotsWrap) {
-  for(let i=0; i<TOTAL; i++) {
+  const TOTAL = 10; // Sesuai jumlah slide data asli di refugia-magetan (3).html
+  let cur = 0;
+
+  // Build dots secara dinamis
+  for (let i = 0; i < TOTAL; i++) {
     const d = document.createElement('div');
-    d.className = 'sdot' + (i===0 ? ' on' : '');
+    d.className = 'sdot' + (i === 0 ? ' on' : '');
     d.onclick = () => goTo(i);
     dotsWrap.appendChild(d);
   }
-}
 
-function goTo(n){
-  if (!track) return;
-  cur = n;
-  track.style.transform = `translateX(-${cur*100}%)`;
-  document.querySelectorAll('.sdot').forEach((d, i) => d.classList.toggle('on', i===cur));
-}
-
-function sMove(dir){
-  let n = cur + dir;
-  if(n < 0) n = TOTAL - 1;
-  if(n >= TOTAL) n = 0;
-  goTo(n);
-}
-
-// ===== MODAL KONTAK =====
-function openModal() {
-  const modal = document.getElementById('contactModal');
-  if (modal) {
-    modal.classList.add('open');
+  function goTo(n) {
+    cur = n;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    document.querySelectorAll('.sdot').forEach((d, i) => d.classList.toggle('on', i === cur));
   }
+
+  window.sMove = function (dir) {
+    let n = cur + dir;
+    if (n < 0) n = TOTAL - 1;
+    if (n >= TOTAL) n = 0;
+    goTo(n);
+  };
 }
 
-function closeModal() {
+// ===== POPUP MODAL KONTAK (Hanya berjalan di kontak.html) =====
+window.openModal = function () {
   const modal = document.getElementById('contactModal');
-  if (modal) {
-    modal.classList.remove('open');
-  }
-}
+  if (modal) modal.classList.add('open');
+};
 
-// Close modal when clicking outside the modal box
-window.addEventListener('click', function(e) {
+window.closeModal = function () {
+  const modal = document.getElementById('contactModal');
+  if (modal) modal.classList.remove('open');
+};
+
+// Tutup modal otomatis saat area latar belakang diklik
+window.addEventListener('click', function (e) {
   const modal = document.getElementById('contactModal');
   if (e.target === modal) {
     closeModal();
   }
 });
 
-// ===== FAQ ACCORDION =====
-function toggleFaq(element) {
-  // Tutup FAQ lain jika ingin hanya satu yang terbuka (opsional)
+// ===== ACCORDION FAQ (Hanya berjalan di faq.html) =====
+window.toggleFaq = function (element) {
   const allItems = document.querySelectorAll('.faq-item');
   allItems.forEach(item => {
     if (item !== element) {
       item.classList.remove('active');
     }
   });
-  
-  // Toggle FAQ yang diklik
   element.classList.toggle('active');
-}
+};

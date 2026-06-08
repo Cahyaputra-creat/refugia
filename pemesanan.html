@@ -5,19 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pemesanan - Kebun Refugia Magetan</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="pemesanan.css">
 </head>
 <body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Logo Refugia">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Beranda</a>
+      <a href="fasilitas.html">Fasilitas</a>
+      <a href="pemesanan.html" class="active">Pemesanan</a>
+      <a href="lokasi.html">Lokasi</a>
+      <a href="kontak.html">Kontak</a>
+      <a href="faq.html">FAQ & Saran</a>
+    </div>
+  </nav>
+
   <section class="section">
     <div class="inner pemes-grid">
       <div class="qr-box">
         <img src="qr-code.png" alt="QR Code Pemesanan">
         <h3>Scan untuk Memesan</h3>
-        <p>Gunakan E-Wallet atau M-Banking Anda untuk melakukan pembayaran digital di lokasi.</p>
+        <p>Gunakan E-Wallet atau M-Banking Anda untuk melakukan pembayaran digital langsung secara cepat.</p>
       </div>
       <div class="tiket-stack">
-        <h2 class="sec-title">Informasi Tiket</h2>
+        <h2 class="sec-title">Informasi Tiket & Masuk</h2>
         <div class="tcard">
           <div class="tcard-left" style="background:var(--g2);">
             <div class="tlabel">Dewasa</div>
@@ -40,14 +53,14 @@
           <div class="jam-ico">⏱️</div>
           <div>
             <strong>Jam Operasional</strong>
-            <span>Buka Setiap Hari: 08:30 - 16:30 WIB</span>
+            <span>Setiap Hari: 08:30 - 16:30 WIB</span>
           </div>
         </div>
-        <button class="btn-wa-order">Pesan via WhatsApp</button>
       </div>
     </div>
   </section>
 
+  <footer class="footer"></footer>
   <script src="script.js"></script>
 </body>
 </html>
