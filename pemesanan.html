@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pemesanan - Kebun Refugia Magetan</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="pemesanan.css">
 </head>
 <body>
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="logo.png" alt="Logo Refugia">
+      <img src="images/logo.png" alt="Logo">
     </a>
     <div class="nav-links">
       <a href="index.html">Beranda</a>
@@ -22,15 +23,18 @@
     </div>
   </nav>
 
-  <section class="section">
+  <section class="section" id="pemesanan">
     <div class="inner pemes-grid">
       <div class="qr-box">
-        <img src="qr-code.png" alt="QR Code Pemesanan">
-        <h3>Scan untuk Memesan</h3>
-        <p>Gunakan E-Wallet atau M-Banking Anda untuk melakukan pembayaran digital langsung secara cepat.</p>
+        <span class="chip gold" style="margin-bottom:16px;">E-Payment</span>
+        <img src="images/qr.jpg" alt="QRIS">
+        <h3>Bayar Lebih Praktis</h3>
+        <p>Gunakan e-wallet atau m-banking Anda untuk pembayaran tiket tanpa ribet antri panjang.</p>
       </div>
       <div class="tiket-stack">
-        <h2 class="sec-title">Informasi Tiket & Masuk</h2>
+        <span class="chip green">Tiket Masuk</span>
+        <h2 class="sec-title">Informasi Tiket</h2>
+        
         <div class="tcard">
           <div class="tcard-left" style="background:var(--g2);">
             <div class="tlabel">Dewasa</div>
@@ -38,29 +42,36 @@
           <div class="tcard-right">
             <strong>Rp 10.000</strong>
             <span class="tsub">Per Orang</span>
+            <span class="tnote">*Bisa ditukar dengan sayuran!</span>
           </div>
         </div>
+        
         <div class="tcard">
           <div class="tcard-left" style="background:var(--y1);">
-            <div class="tlabel">Anak-anak</div>
+            <div class="tlabel">Anak</div>
           </div>
           <div class="tcard-right">
             <strong>Rp 5.000</strong>
-            <span class="tsub">Per Orang</span>
+            <span class="tsub">Anak-anak (Di bawah 12 tahun)</span>
           </div>
         </div>
+
         <div class="jam-info">
           <div class="jam-ico">⏱️</div>
           <div>
             <strong>Jam Operasional</strong>
-            <span>Setiap Hari: 08:30 - 16:30 WIB</span>
+            <span>Buka Setiap Hari: 08.30 - 16.30 WIB</span>
           </div>
         </div>
+
+        <button class="btn-wa-order">Pesan via WhatsApp</button>
       </div>
     </div>
   </section>
 
-  <footer class="footer"></footer>
+  <footer class="footer">
+      </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

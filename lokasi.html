@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lokasi - Kebun Refugia Magetan</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="lokasi.css">
 </head>
 <body>
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="logo.png" alt="Logo Refugia">
+      <img src="images/logo.png" alt="Logo">
     </a>
     <div class="nav-links">
       <a href="index.html">Beranda</a>
@@ -22,33 +23,44 @@
     </div>
   </nav>
 
-  <section class="section alt">
+  <section class="section alt" id="lokasi">
     <div class="inner lokasi-grid">
       <div class="map-vis">
         <div class="map-pin">📍</div>
         <div class="map-label">Kebun Refugia Magetan</div>
       </div>
       <div class="lok-cards">
-        <h2 class="sec-title">Lokasi Wisata</h2>
+        <span class="chip green">Akses Mudah</span>
+        <h2 class="sec-title">Petunjuk Lokasi</h2>
+        
         <div class="lok-card">
           <div class="lok-ico" style="background:var(--y3); color:var(--y1);">🗺️</div>
           <div>
-            <h4>Alamat</h4>
-            <p>Jl. Raya Sarangan, Plaosan II, Kecamatan Plaosan, Kabupaten Magetan, Jawa Timur 63361.</p>
+            <h4>Alamat Lengkap</h4>
+            <p>Jl. Raya Sarangan, Plaosan II, Kec. Plaosan, Kabupaten Magetan, Jawa Timur 63361.</p>
           </div>
         </div>
+        
         <div class="lok-card">
           <div class="lok-ico" style="background:var(--g5); color:var(--g2);">🚗</div>
           <div>
-            <h4>Akses & Parkir</h4>
-            <p>Lokasi berada tepat di pinggir jalan raya utama menuju Telaga Sarangan, sangat mudah diakses kendaraan roda 2, mobil, hingga bus pariwisata besar.</p>
+            <h4>Area Parkir Luas</h4>
+            <p>Tersedia area parkir yang sangat memadai untuk kendaraan pribadi roda dua, mobil, hingga bus pariwisata.</p>
+            <div class="parkir-tags">
+              <span class="parkir-tag">Motor</span>
+              <span class="parkir-tag">Mobil</span>
+              <span class="parkir-tag">Minibus</span>
+              <span class="parkir-tag">Bus Besar</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="footer"></footer>
+  <footer class="footer">
+      </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

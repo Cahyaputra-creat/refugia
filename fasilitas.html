@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fasilitas - Kebun Refugia Magetan</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="fasilitas.css">
 </head>
 <body>
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="logo.png" alt="Logo Refugia">
+      <img src="images/logo.png" alt="Logo">
     </a>
     <div class="nav-links">
       <a href="index.html">Beranda</a>
@@ -22,31 +23,27 @@
     </div>
   </nav>
 
-  <section class="section alt">
+  <section class="section alt" id="fasilitas">
     <div class="inner">
-      <h2 class="sec-title text-center">Fasilitas Unggulan</h2>
-      <p class="sec-sub text-center">Nikmati berbagai fasilitas yang kami sediakan untuk kenyamanan kunjungan Anda.</p>
+      <div style="text-align:center;">
+        <span class="chip green">Wahana & Edukasi</span>
+        <h2 class="sec-title">Fasilitas Unggulan</h2>
+        <p class="sec-sub">Berbagai fasilitas dan spot menarik yang siap memanjakan kunjungan Anda.</p>
+      </div>
       
       <div class="slider-outer">
         <div class="slider-clip">
           <div class="slider-track" id="fSlider">
             <div class="slide">
-              <div class="slide-img" style="background-image:url('images/menara.jpg');"></div>
+              <div class="slide-img" style="background-image:url('images/slide1.jpg');"></div>
               <div class="slide-body">
-                <div class="slide-badge">Populer</div>
-                <h3>Menara Pandang</h3>
-                <p>Nikmati pemandangan kebun bunga secara luas dari atas menara pandang setinggi 15 meter.</p>
+                <div class="slide-num">01</div>
+                <div class="slide-badge">Bunga Hias</div>
+                <h3>Hamparan Bunga</h3>
+                <p>Koleksi ribuan bunga beraneka warna yang ditata rapi, cocok untuk latar belakang fotografi yang indah dan asri.</p>
               </div>
             </div>
-            <div class="slide">
-              <div class="slide-img" style="background-image:url('images/kelinci.jpg');"></div>
-              <div class="slide-body">
-                <div class="slide-badge">Edukasi</div>
-                <h3>Taman Kelinci</h3>
-                <p>Wahana bermain dan edukasi interaktif bagi anak-anak untuk memberi makan kelinci secara langsung.</p>
-              </div>
             </div>
-          </div>
         </div>
         <div class="slider-nav">
           <button class="snav-btn" onclick="sMove(-1)">&#8249;</button>
@@ -58,7 +55,8 @@
   </section>
 
   <footer class="footer">
-    </footer>
+      </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
