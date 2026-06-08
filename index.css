@@ -18,17 +18,18 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
 .nav-links a { font-family:'Nunito', sans-serif; font-weight:700; font-size:13.5px; color:var(--g1); text-decoration:none; padding:8px 14px; border-radius:8px; transition:all .2s; letter-spacing:0.2px; }
 .nav-links a:hover, .nav-links a.active { background:var(--g5); color:var(--g2); }
 
-/* ===== HERO ===== */
-.hero { min-height:90vh; background: linear-gradient(160deg, rgba(20,50,15,0.82) 0%, rgba(35,80,20,0.72) 55%, rgba(55,100,30,0.58) 100%), url('images/hero-bg.jpg') center/cover no-repeat; display:flex; flex-direction:column; justify-content:center; padding:60px 40px 100px; position:relative; overflow:hidden; }
+/* ===== HERO SECTION ===== */
+/* Perhatikan bahwa background url() dihapus dari sini, karena sudah dipindah ke HTML (inline-style) */
+.hero { min-height:90vh; display:flex; flex-direction:column; justify-content:center; padding:60px 40px 100px; position:relative; overflow:hidden; }
 .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:80px; background:var(--cream); border-radius:60% 60% 0 0 / 100% 100% 0 0; }
-.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#E8F8D0; font-family:'Nunito',sans-serif; font-weight:700; font-size:11px; padding:6px 16px; border-radius:30px; margin-bottom:20px; letter-spacing:1.2px; text-transform:uppercase; width:fit-content; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#E8F8D0; font-weight:700; font-size:11px; padding:6px 16px; border-radius:30px; margin-bottom:20px; letter-spacing:1.2px; text-transform:uppercase; width:fit-content; }
 .hero h1 { font-family:'Playfair Display', serif; font-size:clamp(32px,5.5vw,54px); font-weight:700; color:#FFFFFF; line-height:1.2; margin-bottom:8px; }
 .hero h1 em { font-family:'Dancing Script', cursive; font-style:normal; color:var(--y2); font-size:clamp(36px,6vw,60px); }
 .hero-tagline { font-family:'Playfair Display', serif; font-style:italic; font-size:16px; color:rgba(255,255,255,0.8); margin-bottom:28px; max-width:460px; line-height:1.7; }
 .hero-btns { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px; position:relative; z-index:1; }
-.btn-gold { background:linear-gradient(135deg, var(--y1), var(--y2)); color:var(--br); border:none; padding:13px 28px; border-radius:30px; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 4px 20px rgba(232,160,32,0.4); transition:all .2s; }
+.btn-gold { background:linear-gradient(135deg, var(--y1), var(--y2)); color:var(--br); border:none; padding:13px 28px; border-radius:30px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 4px 20px rgba(232,160,32,0.4); transition:all .2s; }
 .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(232,160,32,0.5); }
-.btn-ghost { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.5); padding:12px 26px; border-radius:30px; font-family:'Nunito',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-ghost { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.5); padding:12px 26px; border-radius:30px; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; }
 .btn-ghost:hover { background:rgba(255,255,255,0.12); }
 .hero-stats { display:flex; gap:36px; position:relative; z-index:1; }
 .hero-stat strong { display:block; font-family:'Playfair Display', serif; font-size:26px; font-weight:700; color:#fff; }
@@ -43,9 +44,10 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
 
 /* ===== TENTANG ===== */
 .tentang-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
-.tentang-img { border-radius:20px; overflow:hidden; position:relative; box-shadow:0 12px 40px rgba(30,70,15,0.18); background: url('images/tentang-bg.jpg') center/cover no-repeat; aspect-ratio:4/3;}
-.tentang-img::before { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(27,77,26,0.3) 0%, transparent 60%); z-index:1; border-radius:20px; }
-.tentang-text p { font-family:'Nunito',sans-serif; font-size:14px; color:var(--text-light); line-height:1.9; margin-bottom:16px; }
+.tentang-img { border-radius:20px; overflow:hidden; position:relative; box-shadow:0 12px 40px rgba(30,70,15,0.18); }
+.tentang-img img { width:100%; height:100%; object-fit:cover; display:block; aspect-ratio:4/3; }
+.tentang-img::before { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(27,77,26,0.3) 0%, transparent 60%); z-index:1; border-radius:20px; pointer-events: none; }
+.tentang-text p { font-size:14px; color:var(--text-light); line-height:1.9; margin-bottom:16px; }
 .tentang-tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
 .tentang-tag { background:var(--g5); border:1px solid var(--border); color:var(--g2); font-size:12px; font-weight:700; padding:5px 14px; border-radius:20px; font-family:'Nunito',sans-serif; }
 
@@ -82,4 +84,5 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
   .nav-links { display:none; }
   .footer { padding:32px 20px 18px; }
   .footer-inner { grid-template-columns:1fr; gap:28px; }
+  .footer-btm { flex-direction:column; gap:8px; }
 }
