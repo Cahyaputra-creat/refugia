@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fasilitas - Kebun Refugia Magetan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css"> <link rel="stylesheet" href="fasilitas.css">
+</head>
+<body>
+  <section class="section alt">
+    <div class="inner">
+      <h2 class="sec-title text-center">Fasilitas Unggulan</h2>
+      <p class="sec-sub text-center">Nikmati berbagai fasilitas yang kami sediakan untuk kenyamanan kunjungan Anda.</p>
+      
+      <div class="slider-outer">
+        <div class="slider-clip">
+          <div class="slider-track" id="fSlider">
+            <div class="slide">
+              <div class="slide-img" style="background-image:url('fasilitas1.jpg');"></div>
+              <div class="slide-body">
+                <div class="slide-badge">Populer</div>
+                <h3>Menara Pandang</h3>
+                <p>Nikmati pemandangan kebun bunga secara luas dari atas menara pandang setinggi 15 meter.</p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="slide-img" style="background-image:url('fasilitas2.jpg');"></div>
+              <div class="slide-body">
+                <div class="slide-badge">Edukasi</div>
+                <h3>Taman Kelinci</h3>
+                <p>Wahana bermain dan edukasi interaktif bagi anak-anak untuk memberi makan kelinci secara langsung.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-nav">
+          <button class="snav-btn" onclick="sMove(-1)">&#8249;</button>
+          <div class="s-dots" id="sDots"></div>
+          <button class="snav-btn" onclick="sMove(1)">&#8250;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
