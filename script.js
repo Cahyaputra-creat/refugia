@@ -111,3 +111,18 @@ const tombolDetail = document.querySelector('.btn-detail-lapak');
 if (tombolDetail) {
     // Masukkan logika klik detail lapak di sini
 }
+
+// Opsi A: Mengubah pengecekan URL (Hapus ekstensi .html)
+if (window.location.pathname.includes('fasilitas')) {
+    // Tempatkan logika pop-up detail lapak & toko Anda di sini
+}
+
+if (window.location.pathname.includes('kontak')) {
+    // Tempatkan logika detail petani & kontak Anda di sini
+}
+
+// Opsi B (Paling Direkomendasikan): Cek keberadaan elemen di DOM tanpa peduli URL
+const FAQContainer = document.querySelector('.faq-item'); // sesuaikan dengan class FAQ Anda
+if (FAQContainer) {
+    // Logika gulir FAQ ditaruh di sini, otomatis jalan di halaman faq tanpa cek URL
+}
