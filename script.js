@@ -70,3 +70,32 @@ window.toggleFaq = function(element) {
   // Toggle the clicked one
   element.classList.toggle('active');
 }
+
+// ===== KODE JAVASCRIPT SLIDER FASILITAS =====
+const TOTAL_SLIDES = 10;
+let curSlide = 0;
+const track = document.getElementById('fSlider');
+const dotsWrap = document.getElementById('sDots');
+
+if (track && dotsWrap) {
+  // Buat titik navigasi (dots)
+  for (let i = 0; i < TOTAL_SLIDES; i++) {
+    const d = document.createElement('div');
+    d.className = 's-dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => goToSlide(i);
+    dotsWrap.appendChild(d);
+  }
+}
+
+function goToSlide(n) {
+  curSlide = n;
+  track.style.transform = `translateX(-${curSlide * 100}%)`;
+  document.querySelectorAll('.s-dot').forEach((d, i) => d.classList.toggle('on', i === curSlide));
+}
+
+function sMove(dir) {
+  let n = curSlide + dir;
+  if (n < 0) n = TOTAL_SLIDES - 1;
+  if (n >= TOTAL_SLIDES) n = 0;
+  goToSlide(n);
+}

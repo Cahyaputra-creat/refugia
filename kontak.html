@@ -9,9 +9,10 @@
   <link rel="stylesheet" href="kontak.css">
 </head>
 <body>
+
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="images/logo.png" alt="Logo">
+      <img src="img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
     </a>
     <div class="nav-links">
       <a href="index.html">Beranda</a>
@@ -28,12 +29,12 @@
       <div style="text-align:center;">
         <span class="chip green">Oleh-Oleh & Informasi</span>
         <h2 class="sec-title">Lapak Petani & Kontak</h2>
-        <p class="sec-sub">Bawa pulang hasil panen bumi dan tanaman hias terbaik dari petani lokal Magetan.</p>
+        <p class="sec-sub">Bawa pulang hasil panen bumi terbaik atau hubungi admin untuk informasi lebih lanjut.</p>
       </div>
 
       <div class="lapak-grid">
-        <div class="lapak-card" onclick="openModal()">
-          <div class="lapak-img" style="background-image:url('images/lapak-1.jpg');">
+        <div class="lapak-card" onclick="openModal('tanaman')">
+          <div class="lapak-img" style="background-image:url('img/Edukasi Tanaman.jpeg');">
             <div class="lapak-img-overlay"></div>
           </div>
           <div class="lapak-body">
@@ -42,46 +43,162 @@
             <button class="btn-detail">Hubungi Penjual</button>
           </div>
         </div>
+
+        <div class="lapak-card" onclick="openModal('oleh')">
+          <div class="lapak-img" style="background-image:url('img/Souvenir dan oleh oleh.JPG');">
+            <div class="lapak-img-overlay"></div>
+          </div>
+          <div class="lapak-body">
+            <h3>Pusat Oleh-Oleh</h3>
+            <p>Berbagai macam souvenir eksklusif, kerajinan tangan lokal, dan makanan ringan khas Magetan.</p>
+            <button class="btn-detail">Hubungi Toko</button>
+          </div>
         </div>
+
+        <div class="lapak-card" onclick="openModal('admin')">
+          <div class="lapak-img" style="background-image:url('img/Gasebo.jpg');">
+            <div class="lapak-img-overlay"></div>
+          </div>
+          <div class="lapak-body">
+            <h3>Layanan Admin Refugia</h3>
+            <p>Hubungi admin untuk informasi tiket rombongan, penyewaan tempat, atau pertanyaan lainnya.</p>
+            <button class="btn-detail">Hubungi Admin</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <div class="overlay" id="contactModal">
+  <div class="overlay" id="contactModal" onclick="closeModal(event)">
     <div class="mbox">
       <div class="mhead">
-        <div class="mhead-icon" style="background:var(--g5); color:var(--g2);">🛒</div>
+        <div class="mhead-icon" id="mIcon" style="background:var(--g5); color:var(--g2);">🛒</div>
         <div>
-          <div class="mhead-title">Bursa Tanaman Hias</div>
-          <div class="mhead-sub">Tersedia berbagai bibit bunga berkualitas</div>
+          <div class="mhead-title" id="mTitle">Title</div>
+          <div class="mhead-sub" id="mSub">Sub</div>
         </div>
-        <button class="mclose" onclick="closeModal()">X</button>
+        <button class="mclose" onclick="closeModal(event)">✕</button>
       </div>
       <div class="mbody">
-        <p class="mbody-desc">Silakan hubungi petani atau pengelola lapak secara langsung melalui WhatsApp untuk menanyakan stok atau melakukan pemesanan di luar jadwal kunjungan.</p>
+        <p class="mbody-desc" id="mDesc">Desc</p>
         
         <div class="mitems-label">Jam Pelayanan Online</div>
-        <div class="mitems">
-          <div class="mitem">
-            <div class="mitem-ico">🟢</div>
-            <h4>Senin - Jumat</h4>
-            <p>08.00 - 16.00 WIB</p>
+        <div class="mitems" id="mItems">
           </div>
-          <div class="mitem">
-            <div class="mitem-ico">🟡</div>
-            <h4>Akhir Pekan</h4>
-            <p>09.00 - 15.00 WIB</p>
-          </div>
-        </div>
 
-        <button class="btn-wa">Chat WhatsApp Sekarang</button>
-        <button class="btn-back" onclick="closeModal()">Kembali</button>
+        <a href="#" id="waLink" target="_blank" class="btn-wa">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.39 0 0 5.39 0 12.031c0 2.128.555 4.204 1.613 6.033L.278 23.4l5.484-1.44A11.94 11.94 0 0 0 12.03 24c6.64 0 12.03-5.39 12.03-12.03S18.672 0 12.031 0zm0 22.016a9.914 9.914 0 0 1-5.068-1.39l-.363-.215-3.766.988.998-3.67-.235-.376a9.92 9.92 0 0 1-1.517-5.322c0-5.485 4.463-9.948 9.95-9.948 5.488 0 9.95 4.463 9.95 9.948 0 5.486-4.462 9.949-9.949 9.949zm5.484-7.464c-.301-.151-1.782-.879-2.059-.979-.276-.1-.477-.151-.678.15-.201.302-.778.979-.953 1.18-.176.201-.352.226-.653.075-.301-.15-1.272-.468-2.423-1.317-.896-.66-1.501-1.474-1.677-1.776-.176-.301-.019-.465.132-.615.135-.136.301-.352.452-.527.15-.176.201-.301.301-.502.1-.201.05-.376-.025-.527-.075-.15-.678-1.631-.928-2.233-.245-.588-.493-.508-.678-.517-.176-.008-.377-.008-.577-.008-.201 0-.528.075-.804.376-.276.302-1.054 1.03-1.054 2.511s1.079 2.911 1.23 3.112c.15.201 2.122 3.238 5.14 4.542.718.309 1.278.494 1.716.632.72.228 1.376.196 1.892.119.577-.086 1.782-.728 2.033-1.431.251-.703.251-1.305.176-1.431-.075-.126-.276-.201-.577-.352z"/></svg>
+          Chat WhatsApp Sekarang
+        </a>
+        <button class="btn-back" onclick="closeModal(event)">Kembali</button>
       </div>
     </div>
   </div>
 
   <footer class="footer">
-      </footer>
+    <div class="footer-inner inner">
+      <div>
+        <img src="img/LOGO_REFUGIA.png" alt="Logo Refugia" class="ft-logo">
+        <div class="ft-jam">Buka Setiap Hari: 08.30 - 16.30 WIB</div>
+        <p class="ft-tagline">Menyajikan keindahan alam dan edukasi botani bagi seluruh keluarga di Magetan.</p>
+      </div>
+      <div class="ft-nav">
+        <h4 class="ft-heading">Menu</h4>
+        <a href="index.html">Beranda</a>
+        <a href="fasilitas.html">Fasilitas</a>
+        <a href="pemesanan.html">Pemesanan</a>
+        <a href="lokasi.html">Lokasi</a>
+      </div>
+      <div>
+        <h4 class="ft-heading">Hubungi Kami</h4>
+        <a href="tel:0859-3148-6608" class="ft-phone">0859-3148-6608</a>
+        <div class="ft-socials" style="margin-top:10px;">
+          <a href="https://www.instagram.com/kebunrefugiamagetan/" class="ft-social-btn ft-ig">Instagram</a>
+          <a href="https://www.tiktok.com/@kebunrefugiamagetan" class="ft-social-btn ft-tt">TikTok</a>
+          <a href="https://api.whatsapp.com/send?phone=6285931486608" class="ft-social-btn ft-wa">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-hr">
+    <div class="footer-btm inner">
+      <p>© 2025 Kebun Refugia Magetan · Hak Cipta Dilindungi</p>
+      <p>Dikelola oleh Dinas TPHPKP Kabupaten Magetan</p>
+    </div>
+  </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const mData = {
+      tanaman: {
+        icon: '🌸', title: 'Bursa Tanaman Hias', sub: 'Tersedia berbagai bibit bunga',
+        desc: 'Silakan hubungi petani secara langsung melalui WhatsApp untuk menanyakan stok atau melakukan pemesanan di luar jadwal kunjungan.',
+        phone: '6285931486608',
+        waText: 'Halo Petani Refugia, saya ingin bertanya tentang ketersediaan bibit tanaman hias.',
+        items: [
+          {i: '🟢', t: 'Senin - Jumat', p: '08.00 - 16.00 WIB'},
+          {i: '🟡', t: 'Akhir Pekan', p: '09.00 - 15.00 WIB'}
+        ]
+      },
+      oleh: {
+        icon: '🛍️', title: 'Pusat Oleh-Oleh', sub: 'Cenderamata & Makanan Khas',
+        desc: 'Hubungi pengelola toko oleh-oleh untuk menanyakan ketersediaan produk khas Magetan dan souvenir eksklusif Kebun Refugia.',
+        phone: '6285931486608',
+        waText: 'Halo Toko Refugia, saya ingin bertanya tentang oleh-oleh khas Magetan.',
+        items: [
+          {i: '🟢', t: 'Senin - Jumat', p: '08.00 - 16.00 WIB'},
+          {i: '🟡', t: 'Akhir Pekan', p: '09.00 - 15.00 WIB'}
+        ]
+      },
+      admin: {
+        icon: '👨‍💼', title: 'Layanan Admin Refugia', sub: 'Pusat Informasi & Tiket',
+        desc: 'Untuk pemesanan tiket rombongan, penyewaan lokasi event/wedding, dan informasi lainnya, silakan hubungi admin resmi kami.',
+        phone: '6285931486608',
+        waText: 'Halo Admin Refugia, saya ingin mendapatkan informasi lebih lanjut mengenai fasilitas.',
+        items: [
+          {i: '🟢', t: 'Setiap Hari', p: '08.30 - 16.30 WIB'},
+          {i: '⚡', t: 'Respon Cepat', p: 'Di Jam Kerja'}
+        ]
+      }
+    };
+
+    const overlay = document.getElementById('contactModal');
+    const mIcon = document.getElementById('mIcon');
+    const mTitle = document.getElementById('mTitle');
+    const mSub = document.getElementById('mSub');
+    const mDesc = document.getElementById('mDesc');
+    const mItems = document.getElementById('mItems');
+    const waLink = document.getElementById('waLink');
+
+    function openModal(id) {
+      const data = mData[id];
+      if(!data) return;
+      
+      mIcon.textContent = data.icon;
+      mTitle.textContent = data.title;
+      mSub.textContent = data.sub;
+      mDesc.textContent = data.desc;
+      
+      mItems.innerHTML = '';
+      data.items.forEach(it => {
+        mItems.innerHTML += `
+          <div class="mitem">
+            <div class="mitem-ico">${it.i}</div>
+            <h4>${it.t}</h4>
+            <p>${it.p}</p>
+          </div>
+        `;
+      });
+
+      // Mengatur link otomatis ke WhatsApp dengan pesan bawaan
+      waLink.href = `https://api.whatsapp.com/send?phone=${data.phone}&text=${encodeURIComponent(data.waText)}`;
+      
+      overlay.classList.add('open');
+    }
+    
+    function closeModal(e) {
+      // Hanya menutup jika mengklik background hitam, tombol silang, atau tombol kembali
+      if(e && e.target !== overlay && !e.target.classList.contains('mclose') && !e.target.classList.contains('btn-back')) return;
+      overlay.classList.remove('open');
+    }
+  </script>
 </body>
 </html>
