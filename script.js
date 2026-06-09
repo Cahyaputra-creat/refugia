@@ -99,3 +99,15 @@ function sMove(dir) {
   if (n >= TOTAL_SLIDES) n = 0;
   goToSlide(n);
 }
+
+// Pengecekan untuk FAQ
+const faqItems = document.querySelectorAll('.faq-item');
+if (faqItems.length > 0) {
+    // Masukkan logika klik FAQ di dalam sini
+}
+
+// Pengecekan untuk Detail Lapak
+const tombolDetail = document.querySelector('.btn-detail-lapak');
+if (tombolDetail) {
+    // Masukkan logika klik detail lapak di sini
+}
