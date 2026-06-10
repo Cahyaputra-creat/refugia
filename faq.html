@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ & Saran - Kebun Refugia Magetan</title>
+  <title>Pemesanan - Kebun Refugia Magetan</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="faq.css">
+  <link rel="stylesheet" href="pemesanan.css">
 </head>
 <body>
 
@@ -17,55 +17,70 @@
     <div class="nav-links">
       <a href="index.html">Beranda</a>
       <a href="fasilitas.html">Fasilitas</a>
-      <a href="pemesanan.html">Pemesanan</a>
+      <a href="pemesanan.html" class="active">Pemesanan</a>
       <a href="lokasi.html">Lokasi</a>
       <a href="kontak.html">Kontak</a>
-      <a href="faq.html" class="active">FAQ & Saran</a>
+      <a href="faq.html">FAQ & Saran</a>
+    </div>
+
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </nav>
 
-  <section class="section alt" id="faq">
+  <section class="section" id="pemesanan">
     <div class="inner">
       <div style="text-align:center;">
-        <span class="chip gold">Pusat Bantuan</span>
-        <h2 class="sec-title">Pertanyaan yang Sering Diajukan</h2>
+        <span class="chip gold">Tiket & Jam Buka</span>
+        <h2 class="sec-title">Informasi Tiket Masuk</h2>
+        <p class="sec-sub">Nikmati keindahan alam dengan tarif yang sangat terjangkau bagi seluruh kalangan.</p>
       </div>
-
-      <div class="faq-container">
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-q">Berapa harga tiket masuk Kebun Refugia?</div>
-          <div class="faq-a">Harga tiket masuk adalah <strong>Rp 10.000 untuk Dewasa</strong> dan <strong>Rp 5.000 untuk Anak-anak</strong> (di bawah 12 tahun). Menariknya, potongan tiket Anda dapat ditukarkan dengan sayuran gratis saat pulang!</div>
+      
+      <div class="pemes-grid">
+        <div class="qr-box">
+          <img src="img/Qrish Kebun Refugia Magetan.png" alt="QRIS Kebun Refugia Magetan">
+          <h3>E-Pembayaran (QRIS)</h3>
+          <p>Scan kode QRIS di atas untuk melakukan pembayaran tiket masuk secara non-tunai di loket resmi.</p>
         </div>
         
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-q">Jam berapa Kebun Refugia buka?</div>
-          <div class="faq-a">Kami buka setiap hari (Senin - Minggu) mulai pukul <strong>08.30 WIB hingga 16.30 WIB</strong>. Waktu terbaik untuk berkunjung adalah pagi hari untuk mendapatkan udara tersejuk dan pencahayaan foto yang sempurna.</div>
+        <div class="tiket-stack">
+          <div class="tcard">
+            <div class="tcard-left" style="background: linear-gradient(135deg, var(--g1), var(--g2)); color: white;">
+              <span class="tlabel">Dewasa</span>
+            </div>
+            <div class="tcard-right">
+              <strong>Rp 10.000</strong>
+              <span class="tsub">Per orang / kunjungan</span>
+              <span class="tnote">✓ Dapat ditukar dengan sayuran segar saat pulang!</span>
+            </div>
+          </div>
+          
+          <div class="tcard">
+            <div class="tcard-left" style="background: linear-gradient(135deg, var(--y1), var(--y2)); color: var(--br);">
+              <span class="tlabel">Anak-Anak</span>
+            </div>
+            <div class="tcard-right">
+              <strong>Rp 5.000</strong>
+              <span class="tsub">Usia di bawah 12 tahun</span>
+              <span class="tnote">✓ Gratis masuk untuk balita (di bawah 3 tahun)</span>
+            </div>
+          </div>
+          
+          <div class="jam-info">
+            <div class="jam-ico" style="color: white;">🕒</div>
+            <div>
+              <strong>Jam Operasional Resmi</strong>
+              <span>Setiap Hari: 08.30 - 16.30 WIB</span>
+            </div>
+          </div>
+          
+          <button class="btn-wa-order" onclick="window.location.href='https://api.whatsapp.com/send?phone=6285931486608&text=Halo%20Admin%20Kebun%20Refugia,%20saya%20ingin%20bertanya%20mengenai%20pemesanan%20tiket%20rombongan.'">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px;"><path d="M12.031 0C5.39 0 0 5.39 0 12.031c0 2.128.555 4.204 1.613 6.033L.278 23.4l5.484-1.44A11.94 11.94 0 0 0 12.03 24c6.64 0 12.03-5.39 12.03-12.03S18.672 0 12.031 0zm0 22.016a9.914 9.914 0 0 1-5.068-1.39l-.363-.215-3.766.988.998-3.67-.235-.376a9.92 9.92 0 0 1-1.517-5.322c0-5.485 4.463-9.948 9.95-9.948 5.488 0 9.95 4.463 9.95 9.948 0 5.486-4.462 9.949-9.949 9.949zm5.484-7.464c-.301-.151-1.782-.879-2.059-.979-.276-.1-.477-.151-.678.15-.201.302-.778.979-.953 1.18-.176.201-.352.226-.653.075-.301-.15-1.272-.468-2.423-1.317-.896-.66-1.501-1.474-1.677-1.776-.176-.301-.019-.465.132-.615.135-.136.301-.352.452-.527.15-.176.201-.301.301-.502.1-.201.05-.376-.025-.527-.075-.15-.678-1.631-.928-2.233-.245-.588-.493-.508-.678-.517-.176-.008-.377-.008-.577-.008-.201 0-.528.075-.804.376-.276.302-1.054 1.03-1.054 2.511s1.079 2.911 1.23 3.112c.15.201 2.122 3.238 5.14 4.542.718.309 1.278.494 1.716.632.72.228 1.376.196 1.892.119.577-.086 1.782-.728 2.033-1.431.251-.703.251-1.305.176-1.431-.075-.126-.276-.201-.577-.352z"/></svg>
+            Hubungi Kontak Pemesanan Kelompok / Rombongan
+          </button>
         </div>
-        
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-q">Fasilitas apa saja yang tersedia?</div>
-          <div class="faq-a">Fasilitas unggulan kami meliputi Hamparan Spot Foto Bunga, Menara Pandang, Taman Kelinci (Ramah Anak), Gazebo Istirahat, Masjid Ki Mageti, Area Parkir luas, Toilet yang bersih, serta Lapak Petani untuk berbelanja hasil bumi dan oleh-oleh.</div>
-        </div>
-
-        <div class="faq-item" onclick="toggleFaq(this)">
-          <div class="faq-q">Di mana lokasi tepatnya?</div>
-          <div class="faq-a">Lokasi Kebun Refugia sangat strategis dan mudah diakses. Berada tepat di pinggir jalan raya utama menuju objek wisata Telaga Sarangan, yaitu di <strong>Jl. Raya Sarangan, Plaosan II, Kec. Plaosan, Kabupaten Magetan.</strong></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="inner">
-      <div class="saran-box">
-        <span class="saran-icon">💌</span>
-        <h3>Bantu Kami Menjadi Lebih Baik</h3>
-        <p>Pengalaman Anda sangat berharga bagi kami. Kami sangat menghargai setiap saran, kritik, dan masukan agar fasilitas dan pelayanan Kebun Refugia Magetan semakin maksimal.</p>
-        
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeESdGRTjlowMnx-LLFd1OPiWipbk8SfyE99_QBnYHYFwrePw/viewform" target="_blank" class="btn-form">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm16 16V5H5v14h14zm-4-4H9v-2h6v2zm2-4H7V9h10v2z"/></svg>
-          Tulis Masukan Anda di Sini ↗
-        </a>
       </div>
     </div>
   </section>
@@ -90,7 +105,7 @@
         <div class="ft-socials" style="margin-top:10px;">
           <a href="https://www.instagram.com/kebunrefugiamagetan/" class="ft-social-btn ft-ig">Instagram</a>
           <a href="https://www.tiktok.com/@kebunrefugiamagetan" class="ft-social-btn ft-tt">TikTok</a>
-          <a href="https://api.whatsapp.com/send?phone=6285931486608" class="ft-social-btn ft-wa">WhatsApp</a>
+          <a href="https://api.whatsapp.com/send?phone=6285931486608&text=Silahkan%20menuliskan%20pertanyaan%20atau%20kritik%20dan%20saran%20anda." class="ft-social-btn ft-wa">WhatsApp</a>
         </div>
       </div>
     </div>
@@ -102,20 +117,18 @@
   </footer>
 
   <script>
-    function toggleFaq(element) {
-      const isActive = element.classList.contains('active');
-      const allFaqs = document.querySelectorAll('.faq-item');
-      
-      // Tutup semua FAQ terlebih dahulu
-      allFaqs.forEach(item => {
-        item.classList.remove('active');
-      });
-      
-      // Jika yang di-klik belum aktif, buka (tambahkan class active)
-      if (!isActive) {
-        element.classList.add('active');
-      }
-    }
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
   </script>
 </body>
 </html>

@@ -22,6 +22,12 @@
       <a href="kontak.html">Kontak</a>
       <a href="faq.html">FAQ & Saran</a>
     </div>
+
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </nav>
 
   <section class="section" id="pemesanan">
@@ -110,5 +116,19 @@
     </div>
   </footer>
 
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+  </script>
 </body>
 </html>
