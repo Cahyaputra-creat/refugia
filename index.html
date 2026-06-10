@@ -20,10 +20,15 @@
       <a href="kontak.html">Kontak</a>
       <a href="faq.html">FAQ & Saran</a>
     </div>
+    
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </nav>
 
- <header class="hero">
-    
+  <header class="hero">
     <div class="hero-bg-container">
       <img src="img/Gambar Beranda.jpg" alt="Background Kebun Refugia" class="hero-bg-img">
       <div class="hero-overlay"></div> 
@@ -38,21 +43,21 @@
         <button class="btn-ghost" onclick="window.location.href='lokasi.html'">Lihat Lokasi</button>
       </div>
     
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <strong>15+</strong>
-        <span>Koleksi Bunga</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>15+</strong>
+          <span>Koleksi Bunga</span>
+        </div>
+        <div class="hero-stat">
+          <strong>3.5H</strong>
+          <span>Area Lahan</span>
+        </div>
+        <div class="hero-stat">
+          <strong>12M</strong>
+          <span>Menara Pandang</span>
+        </div>
       </div>
-      <div class="hero-stat">
-        <strong>3.5H</strong>
-        <span>Area Lahan</span>
-      </div>
-      <div class="hero-stat">
-        <strong>12M</strong>
-        <span>Menara Pandang</span>
-      </div>
-    </div>
-  </header>
+    </div> </header>
 
   <section class="section">
     <div class="inner tentang-grid">
@@ -104,5 +109,21 @@
   </footer>
 
   <script src="script.js"></script>
+  
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Menutup menu otomatis jika salah satu link navigasi diklik
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+  </script>
 </body>
 </html>
