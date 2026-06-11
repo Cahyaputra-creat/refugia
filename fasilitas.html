@@ -7,7 +7,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="fasilitas.css">
-</head>
+
+  <style>
+    /* Mengurangi area gradasi pada gambar utama (Slider) */
+    .slide-img {
+      /* Mendorong efek fade/masking lebih ke kanan (85%) agar foto lebih jelas */
+      -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%) !important;
+      mask-image: linear-gradient(to right, black 85%, transparent 100%) !important;
+    }
+    
+    /* Alternatif jika gradasi menggunakan overlay elemen pseudoclass ::after */
+    .slide-img::after {
+      background: linear-gradient(to right, transparent 80%, var(--bg-color, #eef4ec) 100%) !important;
+    }
+
+    /* Mengurangi efek gelap/blur pada kartu Lapak & Kuliner di bagian bawah */
+    .lapak-img-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%) !important;
+    }
+  </style>
+  </head>
 <body>
 
   <nav class="navbar">
