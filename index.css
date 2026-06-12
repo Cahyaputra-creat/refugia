@@ -161,3 +161,35 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
     height: 100%;
     background: rgba(0, 0, 0, 0.4); 
 }
+
+/* ===== INSTAGRAM GALLERY SECTION ===== */
+.instagram-section {
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.instagram-title {
+  font-family: 'Playfair Display', serif;
+  color: #2d4a22;
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.instagram-gallery {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.instagram-card {
+  flex: 1;
+  min-width: 280px;
+  max-width: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  background: #fff;
+}
