@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         // [BARU] Tambahkan daftar file foto souvenir kamu di sini
         images: [
-          'img/Souvenir.jpeg', 
-          'img/Souvenir2.jpeg', 
+          'img/lapak souvenir 1.png', 
+          'img/lapak souvenir 2.png', 
           'img/Souvenir3.jpeg'
         ]
       },
