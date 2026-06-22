@@ -50,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       sayur: {
         icon:'🥬', title:'Lapak Sayur Segar', sub:'Hasil Tani Sehat',
-        desc:'Beli sayuran segar yang dipanen langsung dari kebun Refugia dan petani lokal sekitar Gunung Lawu.',
+        desc:'Beli sayuran segar organik yang dipanen langsung dari kebun Refugia dan petani lokal sekitar Gunung Lawu.',
         items: [
           {i:'🥕', t:'Sayur Segar', p:'Paket Rp 10.000'},
           {i:'🍓', t:'Buah Segar', p:'Sesuai Musim'},
-          {i:'🌱', t:'Bibit Tanaman',p:'Tanyakan Stok & Harga Terbaru'}
-          {i:'🍂', t:'Pupuk Kompos', p:'Mulai Rp 15.000'}
+          {i:'🍂', t:'Benih tanaman', p:'Tanyakan stok & Harga terbaru'},
+          {i:'🌱', t:'Pupuk Kompos', p:'Mulai Rp 15.000'}
         ]
       },
       makan: {
