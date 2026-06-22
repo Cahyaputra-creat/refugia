@@ -46,6 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
           {i:'👜', t:'Tas Rajut', p:'Mulai Rp 35.000'},
           {i:'🍯', t:'Camilan Khas', p:'Mulai Rp 15.000'},
           {i:'🌸', t:'Bibit Bunga', p:'Mulai Rp 10.000'}
+        ],
+        // [BARU] Tambahkan daftar file foto souvenir kamu di sini
+        images: [
+          'img/Souvenir.jpeg', 
+          'img/Souvenir2.jpeg', 
+          'img/Souvenir3.jpeg'
         ]
       },
       sayur: {
@@ -56,6 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
           {i:'🍓', t:'Buah Segar', p:'Sesuai Musim'},
           {i:'🍂', t:'Benih tanaman', p:'Tanyakan stok & Harga terbaru'},
           {i:'🌱', t:'Pupuk Kompos', p:'Mulai Rp 15.000'}
+        ],
+        // Disimpan dalam array agar formatnya seragam
+        images: [
+          'img/JenisBunga.jpeg'
         ]
       },
       makan: {
@@ -66,6 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
           {i:'☕', t:'Kopi & Wedang', p:'Rp 8.000'},
           {i:'🍗', t:'Ayam Geprek', p:'Rp 20.000'},
           {i:'🍢', t:'Camilan Hangat', p:'Rp 10.000'}
+        ],
+        images: [
+          'img/MenuMakanan_BERGAMBAR.jpeg',
+          'img/MenuMakanan_Teks.jpeg',
+          'img/MenuMinuman_gambar.jpeg',
+          'img/MenuMinuman_teks.jpeg'
         ]
       }
     };
@@ -104,20 +120,26 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
       });
 
-      if(id === 'makan') {
+      // [OTOMATISASI] Jika properti images ada dan isinya lebih dari 1 gambar
+      if(d.images && d.images.length > 1) {
+        
+        // Buat elemen gambar secara dinamis
+        const slidesHtml = d.images.map((imgSrc, idx) => `
+          <img src="${imgSrc}" class="m-slide-img" alt="${d.title} Slide ${idx + 1}">
+        `).join('');
+
+        // Buat dot indikator secara dinamis menyesuaikan jumlah gambar
+        const dotsHtml = d.images.map((_, idx) => `
+          <span class="m-dot ${idx === 0 ? 'active' : ''}"></span>
+        `).join('');
+
         mediaContainer.innerHTML = `
           <div class="m-slider-outer">
             <div class="m-slider-track" id="mSliderTrack">
-              <img src="img/MenuMakanan_BERGAMBAR.jpeg" class="m-slide-img" alt="Menu Makanan Bergambar">
-              <img src="img/MenuMakanan_Teks.jpeg" class="m-slide-img" alt="Menu Makanan Teks">
-              <img src="img/MenuMinuman_gambar.jpeg" class="m-slide-img" alt="Menu Minuman Gambar">
-              <img src="img/MenuMinuman_teks.jpeg" class="m-slide-img" alt="Menu Minuman Teks">
+              ${slidesHtml}
             </div>
             <div class="m-slider-dots">
-              <span class="m-dot active"></span>
-              <span class="m-dot"></span>
-              <span class="m-dot"></span>
-              <span class="m-dot"></span>
+              ${dotsHtml}
             </div>
           </div>
         `;
@@ -125,9 +147,11 @@ document.addEventListener('DOMContentLoaded', function() {
         modalCurSlide = 0;
         const trackM = document.getElementById('mSliderTrack');
         const dotsM = document.querySelectorAll('.m-dot');
+        const totalSlides = d.images.length;
 
+        // Jalankan interval otomatis sesuai jumlah data gambar
         modalInterval = setInterval(() => {
-          modalCurSlide = (modalCurSlide + 1) % 4;
+          modalCurSlide = (modalCurSlide + 1) % totalSlides;
           if(trackM) {
             trackM.style.transform = `translateX(-${modalCurSlide * 100}%)`;
           }
@@ -136,10 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }, 10000);
 
-      } else if(id === 'sayur') {
-        mediaContainer.innerHTML = `<img src="img/JenisBunga.jpeg" class="m-single-img" alt="Jenis Bunga">`;
-      } else if(id === 'souvenir') {
-        mediaContainer.innerHTML = `<img src="img/Souvenir.jpeg" class="m-single-img" alt="Souvenir">`;
+      } else if(d.images && d.images.length === 1) {
+        // Jika gambarnya cuma ada 1, tampilkan gambar tunggal biasa
+        mediaContainer.innerHTML = `<img src="${d.images[0]}" class="m-single-img" alt="${d.title}">`;
       }
 
       overlay.classList.add('open');
@@ -164,7 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Pemasangan Event Listener untuk menutup Modal
     document.querySelectorAll('.modal-close').forEach(elem => {
         elem.addEventListener('click', function(e) {
-            // Hanya jalankan closeM jika yang diklik benar-benar elemen dengan class .modal-close
             if(e.target === this) {
                 closeM();
             }
