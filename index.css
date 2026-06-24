@@ -50,6 +50,30 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
 .hero-stat strong { display:block; font-family:'Playfair Display', serif; font-size:26px; font-weight:700; color:#fff; }
 .hero-stat span { font-size:11px; color:rgba(255,255,255,0.65); font-weight:600; letter-spacing:0.5px; }
 
+/* Container pembungkus gambar agar menutupi area Hero */
+.hero-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+}
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); 
+}
+
 /* ===== SECTION UTILS ===== */
 .section { padding:72px 40px; }
 .section.alt { background:var(--g5); }
@@ -65,6 +89,95 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
 .tentang-text p { font-size:14px; color:var(--text-light); line-height:1.9; margin-bottom:16px; }
 .tentang-tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
 .tentang-tag { background:var(--g5); border:1px solid var(--border); color:var(--g2); font-size:12px; font-weight:700; padding:5px 14px; border-radius:20px; font-family:'Nunito',sans-serif; }
+
+/* ===== INSTAGRAM GALLERY SECTION ===== */
+.video-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Transisi Hover untuk Card Video */
+.video-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 12px 30px rgba(27,77,26,0.15) !important;
+}
+
+/* Efek Hover untuk membesarkan gambar thumbnail & merubah warna play button */
+.video-card:hover img {
+  transform: scale(1.05);
+}
+
+.video-card:hover .instagram-card span {
+  background: var(--y2) !important;
+  color: var(--br) !important;
+}
+
+/* ===== VIDEO MODAL OVERLAY (POP-UP) ===== */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  z-index: 99999; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Class pemicu saat modal aktif */
+.video-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  position: relative;
+  width: 85%;
+  max-width: 380px; 
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transform: scale(0.9);
+  transition: transform 0.3s ease-in-out;
+}
+
+.video-modal.show .modal-content {
+  transform: scale(1);
+}
+
+.modal-content video {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+  max-height: 80vh; 
+  object-fit: cover;
+}
+
+/* Tombol Close silang (X) */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #ffffff;
+  font-size: 45px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  z-index: 100000;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+  color: var(--y2); 
+}
 
 /* ===== FOOTER ===== */
 .footer { background:var(--g1); padding:48px 40px 24px; }
@@ -130,192 +243,3 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
   .footer-inner { grid-template-columns:1fr; gap:28px; }
   .footer-btm { flex-direction:column; gap:8px; }
 }
-
-/* Container pembungkus gambar agar menutupi area Hero */
-.hero-bg-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; 
-}
-
-/* Memastikan gambar memenuhi area dan tidak distorsi */
-.hero-bg-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    display: block;
-}
-
-/* Overlay gelap agar teks di atasnya mudah dibaca */
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); 
-}
-
-/* ===== INSTAGRAM GALLERY SECTION ===== */
-.instagram-section {
-  margin-top: 60px;
-  margin-bottom: 20px;
-}
-
-.instagram-title {
-  font-family: 'Playfair Display', serif;
-  color: #2d4a22;
-  margin-bottom: 30px;
-  text-align: center;
-  font-size: 26px;
-  font-weight: 700;
-}
-
-.instagram-gallery {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.instagram-card {
-  flex: 1;
-  min-width: 280px;
-  max-width: 320px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  background: #fff;
-}
-
-/* --- Tambahan Styling Thumbnail Video & Play Button Sesuai Mockup --- */
-.video-thumbnail-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4/4; /* Menyesuaikan bentuk kotak galeri */
-  overflow: hidden;
-  cursor: pointer;
-  display: block;
-}
-
-.video-thumbnail-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-/* Efek overlay gelap tipis di atas gambar */
-.video-thumbnail-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-/* Tombol Lingkaran Play Putih di Tengah */
-.play-btn-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  width: 54px;
-  height: 54px;
-  background: var(--white);
-  border-radius: 50%;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-/* Segitiga play di dalam lingkaran */
-.play-btn-overlay::after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 8px 0 8px 14px;
-  border-color: transparent transparent transparent var(--g2);
-  margin-left: 4px; /* Supaya pas di tengah secara visual */
-}
-
-/* Efek Hover Card */
-.video-thumbnail-wrapper:hover img {
-  transform: scale(1.05);
-}
-
-.video-thumbnail-wrapper:hover::before {
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.video-thumbnail-wrapper:hover .play-btn-overlay {
-  transform: translate(-50%, -50%) scale(1.1);
-  background: var(--y2);
-}
-
-.video-thumbnail-wrapper:hover .play-btn-overlay::after {
-  border-color: transparent transparent transparent var(--br);
-}
-
-/* Teks Judul Di Bawah Video Card */
-.instagram-card-title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--g1);
-  text-align: center;
-  padding: 16px 12px;
-}
-
-
-/* ===== VIDEO MODAL OVERLAY (POP-UP) ===== */
-.video-modal {
-  display: none; /* Sembunyikan secara default */
-  position: fixed;
-  z-index: 9999; /* Berada di atas seluruh elemen navbar (999) */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(10px); /* Efek background belakang buram */
-  -webkit-backdrop-filter: blur(10px);
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Class pemicu aktif modal */
-.video-modal.show {
-  display: flex;
-  opacity: 1;
-}
-
-.modal-content {
-  position: relative;
-  width: 90%;
-  max-width: 750px; /* Lebar maksimal box pop-up video */
-  background: #000;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-  transform: scale(0.92);
-  transition: transform 0.3s ease;
-}
-
-.video-modal.show .modal-content {
-  transform: scale(1);
-}
-
-/* Tombol Close silang (X) */
-.close-modal {

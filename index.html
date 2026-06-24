@@ -15,7 +15,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.7); /* Sedikit digelapkan agar video lebih kontras */
+      background-color: rgba(0, 0, 0, 0.7); 
       backdrop-filter: blur(10px); 
       -webkit-backdrop-filter: blur(10px); 
       z-index: 99999; 
@@ -23,7 +23,6 @@
       justify-content: center;
       align-items: center;
       
-      /* Menggunakan kombinasi opacity & pointer-events agar transisi blur menjadi sangat smooth */
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease-in-out;
@@ -38,7 +37,7 @@
     .modal-content {
       position: relative;
       width: 85%;
-      max-width: 380px; /* Dioptimalkan agar pas di layar HP maupun Desktop tanpa terpotong */
+      max-width: 380px; 
       background: #000;
       border-radius: 16px;
       overflow: hidden;
@@ -55,7 +54,7 @@
       width: 100%;
       display: block;
       border-radius: 16px;
-      max-height: 80vh; /* Membatasi tinggi video di layar desktop agar tidak memakan ruang vertical */
+      max-height: 80vh; 
       object-fit: cover;
     }
 
@@ -73,7 +72,7 @@
 
     .close-btn:hover {
       transform: scale(1.2);
-      color: var(--y2); /* Memakai variabel warna gold dari token root kamu */
+      color: var(--y2); 
     }
 
     .video-card {
@@ -158,12 +157,12 @@
 
     <div class="inner instagram-gallery-section" style="margin-top: 60px; margin-bottom: 20px;">
       <h3 class="instagram-gallery-title" style="font-family: 'Playfair Display', serif; color: #2d4a22; margin-bottom: 30px; text-align: center; font-size: 26px; font-weight: 700;">
-        Kesseruan di Kebun Refugia Magetan
+        Keseruan di Kebun Refugia Magetan
       </h3>
       
       <div class="instagram-gallery" style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
         
-        <div class="instagram-card video-card" data-video="video/video1.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
+        <div class="instagram-card video-card" data-video="assets/video refugia 1.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
           <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
             <img src="img/Tentang kami.jpeg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
@@ -177,7 +176,7 @@
           </div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video2.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
+        <div class="instagram-card video-card" data-video="assets/video refugia 2.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
           <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
             <img src="img/Gambar Beranda.jpg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
@@ -191,7 +190,7 @@
           </div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video3.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
+        <div class="instagram-card video-card" data-video="assets/video refugia 3.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
           <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
             <img src="img/Tentang kami.jpeg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
@@ -280,11 +279,10 @@
         const videoSrc = this.getAttribute('data-video'); 
         
         popupVideo.src = videoSrc; 
-        popupVideo.load(); // CRITICAL: Memaksa browser memuat resource video baru sebelum diputar
+        popupVideo.load(); 
         
-        modal.classList.add('show'); /* Menggunakan class pemicu agar animasi fade-in berjalan */
+        modal.classList.add('show'); 
         
-        // Menjalankan video secara asynchronous setelah modal terbuka
         popupVideo.play().catch(error => {
           console.log("Autoplay dicegah oleh kebijakan browser, menunggu interaksi pengguna.", error);
         }); 
@@ -296,7 +294,6 @@
       modal.classList.remove('show'); 
       popupVideo.pause(); 
       
-      // Memberikan delay pembersihan src selama 300ms agar animasi penutupan selesai dahulu
       setTimeout(() => {
         popupVideo.src = ""; 
       }, 300);
