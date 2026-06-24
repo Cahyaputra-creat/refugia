@@ -93,19 +93,17 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
 /* ===== RESPONSIVE (TAMPILAN HP) ===== */
 @media(max-width:700px) {
   .section { padding:48px 20px; }
-  .navbar { padding:0 16px; position: relative; } /* Tambah posisi relatif */
+  .navbar { padding:0 16px; position: relative; } 
   .hero { padding:48px 20px 90px; }
   .tentang-grid { grid-template-columns:1fr; }
   
-  /* Aktifkan tombol hamburger di HP */
   .hamburger { display: flex; } 
   
-  /* Modifikasi nav-links lama agar menjadi dropdown menu */
   .nav-links { 
     display: flex;
     position: absolute;
-    top: 68px; /* Muncul tepat di bawah navbar */
-    left: -100%; /* Tersembunyi di kiri layar secara default */
+    top: 68px; 
+    left: -100%; 
     width: 100%;
     background: rgba(255,255,255,0.98);
     backdrop-filter: blur(12px);
@@ -113,12 +111,11 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
     padding: 24px;
     gap: 16px;
     box-shadow: 0 10px 20px rgba(58,122,42,0.1);
-    transition: left 0.3s ease-in-out; /* Efek slide yang mulus */
+    transition: left 0.3s ease-in-out; 
     border-bottom: 1.5px solid var(--border);
     z-index: 998;
   }
 
-  /* Ketika tombol hamburger diklik, menu ini akan meluncur masuk */
   .nav-links.active {
     left: 0; 
   }
@@ -193,3 +190,132 @@ body { font-family:'Nunito', sans-serif; background:#FAFDF7; color:#2A3D1C; over
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   background: #fff;
 }
+
+/* --- Tambahan Styling Thumbnail Video & Play Button Sesuai Mockup --- */
+.video-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/4; /* Menyesuaikan bentuk kotak galeri */
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+}
+
+.video-thumbnail-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Efek overlay gelap tipis di atas gambar */
+.video-thumbnail-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+/* Tombol Lingkaran Play Putih di Tengah */
+.play-btn-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 54px;
+  height: 54px;
+  background: var(--white);
+  border-radius: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Segitiga play di dalam lingkaran */
+.play-btn-overlay::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 14px;
+  border-color: transparent transparent transparent var(--g2);
+  margin-left: 4px; /* Supaya pas di tengah secara visual */
+}
+
+/* Efek Hover Card */
+.video-thumbnail-wrapper:hover img {
+  transform: scale(1.05);
+}
+
+.video-thumbnail-wrapper:hover::before {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.video-thumbnail-wrapper:hover .play-btn-overlay {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--y2);
+}
+
+.video-thumbnail-wrapper:hover .play-btn-overlay::after {
+  border-color: transparent transparent transparent var(--br);
+}
+
+/* Teks Judul Di Bawah Video Card */
+.instagram-card-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--g1);
+  text-align: center;
+  padding: 16px 12px;
+}
+
+
+/* ===== VIDEO MODAL OVERLAY (POP-UP) ===== */
+.video-modal {
+  display: none; /* Sembunyikan secara default */
+  position: fixed;
+  z-index: 9999; /* Berada di atas seluruh elemen navbar (999) */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px); /* Efek background belakang buram */
+  -webkit-backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Class pemicu aktif modal */
+.video-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 750px; /* Lebar maksimal box pop-up video */
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  transform: scale(0.92);
+  transition: transform 0.3s ease;
+}
+
+.video-modal.show .modal-content {
+  transform: scale(1);
+}
+
+/* Tombol Close silang (X) */
+.close-modal {
