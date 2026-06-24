@@ -68,7 +68,7 @@
       transition: background 0.3s;
     }
     .instagram-card:hover .ig-card-overlay {
-      background: rgba(0,0,0,0.5); /* Sedikit lebih gelap saat di-hover */
+      background: rgba(0,0,0,0.5); 
     }
     .ig-play-btn {
       background: rgba(255,255,255,0.9); 
@@ -111,7 +111,7 @@
       z-index: 99999; 
       justify-content: center;
       align-items: center;
-      opacity: 0; /* Untuk animasi fade-in */
+      opacity: 0; 
       transition: opacity 0.3s ease;
     }
     .video-modal.show {
@@ -120,12 +120,12 @@
     .modal-content {
       position: relative;
       width: 90%;
-      max-width: 400px; /* Ukuran ideal untuk video portrait/Reels */
+      max-width: 400px; 
       background: #000;
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-      transform: scale(0.8); /* Untuk animasi zoom-in */
+      transform: scale(0.8); 
       transition: transform 0.3s ease;
     }
     .video-modal.show .modal-content {
@@ -135,7 +135,7 @@
       width: 100%;
       display: block;
       border-radius: 15px;
-      max-height: 85vh; /* Mencegah video terlalu tinggi di layar kecil */
+      max-height: 85vh; 
     }
     .close-btn {
       position: absolute;
@@ -213,7 +213,7 @@
       <div class="tentang-text">
         <h2 class="sec-title">Pesona Keindahan Alam di Kaki Gunung Lawu</h2>
         <p>Kebun Refugia Magetan awalnya merupakan inisiatif lahan untuk menanam bunga hias yang berfungsi sebagai pengalih hama tanaman. Namun, berkat keindahannya, kini bertransformasi menjadi destinasi agrowisata favorit yang memanjakan mata.</p>
-        <p>Dengan latar belakang Gunung Lawu yang megah dan udara sejuk pegunungan, tempat ini menjadi lokasi yang sempurna untuk melepas penat dan berkreasi dengan fotografi.</p>
+        <p>Dengan latar belakang Gunung Lawu yang megah and udara sejuk pegunungan, tempat ini menjadi lokasi yang sempurna untuk melepas penat dan berkreasi dengan fotografi.</p>
         <div class="tentang-tags">
           <span class="tentang-tag">Wisata Alam</span>
           <span class="tentang-tag">Edukasi Botani</span>
@@ -229,7 +229,7 @@
       <h3 class="instagram-gallery-title">Keseruan di Kebun Refugia Magetan</h3>
       
       <div class="instagram-gallery">
-        <div class="instagram-card video-card" data-video="video/video1.mp4">
+        <div class="instagram-card video-card" data-video="img/video refugia 2.mp4">
           <div class="ig-card-thumbnail">
             <img src="img/Tentang kami.jpeg" alt="Cuplikan Video">
             <div class="ig-card-overlay">
@@ -241,7 +241,7 @@
           <div class="ig-card-text">Tonton Keseruan di Instagram</div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video2.mp4">
+        <div class="instagram-card video-card" data-video="img/video refugia 3.mp4">
           <div class="ig-card-thumbnail">
             <img src="img/Gambar Beranda.jpg" alt="Cuplikan Video">
             <div class="ig-card-overlay">
@@ -253,7 +253,7 @@
           <div class="ig-card-text">Lihat Liputan Kebun Refugia</div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video3.mp4">
+        <div class="instagram-card video-card" data-video="img/video refugia 2.mp4">
           <div class="ig-card-thumbnail">
             <img src="img/Tentang kami.jpeg" alt="Cuplikan Video">
             <div class="ig-card-overlay">
@@ -309,8 +309,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
-  
   <script>
     // 1. LOGIKA HAMBURGER MENU
     const hamburger = document.querySelector('.hamburger');
@@ -341,7 +339,6 @@
         popupVideo.src = videoSrc; 
         
         modal.style.display = 'flex';
-        // Sedikit delay agar animasi CSS berjalan mulus
         setTimeout(() => {
           modal.classList.add('show');
         }, 10);
@@ -353,28 +350,23 @@
     // Fungsi Menutup Modal
     function closeModal() {
       modal.classList.remove('show');
-      
-      // Tunggu animasi selesai baru hilangkan dari layar dan hentikan video
       setTimeout(() => {
         modal.style.display = 'none'; 
         popupVideo.pause(); 
-        popupVideo.src = ""; // Membersihkan buffer video
-      }, 300); // 300ms sesuai dengan durasi transition di CSS
+        popupVideo.src = ""; 
+      }, 300); 
     }
 
-    // Menutup dengan tombol X
     if (closeBtn) {
       closeBtn.addEventListener('click', closeModal);
     }
 
-    // Menutup dengan klik di area buram (luar video)
     modal.addEventListener('click', function(e) {
       if (e.target === modal) {
         closeModal();
       }
     });
 
-    // Menutup modal dengan tombol Escape pada Keyboard (Peningkatan UX)
     document.addEventListener('keydown', function(e) {
       if (e.key === "Escape" && modal.style.display === 'flex') {
         closeModal();
