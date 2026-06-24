@@ -8,34 +8,57 @@
   <link rel="stylesheet" href="index.css">
   
   <style>
+    /* ===== VIDEO MODAL OVERLAY ===== */
     .video-modal {
-      display: none; 
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6); 
+      background-color: rgba(0, 0, 0, 0.7); /* Sedikit digelapkan agar video lebih kontras */
       backdrop-filter: blur(10px); 
       -webkit-backdrop-filter: blur(10px); 
       z-index: 99999; 
+      display: flex;
       justify-content: center;
       align-items: center;
+      
+      /* Menggunakan kombinasi opacity & pointer-events agar transisi blur menjadi sangat smooth */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
     }
+
+    /* Class pemicu saat modal aktif */
+    .video-modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .modal-content {
       position: relative;
-      width: 90%;
-      max-width: 400px; /* Ukuran ideal untuk video portrait/Reels */
+      width: 85%;
+      max-width: 380px; /* Dioptimalkan agar pas di layar HP maupun Desktop tanpa terpotong */
       background: #000;
-      border-radius: 15px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transform: scale(0.9);
+      transition: transform 0.3s ease-in-out;
     }
+
+    .video-modal.show .modal-content {
+      transform: scale(1);
+    }
+
     .modal-content video {
       width: 100%;
       display: block;
-      border-radius: 15px;
+      border-radius: 16px;
+      max-height: 80vh; /* Membatasi tinggi video di layar desktop agar tidak memakan ruang vertical */
+      object-fit: cover;
     }
+
     .close-btn {
       position: absolute;
       top: 20px;
@@ -44,15 +67,22 @@
       font-size: 45px;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s, color 0.2s;
       z-index: 100000;
     }
+
     .close-btn:hover {
       transform: scale(1.2);
-      color: #ff4d4d; 
+      color: var(--y2); /* Memakai variabel warna gold dari token root kamu */
     }
+
+    .video-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    }
+
     .video-card:hover {
-      transform: translateY(-5px) !important;
+      transform: translateY(-8px) !important;
+      box-shadow: 0 12px 30px rgba(27,77,26,0.15) !important;
     }
   </style>
 </head>
@@ -128,12 +158,12 @@
 
     <div class="inner instagram-gallery-section" style="margin-top: 60px; margin-bottom: 20px;">
       <h3 class="instagram-gallery-title" style="font-family: 'Playfair Display', serif; color: #2d4a22; margin-bottom: 30px; text-align: center; font-size: 26px; font-weight: 700;">
-        Keseruan di Kebun Refugia Magetan
+        Kesseruan di Kebun Refugia Magetan
       </h3>
       
       <div class="instagram-gallery" style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
         
-        <div class="instagram-card video-card" data-video="video/video1.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block; transition: transform 0.2s;">
+        <div class="instagram-card video-card" data-video="video/video1.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
           <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
             <img src="img/Tentang kami.jpeg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
@@ -147,7 +177,7 @@
           </div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video2.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block; transition: transform 0.2s;">
+        <div class="instagram-card video-card" data-video="video/video2.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
           <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
             <img src="img/Gambar Beranda.jpg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
@@ -161,7 +191,7 @@
           </div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video3.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block; transition: transform 0.2s;">
+        <div class="instagram-card video-card" data-video="video/video3.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block;">
           <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
             <img src="img/Tentang kami.jpeg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
@@ -182,7 +212,7 @@
   <div id="videoModal" class="video-modal">
     <span class="close-btn">&times;</span>
     <div class="modal-content">
-      <video id="popupVideo" controls controlsList="nodownload">
+      <video id="popupVideo" controls playsinline controlsList="nodownload">
         <source src="" type="video/mp4">
         Browser Anda tidak mendukung pemutar video.
       </video>
@@ -224,7 +254,7 @@
   <script src="script.js"></script>
   
   <script>
-    // LOGIKA HAMBURGER MENU
+    // ===== LOGIKA HAMBURGER MENU =====
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
@@ -238,7 +268,7 @@
         });
     });
 
-    // LOGIKA MODAL VIDEO POP-UP
+    // ===== LOGIKA MODAL VIDEO POP-UP =====
     const modal = document.getElementById('videoModal');
     const popupVideo = document.getElementById('popupVideo');
     const closeBtn = document.querySelector('.close-btn');
@@ -248,17 +278,28 @@
     videoCards.forEach(card => {
       card.addEventListener('click', function() {
         const videoSrc = this.getAttribute('data-video'); 
+        
         popupVideo.src = videoSrc; 
-        modal.style.display = 'flex'; 
-        popupVideo.play(); 
+        popupVideo.load(); // CRITICAL: Memaksa browser memuat resource video baru sebelum diputar
+        
+        modal.classList.add('show'); /* Menggunakan class pemicu agar animasi fade-in berjalan */
+        
+        // Menjalankan video secara asynchronous setelah modal terbuka
+        popupVideo.play().catch(error => {
+          console.log("Autoplay dicegah oleh kebijakan browser, menunggu interaksi pengguna.", error);
+        }); 
       });
     });
 
     // Fungsi Menutup Modal
     function closeModal() {
-      modal.style.display = 'none'; 
+      modal.classList.remove('show'); 
       popupVideo.pause(); 
-      popupVideo.src = ""; 
+      
+      // Memberikan delay pembersihan src selama 300ms agar animasi penutupan selesai dahulu
+      setTimeout(() => {
+        popupVideo.src = ""; 
+      }, 300);
     }
 
     // Menutup dengan tombol X
