@@ -4,10 +4,100 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beranda - Kebun Refugia Magetan</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="index.css">
   
   <style>
+    /* --- CSS Gallery Video --- */
+    .instagram-gallery-section {
+      margin-top: 60px; 
+      margin-bottom: 20px;
+    }
+    .instagram-gallery-title {
+      font-family: 'Playfair Display', serif; 
+      color: #2d4a22; 
+      margin-bottom: 30px; 
+      text-align: center; 
+      font-size: 26px; 
+      font-weight: 700;
+    }
+    .instagram-gallery {
+      display: flex; 
+      gap: 24px; 
+      justify-content: center; 
+      flex-wrap: wrap;
+    }
+    .instagram-card {
+      cursor: pointer; 
+      flex: 1; 
+      min-width: 280px; 
+      max-width: 320px; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+      background: #fff; 
+      display: block; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .instagram-card:hover {
+      transform: translateY(-8px) !important;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .ig-card-thumbnail {
+      position: relative; 
+      background: #e2e8f0; 
+      height: 380px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+    }
+    .ig-card-thumbnail img {
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover;
+    }
+    .ig-card-overlay {
+      position: absolute; 
+      inset: 0; 
+      background: rgba(0,0,0,0.3); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .instagram-card:hover .ig-card-overlay {
+      background: rgba(0,0,0,0.5); /* Sedikit lebih gelap saat di-hover */
+    }
+    .ig-play-btn {
+      background: rgba(255,255,255,0.9); 
+      width: 60px; 
+      height: 60px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding-left: 5px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    .instagram-card:hover .ig-play-btn {
+      transform: scale(1.1);
+    }
+    .ig-play-icon {
+      font-size: 24px; 
+      color: #1B4D1A;
+    }
+    .ig-card-text {
+      padding: 16px; 
+      text-align: center; 
+      font-weight: 700; 
+      font-size: 14px; 
+      color: #1B4D1A;
+    }
+
+    /* --- CSS Modal Pop-up Video --- */
     .video-modal {
       display: none; 
       position: fixed;
@@ -15,12 +105,17 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6); 
-      backdrop-filter: blur(10px); 
-      -webkit-backdrop-filter: blur(10px); 
+      background-color: rgba(0, 0, 0, 0.7); 
+      backdrop-filter: blur(8px); 
+      -webkit-backdrop-filter: blur(8px); 
       z-index: 99999; 
       justify-content: center;
       align-items: center;
+      opacity: 0; /* Untuk animasi fade-in */
+      transition: opacity 0.3s ease;
+    }
+    .video-modal.show {
+      opacity: 1;
     }
     .modal-content {
       position: relative;
@@ -29,34 +124,39 @@
       background: #000;
       border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      transform: scale(0.8); /* Untuk animasi zoom-in */
+      transition: transform 0.3s ease;
+    }
+    .video-modal.show .modal-content {
+      transform: scale(1);
     }
     .modal-content video {
       width: 100%;
       display: block;
       border-radius: 15px;
+      max-height: 85vh; /* Mencegah video terlalu tinggi di layar kecil */
     }
     .close-btn {
       position: absolute;
-      top: 20px;
-      right: 30px;
+      top: 15px;
+      right: 25px;
       color: #ffffff;
-      font-size: 45px;
+      font-size: 40px;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s, color 0.2s;
       z-index: 100000;
+      line-height: 1;
     }
     .close-btn:hover {
-      transform: scale(1.2);
+      transform: scale(1.15);
       color: #ff4d4d; 
-    }
-    .video-card:hover {
-      transform: translateY(-5px) !important;
     }
   </style>
 </head>
 <body>
+  
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
       <img src="img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
@@ -69,7 +169,6 @@
       <a href="kontak.html">Kontak</a>
       <a href="faq.html">FAQ & Saran</a>
     </div>
-    
     <div class="hamburger">
       <span></span>
       <span></span>
@@ -126,64 +225,53 @@
       </div>
     </div>
 
-    <div class="inner instagram-gallery-section" style="margin-top: 60px; margin-bottom: 20px;">
-      <h3 class="instagram-gallery-title" style="font-family: 'Playfair Display', serif; color: #2d4a22; margin-bottom: 30px; text-align: center; font-size: 26px; font-weight: 700;">
-        Keseruan di Kebun Refugia Magetan
-      </h3>
+    <div class="inner instagram-gallery-section">
+      <h3 class="instagram-gallery-title">Keseruan di Kebun Refugia Magetan</h3>
       
-      <div class="instagram-gallery" style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
-        
-        <div class="instagram-card video-card" data-video="video/video1.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block; transition: transform 0.2s;">
-          <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/Tentang kami.jpeg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
-            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
-              <div style="background: rgba(255,255,255,0.9); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding-left: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                <span style="font-size: 24px; color: #1B4D1A;">▶</span>
+      <div class="instagram-gallery">
+        <div class="instagram-card video-card" data-video="video/video1.mp4">
+          <div class="ig-card-thumbnail">
+            <img src="img/Tentang kami.jpeg" alt="Cuplikan Video">
+            <div class="ig-card-overlay">
+              <div class="ig-play-btn">
+                <span class="ig-play-icon">▶</span>
               </div>
             </div>
           </div>
-          <div style="padding: 16px; text-align: center; font-weight: 700; font-size: 14px; color: #1B4D1A;">
-            Tonton Keseruan di Instagram
-          </div>
+          <div class="ig-card-text">Tonton Keseruan di Instagram</div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video2.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block; transition: transform 0.2s;">
-          <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/Gambar Beranda.jpg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
-            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
-              <div style="background: rgba(255,255,255,0.9); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding-left: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                <span style="font-size: 24px; color: #1B4D1A;">▶</span>
+        <div class="instagram-card video-card" data-video="video/video2.mp4">
+          <div class="ig-card-thumbnail">
+            <img src="img/Gambar Beranda.jpg" alt="Cuplikan Video">
+            <div class="ig-card-overlay">
+              <div class="ig-play-btn">
+                <span class="ig-play-icon">▶</span>
               </div>
             </div>
           </div>
-          <div style="padding: 16px; text-align: center; font-weight: 700; font-size: 14px; color: #1B4D1A;">
-            Lihat Liputan Kebun Refugia
-          </div>
+          <div class="ig-card-text">Lihat Liputan Kebun Refugia</div>
         </div>
 
-        <div class="instagram-card video-card" data-video="video/video3.mp4" style="cursor: pointer; flex: 1; min-width: 280px; max-width: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); background: #fff; display: block; transition: transform 0.2s;">
-          <div style="position: relative; background: #e2e8f0; height: 380px; display: flex; align-items: center; justify-content: center;">
-            <img src="img/Tentang kami.jpeg" alt="Cuplikan Video" style="width: 100%; height: 100%; object-fit: cover;">
-            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
-              <div style="background: rgba(255,255,255,0.9); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding-left: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                <span style="font-size: 24px; color: #1B4D1A;">▶</span>
+        <div class="instagram-card video-card" data-video="video/video3.mp4">
+          <div class="ig-card-thumbnail">
+            <img src="img/Tentang kami.jpeg" alt="Cuplikan Video">
+            <div class="ig-card-overlay">
+              <div class="ig-play-btn">
+                <span class="ig-play-icon">▶</span>
               </div>
             </div>
           </div>
-          <div style="padding: 16px; text-align: center; font-weight: 700; font-size: 14px; color: #1B4D1A;">
-            Suasana Indah Kebun Bunga
-          </div>
+          <div class="ig-card-text">Suasana Indah Kebun Bunga</div>
         </div>
-
       </div>
     </div>
   </section>
 
   <div id="videoModal" class="video-modal">
-    <span class="close-btn">&times;</span>
+    <span class="close-btn" title="Tutup Video">&times;</span>
     <div class="modal-content">
       <video id="popupVideo" controls controlsList="nodownload">
-        <source src="" type="video/mp4">
         Browser Anda tidak mendukung pemutar video.
       </video>
     </div>
@@ -208,9 +296,9 @@
         <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 5px; font-weight: 500;">Admin Refugia:</p>
         <a href="tel:0859-3148-6608" class="ft-phone">0859-3148-6608</a>
         <div class="ft-socials" style="margin-top:10px;">
-          <a href="https://www.instagram.com/kebunrefugiamagetan/" class="ft-social-btn ft-ig">Instagram</a>
-          <a href="https://www.tiktok.com/@kebunrefugiamagetan" class="ft-social-btn ft-tt">TikTok</a>
-          <a href="https://api.whatsapp.com/send?phone=6285931486608&text=Silahkan%20menuliskan%20pertanyaan%20atau%20kritik%20dan%20saran%20anda." class="ft-social-btn ft-wa">WhatsApp</a>
+          <a href="https://www.instagram.com/kebunrefugiamagetan/" class="ft-social-btn ft-ig" target="_blank">Instagram</a>
+          <a href="https://www.tiktok.com/@kebunrefugiamagetan" class="ft-social-btn ft-tt" target="_blank">TikTok</a>
+          <a href="https://api.whatsapp.com/send?phone=6285931486608&text=Silahkan%20menuliskan%20pertanyaan%20atau%20kritik%20dan%20saran%20anda." class="ft-social-btn ft-wa" target="_blank">WhatsApp</a>
         </div>
       </div>
     </div>
@@ -224,21 +312,23 @@
   <script src="script.js"></script>
   
   <script>
-    // LOGIKA HAMBURGER MENU
+    // 1. LOGIKA HAMBURGER MENU
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+      });
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
-    });
+      document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => {
+              navLinks.classList.remove('active');
+          });
+      });
+    }
 
-    // LOGIKA MODAL VIDEO POP-UP
+    // 2. LOGIKA MODAL VIDEO POP-UP
     const modal = document.getElementById('videoModal');
     const popupVideo = document.getElementById('popupVideo');
     const closeBtn = document.querySelector('.close-btn');
@@ -249,24 +339,44 @@
       card.addEventListener('click', function() {
         const videoSrc = this.getAttribute('data-video'); 
         popupVideo.src = videoSrc; 
-        modal.style.display = 'flex'; 
+        
+        modal.style.display = 'flex';
+        // Sedikit delay agar animasi CSS berjalan mulus
+        setTimeout(() => {
+          modal.classList.add('show');
+        }, 10);
+        
         popupVideo.play(); 
       });
     });
 
     // Fungsi Menutup Modal
     function closeModal() {
-      modal.style.display = 'none'; 
-      popupVideo.pause(); 
-      popupVideo.src = ""; 
+      modal.classList.remove('show');
+      
+      // Tunggu animasi selesai baru hilangkan dari layar dan hentikan video
+      setTimeout(() => {
+        modal.style.display = 'none'; 
+        popupVideo.pause(); 
+        popupVideo.src = ""; // Membersihkan buffer video
+      }, 300); // 300ms sesuai dengan durasi transition di CSS
     }
 
     // Menutup dengan tombol X
-    closeBtn.addEventListener('click', closeModal);
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
 
     // Menutup dengan klik di area buram (luar video)
     modal.addEventListener('click', function(e) {
       if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Menutup modal dengan tombol Escape pada Keyboard (Peningkatan UX)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape" && modal.style.display === 'flex') {
         closeModal();
       }
     });
