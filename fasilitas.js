@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
           {i:'🥕', t:'Sayur Segar', p:'Paket Rp 10.000'},
           {i:'🍓', t:'Buah Segar', p:'Sesuai Musim'},
           {i:'🍂', t:'Benih tanaman', p:'Tanyakan stok & Harga terbaru'},
-          {i:'🌱', t:'Pupuk Kompos', p:'Mulai Rp 15.000'}
         ],
         // Disimpan dalam array agar formatnya seragam
         images: [
