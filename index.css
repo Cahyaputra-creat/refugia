@@ -119,7 +119,6 @@ body {
   overflow: hidden; 
 }
 
-/* Lengkungan di bawah Hero */
 .hero::after { 
   content: ''; 
   position: absolute; 
@@ -380,7 +379,6 @@ body {
   flex-wrap: wrap; 
 }
 
-/* Kartu Video Utama */
 .instagram-card { 
   cursor: pointer; 
   flex: 1; 
@@ -399,7 +397,6 @@ body {
   box-shadow: 0 12px 30px rgba(27, 77, 26, 0.15); 
 }
 
-/* Thumbnail & Overlay */
 .ig-card-thumbnail { 
   position: relative; 
   background: #e2e8f0; 
@@ -435,7 +432,6 @@ body {
   background: rgba(0, 0, 0, 0.5); 
 }
 
-/* Tombol Play Icon */
 .ig-play-btn { 
   background: rgba(255, 255, 255, 0.9); 
   width: 60px; 
@@ -539,7 +535,7 @@ body {
 }
 
 /* =========================================
-   9. FOOTER
+   9. FOOTER (SUDAH DIPERBAIKI)
 ========================================= */
 .footer { 
   background: var(--g1); 
@@ -610,7 +606,7 @@ body {
   font-weight: 700; 
   color: rgba(255, 255, 255, 0.85); 
   text-decoration: none; 
-  margin-bottom: 5px; 
+  margin-bottom: 10px; 
   transition: color 0.2s ease; 
 }
 
@@ -618,33 +614,37 @@ body {
   color: var(--g4); 
 }
 
+/* --- PERUBAHAN UTAMA: SOSIAL MEDIA HORIZONTAL DAN BENTUK LINGKARAN --- */
 .ft-socials { 
   display: flex; 
-  flex-direction: column; 
-  gap: 10px; 
+  flex-direction: row; /* Berubah menjadi horizontal (mendatar) */
+  gap: 12px; 
+  margin-top: 10px;
 }
 
 .ft-social-btn { 
   display: inline-flex; 
   align-items: center; 
-  gap: 10px; 
-  font-size: 13px; 
-  font-weight: 700; 
+  justify-content: center;
+  width: 42px; /* Ukuran tetap agar menjadi lingkaran sempurna */
+  height: 42px; 
+  font-size: 18px; /* Ukuran ikon di dalamnya */
   text-decoration: none; 
-  padding: 9px 16px; 
-  border-radius: 10px; 
-  transition: all 0.2s ease; 
+  border-radius: 50%; /* Membuat kotak menjadi lingkaran penuh */
+  transition: all 0.3s ease; 
   border: 1px solid transparent; 
 }
 
+/* Efek warna dan animasi melayang (hover) */
 .ft-ig { background: rgba(193, 53, 132, 0.15); color: #e879b0; border-color: rgba(193, 53, 132, 0.25); }
-.ft-ig:hover { background: rgba(193, 53, 132, 0.28); }
+.ft-ig:hover { background: #c13584; color: #fff; transform: translateY(-4px); }
 
 .ft-tt { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.85); border-color: rgba(255, 255, 255, 0.15); }
-.ft-tt:hover { background: rgba(255, 255, 255, 0.15); }
+.ft-tt:hover { background: #ffffff; color: #000000; transform: translateY(-4px); }
 
 .ft-wa { background: rgba(37, 211, 102, 0.15); color: #4ae580; border-color: rgba(37, 211, 102, 0.25); }
-.ft-wa:hover { background: rgba(37, 211, 102, 0.28); }
+.ft-wa:hover { background: #25d366; color: #ffffff; transform: translateY(-4px); }
+/* ---------------------------------------------------------------------- */
 
 .footer-hr { 
   border: none; 
