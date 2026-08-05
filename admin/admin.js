@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Instant lazy render for active tab
                 if (targetTab === 'tab-dashboard') renderDashboardAnalytics();
-                else if (targetTab === 'tab-beranda') loadHeroSettings();
+                else if (targetTab === 'tab-beranda') { loadHeroSettings(); renderVideosTable(); }
                 else if (targetTab === 'tab-transaksi') renderSalesTable();
                 else if (targetTab === 'tab-tiket') renderTicketTable();
                 else if (targetTab === 'tab-fasilitas') renderFacilitiesTable();
@@ -969,6 +969,7 @@ function loadHeroSettings() {
         }
     }
     if (document.getElementById('galeriTitleInput')) document.getElementById('galeriTitleInput').value = hero.galeriTitle || 'Keseruan di Kebun Refugia Magetan';
+    renderVideosTable();
 }
 
 function renderVideosTable() {
