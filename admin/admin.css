@@ -670,3 +670,20 @@ table.admin-table tbody tr:hover {
   from { opacity: 0; transform: translateY(-16px) scale(0.95); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ADMIN SCROLLABLE MODAL OVERLAY FIX */
+.login-page {
+  overflow-y: auto !important;
+  padding: 30px 15px !important;
+  box-sizing: border-box !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.login-page .login-card {
+  max-height: 88vh !important;
+  overflow-y: auto !important;
+  margin: auto !important;
+  scrollbar-width: thin;
+  box-sizing: border-box !important;
+}
