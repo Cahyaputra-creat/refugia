@@ -1,0 +1,942 @@
+/* =========================================
+   1. RESET & BASE
+========================================= */
+*, /* Sembunyikan scrollbar visual di seluruh website (tetap bisa di-scroll HP & Laptop) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  display: none !important;
+  background: transparent !important;
+}
+
+html { 
+  scroll-behavior: smooth; 
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide vertical scrollbar for Chrome, Safari, Opera, Edge */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body { 
+  font-family: 'Nunito', sans-serif; 
+  background: #FAFDF7; 
+  color: #2A3D1C; 
+  overflow-x: hidden; 
+  font-weight: 400; 
+  line-height: 1.7; 
+  -webkit-font-smoothing: antialiased; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* =========================================
+   2. COLOR TOKENS (Variabel Warna)
+========================================= */
+:root {
+  --g1: #1B4D1A; 
+  --g2: #3A7A2A; 
+  --g3: #6DB53B; 
+  --g4: #C5E8A0; 
+  --g5: #EBF7DC;
+  --y1: #E8A020; 
+  --y2: #F5C842; 
+  --y3: #FEF3D0; 
+  --br: #5C3D11;
+  --cream: #FAFDF7; 
+  --white: #FFFFFF; 
+  --grey: #6B7A52; 
+  --border: #D6E8C0;
+  --text: #2A3D1C; 
+  --text-light: #566B3A;
+}
+
+/* =========================================
+   3. NAVBAR & HAMBURGER MENU
+========================================= */
+.navbar { 
+  position: sticky; 
+  top: 0; 
+  z-index: 999; 
+  background: rgba(255, 255, 255, 0.97); 
+  backdrop-filter: blur(12px); 
+  border-bottom: 1.5px solid var(--border); 
+  height: 68px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 0 32px; 
+  box-shadow: 0 2px 16px rgba(58, 122, 42, 0.07); 
+}
+
+.nav-logo img { 
+  height: 52px; 
+  width: auto; 
+  display: block; 
+  object-fit: contain; 
+}
+
+.nav-links { 
+  display: flex; 
+  gap: 4px; 
+}
+
+.nav-links a { 
+  font-family: 'Nunito', sans-serif; 
+  font-weight: 700; 
+  font-size: 13.5px; 
+  color: var(--g1); 
+  text-decoration: none; 
+  padding: 8px 14px; 
+  border-radius: 8px; 
+  transition: all 0.2s ease; 
+  letter-spacing: 0.2px; 
+}
+
+.nav-links a:hover, 
+.nav-links a.active { 
+  background: var(--g5); 
+  color: var(--g2); 
+}
+
+.hamburger { 
+  display: none; 
+  cursor: pointer; 
+  flex-direction: column; 
+  gap: 5px; 
+  z-index: 1000; 
+}
+
+.hamburger span { 
+  width: 24px; 
+  height: 3px; 
+  background-color: var(--g1); 
+  border-radius: 3px; 
+  transition: all 0.3s ease; 
+}
+
+/* =========================================
+   4. HERO SECTION
+========================================= */
+.hero { 
+  min-height: 90vh; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  padding: 60px 40px 100px; 
+  position: relative; 
+  overflow: hidden; 
+}
+
+.hero::after { 
+  content: ''; 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  right: 0; 
+  height: 80px; 
+  background: var(--cream); 
+  border-radius: 60% 60% 0 0 / 100% 100% 0 0; 
+}
+
+.hero-bg-container { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  z-index: -1; 
+}
+
+.hero-bg-img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block; 
+}
+
+.hero-overlay { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background: rgba(0, 0, 0, 0.4); 
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  background: rgba(255, 255, 255, 0.15); 
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+  color: #E8F8D0; 
+  font-weight: 700; 
+  font-size: 11px; 
+  padding: 6px 16px; 
+  border-radius: 30px; 
+  margin-bottom: 20px; 
+  letter-spacing: 1.2px; 
+  text-transform: uppercase; 
+  width: fit-content; 
+}
+
+.hero h1 { 
+  font-family: 'Playfair Display', serif; 
+  font-size: clamp(32px, 5.5vw, 54px); 
+  font-weight: 700; 
+  color: #FFFFFF; 
+  line-height: 1.2; 
+  margin-bottom: 8px; 
+}
+
+.hero h1 em { 
+  font-family: 'Dancing Script', cursive; 
+  font-style: normal; 
+  color: var(--y2); 
+  font-size: clamp(36px, 6vw, 60px); 
+}
+
+.hero-tagline { 
+  font-family: 'Playfair Display', serif; 
+  font-style: italic; 
+  font-size: 16px; 
+  color: rgba(255, 255, 255, 0.8); 
+  margin-bottom: 28px; 
+  max-width: 460px; 
+  line-height: 1.7; 
+}
+
+.hero-btns { 
+  display: flex; 
+  gap: 14px; 
+  flex-wrap: wrap; 
+  margin-bottom: 40px; 
+}
+
+.btn-gold { 
+  background: linear-gradient(135deg, var(--y1), var(--y2)); 
+  color: var(--br); 
+  border: none; 
+  padding: 13px 28px; 
+  border-radius: 30px; 
+  font-size: 13px; 
+  font-weight: 800; 
+  cursor: pointer; 
+  box-shadow: 0 4px 20px rgba(232, 160, 32, 0.4); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.btn-gold:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 28px rgba(232, 160, 32, 0.5); 
+}
+
+.btn-ghost { 
+  background: transparent; 
+  color: #fff; 
+  border: 2px solid rgba(255, 255, 255, 0.5); 
+  padding: 12px 26px; 
+  border-radius: 30px; 
+  font-size: 13px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: background 0.2s ease; 
+}
+
+.btn-ghost:hover { 
+  background: rgba(255, 255, 255, 0.12); 
+}
+
+.hero-stats { 
+  display: flex; 
+  gap: 36px; 
+}
+
+.hero-stat strong { 
+  display: block; 
+  font-family: 'Playfair Display', serif; 
+  font-size: 26px; 
+  font-weight: 700; 
+  color: #fff; 
+}
+
+.hero-stat span { 
+  font-size: 11px; 
+  color: rgba(255, 255, 255, 0.65); 
+  font-weight: 600; 
+  letter-spacing: 0.5px; 
+}
+
+/* =========================================
+   5. UTILITIES & TYPOGRAPHY
+========================================= */
+.section { 
+  padding: 72px 40px; 
+}
+
+.section.alt { 
+  background: var(--g5); 
+}
+
+.inner { 
+  max-width: 960px; 
+  margin: 0 auto; 
+}
+
+.sec-title { 
+  font-family: 'Playfair Display', serif; 
+  font-size: clamp(22px, 3.5vw, 32px); 
+  font-weight: 700; 
+  color: var(--g1); 
+  line-height: 1.3; 
+  margin-bottom: 10px; 
+}
+
+.sec-sub { 
+  font-size: 14px; 
+  color: var(--text-light); 
+  line-height: 1.8; 
+  margin-bottom: 28px; 
+}
+
+/* =========================================
+   6. TENTANG (ABOUT) SECTION
+========================================= */
+.tentang-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 40px; 
+  align-items: center; 
+}
+
+.tentang-img { 
+  border-radius: 20px; 
+  overflow: hidden; 
+  position: relative; 
+  box-shadow: 0 12px 40px rgba(30, 70, 15, 0.18); 
+}
+
+.tentang-img img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block; 
+  aspect-ratio: 4 / 3; 
+}
+
+.tentang-img::before { 
+  content: ''; 
+  position: absolute; 
+  inset: 0; 
+  background: linear-gradient(to top, rgba(27, 77, 26, 0.3) 0%, transparent 60%); 
+  z-index: 1; 
+  border-radius: 20px; 
+  pointer-events: none; 
+}
+
+.tentang-text p { 
+  font-size: 14px; 
+  color: var(--text-light); 
+  line-height: 1.9; 
+  margin-bottom: 16px; 
+}
+
+.tentang-tags { 
+  display: flex; 
+  gap: 8px; 
+  flex-wrap: wrap; 
+  margin-top: 20px; 
+}
+
+.tentang-tag { 
+  background: var(--g5); 
+  border: 1px solid var(--border); 
+  color: var(--g2); 
+  font-size: 12px; 
+  font-weight: 700; 
+  padding: 5px 14px; 
+  border-radius: 20px; 
+}
+
+/* =========================================
+   7. INSTAGRAM GALLERY & VIDEO CARDS
+========================================= */
+.instagram-gallery-section { 
+  margin-top: 60px; 
+  margin-bottom: 20px; 
+}
+
+.instagram-gallery-title { 
+  font-family: 'Playfair Display', serif; 
+  color: var(--g1); 
+  margin-bottom: 30px; 
+  text-align: center; 
+  font-size: 26px; 
+  font-weight: 700; 
+}
+
+.instagram-gallery { 
+  display: flex; 
+  gap: 24px; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+}
+
+.instagram-card { 
+  cursor: pointer; 
+  flex: 1; 
+  min-width: 280px; 
+  max-width: 320px; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
+  background: #fff; 
+  display: block; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.instagram-card:hover { 
+  transform: translateY(-8px); 
+  box-shadow: 0 12px 30px rgba(27, 77, 26, 0.15); 
+}
+
+.ig-card-thumbnail { 
+  position: relative; 
+  background: #e2e8f0; 
+  height: 380px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  overflow: hidden; 
+}
+
+.ig-card-thumbnail img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  transition: transform 0.3s ease; 
+}
+
+.instagram-card:hover .ig-card-thumbnail img { 
+  transform: scale(1.05); 
+}
+
+.ig-card-overlay { 
+  position: absolute; 
+  inset: 0; 
+  background: rgba(0, 0, 0, 0.3); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  transition: background 0.3s ease; 
+}
+
+.instagram-card:hover .ig-card-overlay { 
+  background: rgba(0, 0, 0, 0.5); 
+}
+
+.ig-play-btn { 
+  background: rgba(255, 255, 255, 0.9); 
+  width: 60px; 
+  height: 60px; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding-left: 5px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.3s ease, background 0.3s ease; 
+}
+
+.ig-play-icon { 
+  font-size: 24px; 
+  color: var(--g1); 
+  transition: color 0.3s ease; 
+}
+
+.instagram-card:hover .ig-play-btn { 
+  transform: scale(1.1); 
+  background: var(--y2); 
+}
+
+.instagram-card:hover .ig-play-icon { 
+  color: var(--br); 
+}
+
+.ig-card-text { 
+  padding: 16px; 
+  text-align: center; 
+  font-weight: 700; 
+  font-size: 14px; 
+  color: var(--g1); 
+}
+
+/* =========================================
+   8. VIDEO MODAL (POP-UP OVERLAY)
+========================================= */
+.video-modal {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  z-index: 99999; 
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.video-modal.show { 
+  opacity: 1; 
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 380px; 
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transform: scale(0.9);
+  transition: transform 0.3s ease-in-out;
+}
+
+.video-modal.show .modal-content { 
+  transform: scale(1); 
+}
+
+.modal-content video { 
+  width: 100%; 
+  display: block; 
+  border-radius: 16px; 
+  max-height: 85vh; 
+  object-fit: cover; 
+}
+
+.close-btn { 
+  position: absolute; 
+  top: 15px; 
+  right: 25px; 
+  color: #ffffff; 
+  font-size: 40px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  transition: transform 0.2s ease, color 0.2s ease; 
+  z-index: 100000; 
+  line-height: 1; 
+}
+
+.close-btn:hover { 
+  transform: scale(1.15); 
+  color: #ff4d4d; 
+}
+
+/* =========================================
+   9. FOOTER (SUDAH DIPERBAIKI)
+========================================= */
+.footer { 
+  background: var(--g1); 
+  padding: 48px 40px 24px; 
+}
+
+.footer-inner { 
+  display: grid; 
+  grid-template-columns: 1.4fr 1fr 1.2fr; 
+  gap: 40px; 
+  margin-bottom: 36px; 
+}
+
+.ft-logo { 
+  height: 56px; 
+  width: auto; 
+  object-fit: contain; 
+  filter: brightness(0) invert(1); 
+  opacity: 0.92; 
+  margin-bottom: 14px; 
+  display: block; 
+}
+
+.ft-jam { 
+  font-family: 'Nunito', sans-serif; 
+  font-size: 13px; 
+  font-weight: 700; 
+  color: var(--g4); 
+  margin-bottom: 8px; 
+  letter-spacing: 0.2px; 
+}
+
+.ft-tagline { 
+  font-size: 12px; 
+  color: rgba(255, 255, 255, 0.5); 
+}
+
+.ft-heading { 
+  font-family: 'Playfair Display', serif; 
+  font-size: 14px; 
+  font-weight: 700; 
+  color: rgba(255, 255, 255, 0.9); 
+  margin-bottom: 14px; 
+  letter-spacing: 0.3px; 
+}
+
+.ft-nav { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 9px; 
+}
+
+.ft-nav a { 
+  font-size: 13px; 
+  font-weight: 500; 
+  color: rgba(255, 255, 255, 0.6); 
+  text-decoration: none; 
+  transition: color 0.2s ease; 
+}
+
+.ft-nav a:hover { 
+  color: var(--g4); 
+}
+
+.ft-phone { 
+  display: block; 
+  font-size: 14px; 
+  font-weight: 700; 
+  color: rgba(255, 255, 255, 0.85); 
+  text-decoration: none; 
+  margin-bottom: 10px; 
+  transition: color 0.2s ease; 
+}
+
+.ft-phone:hover { 
+  color: var(--g4); 
+}
+
+/* --- PERUBAHAN UTAMA: SOSIAL MEDIA HORIZONTAL DAN BENTUK LINGKARAN --- */
+.ft-socials { 
+  display: flex; 
+  flex-direction: row; /* Berubah menjadi horizontal (mendatar) */
+  gap: 12px; 
+  margin-top: 10px;
+}
+
+.ft-social-btn { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center;
+  width: 42px; /* Ukuran tetap agar menjadi lingkaran sempurna */
+  height: 42px; 
+  font-size: 18px; /* Ukuran ikon di dalamnya */
+  text-decoration: none; 
+  border-radius: 50%; /* Membuat kotak menjadi lingkaran penuh */
+  transition: all 0.3s ease; 
+  border: 1px solid transparent; 
+}
+
+/* Efek warna dan animasi melayang (hover) */
+.ft-ig { background: rgba(193, 53, 132, 0.15); color: #e879b0; border-color: rgba(193, 53, 132, 0.25); }
+.ft-ig:hover { background: #c13584; color: #fff; transform: translateY(-4px); }
+
+.ft-tt { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.85); border-color: rgba(255, 255, 255, 0.15); }
+.ft-tt:hover { background: #ffffff; color: #000000; transform: translateY(-4px); }
+
+.ft-wa { background: rgba(37, 211, 102, 0.15); color: #4ae580; border-color: rgba(37, 211, 102, 0.25); }
+.ft-wa:hover { background: #25d366; color: #ffffff; transform: translateY(-4px); }
+/* ---------------------------------------------------------------------- */
+
+.footer-hr { 
+  border: none; 
+  border-top: 1px solid rgba(255, 255, 255, 0.1); 
+  margin-bottom: 16px; 
+}
+
+.footer-btm { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  flex-wrap: wrap; 
+  gap: 8px; 
+}
+
+.footer-btm p { 
+  font-size: 11px; 
+  color: rgba(255, 255, 255, 0.35); 
+}
+
+/* =========================================
+   10. RESPONSIVE (TAMPILAN HP)
+========================================= */
+@media (max-width: 700px) {
+  .section { 
+    padding: 48px 20px; 
+  }
+  
+  .navbar { 
+    padding: 0 16px; 
+    position: relative; 
+  } 
+  
+  .hero { 
+    padding: 48px 20px 90px; 
+  }
+  
+  .tentang-grid { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .hamburger { 
+    display: flex; 
+  } 
+  
+  .nav-links { 
+    display: flex;
+    position: absolute;
+    top: 68px; 
+    left: -100%; 
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    padding: 24px;
+    gap: 16px;
+    box-shadow: 0 10px 20px rgba(58, 122, 42, 0.1);
+    transition: left 0.3s ease-in-out; 
+    border-bottom: 1.5px solid var(--border);
+    z-index: 998;
+  }
+
+  .nav-links.active { 
+    left: 0; 
+  }
+  
+  .nav-links a { 
+    width: 100%; 
+    text-align: center; 
+    padding: 10px 0; 
+  }
+  
+  .footer { 
+    padding: 32px 20px 18px; 
+  }
+  
+  .footer-inner { 
+    grid-template-columns: 1fr; 
+    gap: 28px; 
+  }
+  
+  .footer-btm { 
+    flex-direction: column; 
+    gap: 8px; 
+    text-align: center;
+  }
+}
+
+/* =========================================
+   CSS GALLERY VIDEO & MODAL POP-UP
+========================================= */
+.instagram-gallery-section {
+  margin-top: 60px; 
+  margin-bottom: 20px;
+}
+.instagram-gallery-title {
+  font-family: 'Playfair Display', serif; 
+  color: #2d4a22; 
+  margin-bottom: 30px; 
+  text-align: center; 
+  font-size: 26px; 
+  font-weight: 700;
+}
+.instagram-gallery {
+  display: flex; 
+  gap: 24px; 
+  justify-content: center; 
+  flex-wrap: wrap;
+}
+.instagram-card {
+  cursor: pointer; 
+  flex: 1; 
+  min-width: 280px; 
+  max-width: 320px; 
+  border-radius: 12px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+  background: #fff; 
+  display: block; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.instagram-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.ig-card-thumbnail {
+  position: relative; 
+  background: #e2e8f0; 
+  height: 380px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
+.ig-card-thumbnail img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+.ig-card-overlay {
+  position: absolute; 
+  inset: 0; 
+  background: rgba(0,0,0,0.3); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: background 0.3s;
+}
+.instagram-card:hover .ig-card-overlay {
+  background: rgba(0,0,0,0.5); 
+}
+.ig-play-btn {
+  background: rgba(255,255,255,0.9); 
+  width: 60px; 
+  height: 60px; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding-left: 5px; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+.instagram-card:hover .ig-play-btn {
+  transform: scale(1.1);
+}
+.ig-play-icon {
+  font-size: 24px; 
+  color: #1B4D1A;
+}
+.ig-card-text {
+  padding: 16px; 
+  text-align: center; 
+  font-weight: 700; 
+  font-size: 14px; 
+  color: #1B4D1A;
+}
+
+.video-modal {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: blur(8px); 
+  -webkit-backdrop-filter: blur(8px); 
+  z-index: 99999; 
+  justify-content: center;
+  align-items: center;
+  opacity: 0; 
+  transition: opacity 0.3s ease;
+}
+.video-modal.show {
+  opacity: 1;
+}
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 400px; 
+  background: #000;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  transform: scale(0.8); 
+  transition: transform 0.3s ease;
+}
+.video-modal.show .modal-content {
+  transform: scale(1);
+}
+.modal-content video {
+  width: 100%;
+  display: block;
+  border-radius: 15px;
+  max-height: 85vh; 
+}
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  z-index: 100000;
+  line-height: 1;
+}
+.close-btn:hover {
+  transform: scale(1.15);
+  color: #ff4d4d; 
+}
+
+/* =========================================
+   WEATHER BADGE PILL WIDGET (TRANSPARENT MATCHING HERO BADGE)
+========================================= */
+.weather-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 16px;
+  border-radius: 30px;
+  letter-spacing: 0.5px;
+  width: fit-content;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.weather-badge-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.weather-badge-pill .w-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.weather-badge-pill .w-temp {
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.weather-badge-pill .w-text {
+  color: #E8F8D0;
+  font-weight: 600;
+}
+

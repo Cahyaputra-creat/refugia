@@ -4,162 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beranda - Kebun Refugia Magetan</title>
+  <meta name="description" content="Selamat datang di Kebun Refugia Magetan. Destinasi agrowisata edukasi taman bunga terindah dengan pemandangan megah Gunung Lawu.">
+  <meta name="keywords" content="Kebun Refugia, Refugia Magetan, Agrowisata Magetan, Wisata Gunung Lawu, Taman Bunga Magetan">
+  <meta name="author" content="Dinas TPHP Kabupaten Magetan">
   
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="index.css?v=2">
-  
-  <style>
-    /* --- CSS Gallery Video --- */
-    .instagram-gallery-section {
-      margin-top: 60px; 
-      margin-bottom: 20px;
-    }
-    .instagram-gallery-title {
-      font-family: 'Playfair Display', serif; 
-      color: #2d4a22; 
-      margin-bottom: 30px; 
-      text-align: center; 
-      font-size: 26px; 
-      font-weight: 700;
-    }
-    .instagram-gallery {
-      display: flex; 
-      gap: 24px; 
-      justify-content: center; 
-      flex-wrap: wrap;
-    }
-    .instagram-card {
-      cursor: pointer; 
-      flex: 1; 
-      min-width: 280px; 
-      max-width: 320px; 
-      border-radius: 12px; 
-      overflow: hidden; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
-      background: #fff; 
-      display: block; 
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .instagram-card:hover {
-      transform: translateY(-8px) !important;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-    .ig-card-thumbnail {
-      position: relative; 
-      background: #e2e8f0; 
-      height: 380px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-    }
-    .ig-card-thumbnail img {
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover;
-    }
-    .ig-card-overlay {
-      position: absolute; 
-      inset: 0; 
-      background: rgba(0,0,0,0.3); 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      transition: background 0.3s;
-    }
-    .instagram-card:hover .ig-card-overlay {
-      background: rgba(0,0,0,0.5); 
-    }
-    .ig-play-btn {
-      background: rgba(255,255,255,0.9); 
-      width: 60px; 
-      height: 60px; 
-      border-radius: 50%; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      padding-left: 5px; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-    }
-    .instagram-card:hover .ig-play-btn {
-      transform: scale(1.1);
-    }
-    .ig-play-icon {
-      font-size: 24px; 
-      color: #1B4D1A;
-    }
-    .ig-card-text {
-      padding: 16px; 
-      text-align: center; 
-      font-weight: 700; 
-      font-size: 14px; 
-      color: #1B4D1A;
-    }
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/img/LOGO_REFUGIA.png">
 
-    /* --- CSS Modal Pop-up Video --- */
-    .video-modal {
-      display: none; 
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7); 
-      backdrop-filter: blur(8px); 
-      -webkit-backdrop-filter: blur(8px); 
-      z-index: 99999; 
-      justify-content: center;
-      align-items: center;
-      opacity: 0; 
-      transition: opacity 0.3s ease;
-    }
-    .video-modal.show {
-      opacity: 1;
-    }
-    .modal-content {
-      position: relative;
-      width: 90%;
-      max-width: 400px; 
-      background: #000;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-      transform: scale(0.8); 
-      transition: transform 0.3s ease;
-    }
-    .video-modal.show .modal-content {
-      transform: scale(1);
-    }
-    .modal-content video {
-      width: 100%;
-      display: block;
-      border-radius: 15px;
-      max-height: 85vh; 
-    }
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 25px;
-      color: #ffffff;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s, color 0.2s;
-      z-index: 100000;
-      line-height: 1;
-    }
-    .close-btn:hover {
-      transform: scale(1.15);
-      color: #ff4d4d; 
-    }
-  </style>
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kebunrefugiamagetan.vercel.app/">
+  <meta property="og:title" content="Kebun Refugia Magetan - Agrowisata Taman Bunga">
+  <meta property="og:description" content="Nikmati keindahan hamparan bunga memukau dengan latar belakang Gunung Lawu di Kebun Refugia Magetan.">
+  <meta property="og:image" content="https://kebunrefugiamagetan.vercel.app/assets/img/LOGO_REFUGIA.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/index.css?v=2">
 </head>
 <body>
   
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
+      <img src="assets/img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
     </a>
     <div class="nav-links">
       <a href="index.html" class="active">Beranda</a>
@@ -178,11 +44,12 @@
 
   <header class="hero">
     <div class="hero-bg-container">
-      <img src="img/Gambar Beranda.jpg" alt="Background Kebun Refugia" class="hero-bg-img">
+      <img src="assets/img/Gambar Beranda.jpg" alt="Background Kebun Refugia" class="hero-bg-img">
       <div class="hero-overlay"></div> 
     </div>
 
     <div class="hero-content">
+      <div id="weatherWidget" style="margin-bottom: 8px;"></div>
       <div class="hero-badge">Selamat Datang di</div>
       <h1>Kebun Refugia <br><em>Magetan</em></h1>
       <p class="hero-tagline">Nikmati keindahan hamparan bunga yang memukau dengan latar megah Gunung Lawu, serta berbagai spot wisata menarik yang cocok untuk dinikmati bersama seluruh keluarga.</p>
@@ -213,7 +80,7 @@
       <div class="tentang-text">
         <h2 class="sec-title">Pesona Keindahan Alam di Kaki Gunung Lawu</h2>
         <p>Kebun Refugia Magetan awalnya merupakan inisiatif lahan untuk menanam bunga hias yang berfungsi sebagai pengalih hama tanaman. Namun, berkat keindahannya, kini bertransformasi menjadi destinasi agrowisata favorit yang memanjakan mata.</p>
-        <p>Dengan latar belakang Gunung Lawu yang megah and udara sejuk pegunungan, tempat ini menjadi lokasi yang sempurna untuk melepas penat dan berkreasi dengan fotografi.</p>
+        <p>Dengan latar belakang Gunung Lawu yang megah dan udara sejuk pegunungan, tempat ini menjadi lokasi yang sempurna untuk melepas penat dan berkreasi dengan fotografi.</p>
         <div class="tentang-tags">
           <span class="tentang-tag">Wisata Alam</span>
           <span class="tentang-tag">Edukasi Botani</span>
@@ -221,7 +88,7 @@
         </div>
       </div>
       <div class="tentang-img">
-        <img src="img/Tentang kami.jpeg" alt="Pemandangan Refugia">
+        <img src="assets/img/Tentang kami.jpeg" alt="Pemandangan Refugia">
       </div>
     </div>
 
@@ -229,9 +96,9 @@
       <h3 class="instagram-gallery-title">Keseruan di Kebun Refugia Magetan</h3>
       
       <div class="instagram-gallery">
-        <div class="instagram-card video-card" data-video="img/video refugia 2.mp4">
+        <div class="instagram-card video-card" data-video="assets/img/video refugia 2.mp4">
           <div class="ig-card-thumbnail">
-            <img src="img/Tentang kami.jpeg" alt="Cuplikan Video">
+            <img src="assets/img/Tentang kami.jpeg" alt="Cuplikan Video">
             <div class="ig-card-overlay">
               <div class="ig-play-btn">
                 <span class="ig-play-icon">▶</span>
@@ -241,9 +108,9 @@
           <div class="ig-card-text">Tonton Keseruan di Instagram</div>
         </div>
 
-        <div class="instagram-card video-card" data-video="img/video refugia 3.mp4">
+        <div class="instagram-card video-card" data-video="assets/img/video refugia 3.mp4">
           <div class="ig-card-thumbnail">
-            <img src="img/Gambar Beranda.jpg" alt="Cuplikan Video">
+            <img src="assets/img/Gambar Beranda.jpg" alt="Cuplikan Video">
             <div class="ig-card-overlay">
               <div class="ig-play-btn">
                 <span class="ig-play-icon">▶</span>
@@ -253,9 +120,9 @@
           <div class="ig-card-text">Lihat Liputan Kebun Refugia</div>
         </div>
 
-        <div class="instagram-card video-card" data-video="img/video refugia 2.mp4">
+        <div class="instagram-card video-card" data-video="assets/img/video refugia 2.mp4">
           <div class="ig-card-thumbnail">
-            <img src="img/Tentang kami.jpeg" alt="Cuplikan Video">
+            <img src="assets/img/Tentang kami.jpeg" alt="Cuplikan Video">
             <div class="ig-card-overlay">
               <div class="ig-play-btn">
                 <span class="ig-play-icon">▶</span>
@@ -280,7 +147,7 @@
   <footer class="footer">
     <div class="footer-inner inner">
       <div>
-        <img src="img/LOGO_REFUGIA.png" alt="Logo Refugia" class="ft-logo">
+        <img src="assets/img/LOGO_REFUGIA.png" alt="Logo Refugia" class="ft-logo">
         <div class="ft-jam">Buka Setiap Hari: 08.00 - 17.00 WIB</div>
         <p class="ft-tagline">Menyajikan keindahan alam dan edukasi tanaman bagi seluruh keluarga di Magetan.</p>
       </div>
@@ -319,69 +186,9 @@
     </div>
   </footer>
 
-  <script>
-    // 1. LOGIKA HAMBURGER MENU
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (hamburger && navLinks) {
-      hamburger.addEventListener('click', () => {
-          navLinks.classList.toggle('active');
-      });
-
-      document.querySelectorAll('.nav-links a').forEach(link => {
-          link.addEventListener('click', () => {
-              navLinks.classList.remove('active');
-          });
-      });
-    }
-
-    // 2. LOGIKA MODAL VIDEO POP-UP
-    const modal = document.getElementById('videoModal');
-    const popupVideo = document.getElementById('popupVideo');
-    const closeBtn = document.querySelector('.close-btn');
-    const videoCards = document.querySelectorAll('.video-card');
-
-    // Menampilkan Modal dan Memutar Video
-    videoCards.forEach(card => {
-      card.addEventListener('click', function() {
-        const videoSrc = this.getAttribute('data-video'); 
-        popupVideo.src = videoSrc; 
-        
-        modal.style.display = 'flex';
-        setTimeout(() => {
-          modal.classList.add('show');
-        }, 10);
-        
-        popupVideo.play(); 
-      });
-    });
-
-    // Fungsi Menutup Modal
-    function closeModal() {
-      modal.classList.remove('show');
-      setTimeout(() => {
-        modal.style.display = 'none'; 
-        popupVideo.pause(); 
-        popupVideo.src = ""; 
-      }, 300); 
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeModal);
-    }
-
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === "Escape" && modal.style.display === 'flex') {
-        closeModal();
-      }
-    });
-  </script>
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/tracker.js"></script>
+  <script src="assets/js/weather.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin - Kebun Refugia Magetan</title>
+  
+  <!-- Absolute Asset Paths for Vercel CleanUrls -->
+  <link rel="icon" type="image/png" href="/assets/img/LOGO_REFUGIA.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+
+  <!-- Chart.js CDN for Visual Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="admin-layout">
+    
+    <!-- SIDEBAR NAV -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="/assets/img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia Magetan">
+        <div class="sidebar-brand">PANEL ADMIN</div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active" data-tab="tab-dashboard">📊 Ringkasan Analytics</a></li>
+        <li><a href="#" data-tab="tab-transaksi">🧾 Transaksi Loket</a></li>
+        <li><a href="#" data-tab="tab-tiket">🎟️ Kelola Tiket</a></li>
+        <li><a href="#" data-tab="tab-fasilitas">🌺 Fasilitas & Lapak</a></li>
+        <li><a href="#" data-tab="tab-faq">❓ Kelola FAQ</a></li>
+        <li><a href="#" data-tab="tab-pesan">📩 Pesan Masuk</a></li>
+        <li><a href="#" data-tab="tab-pengaturan">⚙️ Pengaturan Website</a></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="btn-logout">
+          🚪 Keluar Admin
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle">☰</button>
+          <div class="topbar-title" id="topbarTitle">Ringkasan Analytics</div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="user-profile">
+            <div class="avatar">A</div>
+            <div class="user-info">
+              <strong>Admin Refugia</strong>
+              <span>Dinas TPHP Magetan</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+        
+        <!-- 1. TAB DASHBOARD -->
+        <section id="tab-dashboard" class="tab-content active">
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">👥</div>
+              <div class="stat-info">
+                <h3 id="statTotalPengunjung">0</h3>
+                <p>Tiket Wisata Terjual</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">🎟️</div>
+              <div class="stat-info">
+                <h3 id="statTotalPendapatan">Rp 0</h3>
+                <p>Total Pendapatan Tiket</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">🌐</div>
+              <div class="stat-info">
+                <h3 id="statWebViews">0</h3>
+                <p>Kunjungan Web</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">📩</div>
+              <div class="stat-info">
+                <h3 id="msgCountStat">0</h3>
+                <p>Pesan Masuk Baru</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRAFIK VISUAL TREN PENGUNJUNG & PENDAPATAN -->
+          <div class="card-panel" style="margin-bottom:28px;">
+            <div class="panel-header">
+              <div class="panel-title">📈 Grafik Trend Pendapatan Penjualan Tiket</div>
+            </div>
+            <div style="padding:15px; height:280px; position:relative;">
+              <canvas id="salesChart"></canvas>
+            </div>
+          </div>
+
+          <!-- ANALYTICS TRAFIK WEBSITE & HAKIKAT POPULARITAS -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-bottom:32px;">
+            
+            <!-- RINCIAN PENJUALAN TIKET PER KATEGORI -->
+            <div class="card-panel" style="margin-bottom:0;">
+              <div class="panel-header">
+                <div class="panel-title">🎟️ Rekapitulasi Tiket Terjual per Kategori</div>
+              </div>
+              <div style="padding:20px;">
+                <div id="categorySummaryGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px;">
+                  <!-- Rendered dynamically via admin.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ANALYTICS HAKIKAT TRAFIK WEBSITE -->
+            <div class="card-panel" style="margin-bottom:0;">
+              <div class="panel-header">
+                <div class="panel-title">🌐 Halaman Website Paling Populer (Trafik Digital)</div>
+              </div>
+              <div style="padding:20px;">
+                <div id="pageTrafficGrid" style="display:flex; flex-direction:column; gap:10px;">
+                  <!-- Rendered dynamically via admin.js -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 2. TAB TRANSAKSI LOKET MANUAL -->
+        <section id="tab-transaksi" class="tab-content">
+          <div class="card-panel">
+            <div class="panel-header">
+              <div class="panel-title">Pencatatan Penjualan Tiket Loket Manual</div>
+              <div class="panel-actions">
+                <button class="btn-add" onclick="openSaleModal()">+ Catat Transaksi Tiket</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID Transaksi</th>
+                    <th>Tanggal</th>
+                    <th>Jenis Tiket / Tarif</th>
+                    <th>Harga Satuan</th>
+                    <th>Jumlah Terjual (Qty)</th>
+                    <th>Total Nominal</th>
+                    <th>Keterangan / Loket</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="salesTbody">
+                  <!-- Rendered dynamically via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. TAB TIKET -->
+        <section id="tab-tiket" class="tab-content">
+          
+          <!-- PENGATURAN QRIS & E-PEMBAYARAN -->
+          <div class="card-panel" style="padding: 24px; margin-bottom: 24px;">
+            <div class="panel-header" style="margin-bottom: 16px; padding:0; border:none;">
+              <div class="panel-title">📱 Pengaturan E-Pembayaran & Barcode QRIS</div>
+            </div>
+            <form id="qrisSettingsForm" style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group" style="margin:0;">
+                <label>Nama Akun / Verifikasi QRIS</label>
+                <input type="text" id="qrisAccountInput" class="form-control" placeholder="Contoh: TAMAN REFUGIA MAGETAN" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>URL / File Barcode QRIS</label>
+                <input type="text" id="qrisUrlInput" class="form-control" placeholder="Contoh: assets/img/Qrish Kebun Refugia Magetan.png" required>
+              </div>
+              <div style="grid-column: span 2; margin-top: 8px;">
+                <button type="submit" class="btn-primary" style="width:auto; padding:10px 24px;">💾 Simpan Pengaturan QRIS</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card-panel">
+            <div class="panel-header">
+              <div class="panel-title">Pengaturan Tarif Tiket & Parkir Masuk</div>
+              <div class="panel-actions">
+                <button class="btn-add" onclick="openTicketModal()">+ Tambah Tarif / Tiket Baru</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Jenis Tiket / Parkir</th>
+                    <th>Harga Tarif (Rp)</th>
+                    <th>Keterangan</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="ticketTbody">
+                  <!-- Rendered via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. TAB FASILITAS & LAPAK -->
+        <section id="tab-fasilitas" class="tab-content">
+          <div class="card-panel">
+            <div class="panel-header">
+              <div class="panel-title">Daftar Fasilitas & Lapak Petani</div>
+              <div class="panel-actions">
+                <button class="btn-add" onclick="openFacilityModal()">+ Tambah Fasilitas</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Nama Fasilitas</th>
+                    <th>Kategori</th>
+                    <th>Deskripsi Singkat</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="facilityTbody">
+                  <!-- Rendered via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. TAB FAQ -->
+        <section id="tab-faq" class="tab-content">
+          <div class="card-panel">
+            <div class="panel-header">
+              <div class="panel-title">Kelola Pertanyaan FAQ</div>
+              <div class="panel-actions">
+                <button class="btn-add" onclick="openFaqModal()">+ Tambah FAQ Baru</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Pertanyaan</th>
+                    <th>Jawaban Dipublikasikan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="faqTbody">
+                  <!-- Rendered via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. TAB PESAN MASUK -->
+        <section id="tab-pesan" class="tab-content">
+          <div class="card-panel">
+            <div class="panel-header">
+              <div class="panel-title">Kotak Masuk Kritik, Saran & Pertanyaan</div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Nama Pengirim</th>
+                    <th>Kontak / No. WA</th>
+                    <th>Isi Pesan / Saran</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="messageTbody">
+                  <!-- Rendered dynamically via admin.js from RefugiaDB -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. TAB PENGATURAN -->
+        <section id="tab-pengaturan" class="tab-content">
+          <div class="card-panel" style="padding: 28px;">
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--primary-green); margin-bottom: 20px;">Pengaturan Jam Operasional & Informasi Publik</h3>
+            
+            <form id="settingsForm">
+              <div class="form-group">
+                <label for="jamBukaInput">Jam Operasional Kebun</label>
+                <input type="text" id="jamBukaInput" class="form-control" placeholder="Contoh: Setiap Hari: 08.00 - 17.00 WIB" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phoneAdminInput">Nomor WhatsApp Admin Refugia</label>
+                <input type="text" id="phoneAdminInput" class="form-control" placeholder="Contoh: 0859-3148-6608" required>
+              </div>
+
+              <div class="form-group">
+                <label for="taglineInput">Teks Tagline Footer Website</label>
+                <input type="text" id="taglineInput" class="form-control" placeholder="Teks tagline footer..." required>
+              </div>
+
+              <button type="submit" class="btn-primary" style="width: auto; padding: 12px 28px;">💾 Simpan Perubahan Pengaturan</button>
+            </form>
+
+            <hr style="margin: 32px 0; border: none; border-top: 1px solid var(--border-light, #E1E9E0);">
+
+            <h3 style="font-family: 'Playfair Display', serif; color: var(--primary-green); margin-bottom: 20px;">🔒 Keamanan Kredensial Akses Admin</h3>
+            <form id="adminSecurityForm">
+              <div class="form-group">
+                <label for="adminUsernameInput">Username Admin</label>
+                <input type="text" id="adminUsernameInput" class="form-control" value="admin" required>
+              </div>
+              <div class="form-group">
+                <label for="adminPasswordInput">Password Baru Admin</label>
+                <input type="password" id="adminPasswordInput" class="form-control" placeholder="Masukkan password baru admin..." required minlength="6">
+              </div>
+              <button type="submit" class="btn-primary" style="width: auto; padding: 12px 28px; background: #0D261C;">🔐 Ubah Password Admin</button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL CATAT TRANSAKSI TIKET LOKET MANUAL -->
+  <div id="saleModal" class="login-page" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6);">
+    <div class="login-card" style="max-width:500px; text-align:left;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--primary-green); margin-bottom:15px;">Catat Transaksi Tiket Loket</h2>
+      <form id="saleForm">
+        <div class="form-group">
+          <label>Tanggal Transaksi</label>
+          <input type="date" id="saleDate" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Pilih Jenis Tiket / Tarif</label>
+          <select id="saleTicketSelect" class="form-control" required>
+            <!-- Rendered dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Jumlah Tiket Terjual (Qty)</label>
+          <input type="number" id="saleQty" class="form-control" min="1" value="1" placeholder="Contoh: 50" required>
+        </div>
+        <div class="form-group">
+          <label>Catatan / Petugas Loket</label>
+          <input type="text" id="saleNotes" class="form-control" placeholder="Contoh: Loket Utama Gerbang Depan">
+        </div>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button type="submit" class="btn-primary">💾 Simpan Transaksi Tiket</button>
+          <button type="button" class="btn-logout" style="background:#edf2f7; color:#4a5568; border:1px solid #cbd5e0;" onclick="closeSaleModal()">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT/ADD TIKET -->
+  <div id="ticketModal" class="login-page" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6);">
+    <div class="login-card" style="max-width:520px; text-align:left;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--primary-green); margin-bottom:15px;" id="ticketModalTitle">Kelola Tarif Tiket</h2>
+      <form id="ticketForm">
+        <input type="hidden" id="ticketId">
+        <div class="form-group">
+          <label>Nama / Jenis Tiket</label>
+          <input type="text" id="ticketType" class="form-control" placeholder="Contoh: Dewasa / Rombongan / Parkir Motor" required>
+        </div>
+        <div class="form-group">
+          <label>Harga Tarif (Rp)</label>
+          <input type="number" id="ticketPrice" class="form-control" placeholder="Contoh: 10000" required>
+        </div>
+        <div class="form-group">
+          <label>Keterangan / Benefit</label>
+          <input type="text" id="ticketDesc" class="form-control" placeholder="Contoh: Untuk usia 12 tahun ke atas (Gratis Sayur)" required>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="ticketStatus" class="form-control">
+            <option value="Aktif">Aktif</option>
+            <option value="Nonaktif">Nonaktif</option>
+            <option value="Promo">Promo</option>
+          </select>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button type="submit" class="btn-primary">💾 Simpan Tarif Tiket</button>
+          <button type="button" class="btn-logout" style="background:#edf2f7; color:#4a5568; border:1px solid #cbd5e0;" onclick="closeTicketModal()">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT/ADD FAQ -->
+  <div id="faqModal" class="login-page" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6);">
+    <div class="login-card" style="max-width:500px; text-align:left;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--primary-green); margin-bottom:15px;" id="faqModalTitle">Tambah FAQ Baru</h2>
+      <form id="faqForm">
+        <input type="hidden" id="faqId">
+        <div class="form-group">
+          <label>Pertanyaan</label>
+          <input type="text" id="faqQuestion" class="form-control" placeholder="Contoh: Berapa harga tiket masuk?" required>
+        </div>
+        <div class="form-group">
+          <label>Jawaban</label>
+          <textarea id="faqAnswer" class="form-control" placeholder="Tuliskan jawaban yang akan ditampilkan di website..." rows="4" required></textarea>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="submit" class="btn-primary">💾 Simpan FAQ</button>
+          <button type="button" class="btn-logout" style="background:#edf2f7; color:#4a5568; border:1px solid #cbd5e0;" onclick="closeFaqModal()">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT/ADD FACILITY -->
+  <div id="facilityModal" class="login-page" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6);">
+    <div class="login-card" style="max-width:540px; text-align:left;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--primary-green); margin-bottom:15px;" id="facilityModalTitle">Tambah Fasilitas Baru</h2>
+      <form id="facilityForm">
+        <input type="hidden" id="facId">
+        <div class="form-group">
+          <label>Nama Fasilitas / Lapak</label>
+          <input type="text" id="facName" class="form-control" placeholder="Contoh: Lapak Souvenir & Kerajinan" required>
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="facCategory" class="form-control">
+            <option value="Kuliner & Belanja">Kuliner & Belanja</option>
+            <option value="Fotografi">Fotografi</option>
+            <option value="Santai">Santai</option>
+            <option value="Interaksi Anak">Interaksi Anak</option>
+            <option value="Edukasi">Edukasi</option>
+            <option value="Ibadah">Ibadah</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Deskripsi Singkat</label>
+          <textarea id="facDesc" class="form-control" placeholder="Deskripsi singkat fasilitas/lapak..." rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>URL Gambar Katalog / Menu (Pisahkan dengan Koma jika > 1)</label>
+          <textarea id="facImages" class="form-control" placeholder="Contoh: assets/img/MenuMakanan_BERGAMBAR.jpeg, assets/img/MenuMakanan_Teks.jpeg" rows="2"></textarea>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="submit" class="btn-primary">💾 Simpan Fasilitas & Katalog</button>
+          <button type="button" class="btn-logout" style="background:#edf2f7; color:#4a5568; border:1px solid #cbd5e0;" onclick="closeFacilityModal()">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/assets/js/db.js"></script>
+  <script src="/assets/js/tracker.js"></script>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

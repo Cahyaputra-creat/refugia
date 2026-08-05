@@ -99,39 +99,55 @@
   width: 44px; 
   height: 44px; 
   border-radius: 50%; 
-  background: var(--g5); 
-  border: 1px solid var(--border); 
-  color: var(--g1); 
-  font-size: 24px; 
-  display: flex; 
+  background: #F4F8F3; 
+  border: 1.5px solid var(--border, #E1E9E0); 
+  color: var(--g1, #184432); 
+  display: inline-flex; 
   align-items: center; 
   justify-content: center; 
   cursor: pointer; 
-  transition: all .2s; 
+  transition: all .25s ease; 
+  box-shadow: 0 4px 12px rgba(30, 70, 15, 0.08);
+  padding: 0;
+  line-height: 1;
+}
+
+.snav-btn svg {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
 }
 
 .snav-btn:hover { 
-  background: var(--g4); 
-  color: var(--g1); 
+  background: var(--g1, #184432); 
+  color: #E2B350; 
+  border-color: var(--g1, #184432);
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(24, 68, 50, 0.25);
 }
 
 .sdots { 
   display: flex; 
+  align-items: center; 
   gap: 8px; 
+  height: 44px;
 }
 
 .sdot { 
   width: 8px; 
   height: 8px; 
   border-radius: 50%; 
-  background: var(--border); 
+  background: #CBD5E0; 
   cursor: pointer; 
-  transition: all .3s; 
+  transition: all .3s ease; 
 }
 
 .sdot.on { 
-  background: var(--g2); 
+  background: var(--g1, #184432); 
   width: 24px; 
+  border-radius: 10px;
 }
 
 
@@ -151,6 +167,9 @@
   transition: all .3s; 
   cursor: pointer; 
   box-shadow: 0 4px 16px rgba(30, 70, 15, 0.07); 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .lapak-card:hover { 
@@ -175,6 +194,9 @@
 
 .lapak-body { 
   padding: 18px; 
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .lapak-body h3 { 
@@ -205,6 +227,7 @@
   cursor: pointer; 
   transition: background .2s; 
   letter-spacing: 0.3px; 
+  margin-top: auto;
 }
 
 .btn-detail:hover { 
@@ -437,28 +460,83 @@
 }
 
 .m-slider-dots { 
-  position: absolute; 
-  bottom: 12px; 
-  left: 50%; 
-  transform: translateX(-50%); 
   display: flex; 
-  gap: 6px; 
-  z-index: 10; 
+  gap: 8px; 
+  align-items: center;
+  justify-content: center;
 }
 
 .m-dot { 
-  width: 7px; 
-  height: 7px; 
+  width: 8px; 
+  height: 8px; 
   border-radius: 50%; 
-  background: rgba(0, 0, 0, 0.15); 
-  transition: all 0.3s; 
+  background: rgba(13, 38, 28, 0.2); 
+  transition: all 0.3s ease; 
+  cursor: pointer;
+}
+
+.m-dot:hover {
+  background: var(--g2);
 }
 
 .m-dot.active { 
-  background: var(--g2); 
-  width: 18px; 
+  background: var(--g1, #184432); 
+  width: 22px; 
+  border-radius: 10px;
 }
 
+/* TOMBOL PANAH NAVIGASI KATALOG ❮ ❯ UNTUK LAPTOP & HP */
+.m-arrow {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(13, 38, 28, 0.85);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+.m-arrow:hover {
+  background: var(--g1, #184432);
+  color: #E2B350;
+  transform: translateY(-50%) scale(1.12);
+}
+
+.m-arrow-prev {
+  left: 12px;
+}
+
+.m-arrow-next {
+  right: 12px;
+}
+
+.m-slide-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+  background: rgba(13, 38, 28, 0.85);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 11px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
 /* ===== GAYA BARU: SINGLE IMAGE (LAPAK SAYUR) ===== */
 .m-single-img { 

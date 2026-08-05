@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Panel Admin - Kebun Refugia Magetan</title>
+  
+  <!-- Absolute Asset Paths for Vercel CleanUrls -->
+  <link rel="icon" type="image/png" href="/assets/img/LOGO_REFUGIA.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="login-page">
+
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="/assets/img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
+      <h1>Panel Admin</h1>
+      <p>Kebun Refugia Magetan</p>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Username Admin</label>
+        <input type="text" id="username" class="form-control" placeholder="Masukan username admin" required autofocus autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-primary">Masuk ke Dashboard ➔</button>
+    </form>
+
+    <div style="margin-top: 24px; font-size: 12px; color: var(--text-muted);">
+      <p>© 2026 Kebun Refugia Magetan · Dinas TPHP Magetan</p>
+    </div>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

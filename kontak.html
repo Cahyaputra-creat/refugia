@@ -3,17 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kontak - Kebun Refugia Magetan</title>
+  <title>Kontak & Layanan Admin - Kebun Refugia Magetan</title>
+  <meta name="description" content="Hubungi Admin Kebun Refugia Magetan, lapak penjual tanaman hias, dan toko oleh-oleh khas Magetan.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/img/LOGO_REFUGIA.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kontak & Lapak - Kebun Refugia Magetan">
+  <meta property="og:description" content="Hubungi Admin Kebun Refugia dan lapak oleh-oleh khas Magetan.">
+  <meta property="og:image" content="https://kebunrefugiamagetan.vercel.app/assets/img/LOGO_REFUGIA.png">
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="index.css?v=2">
-  <link rel="stylesheet" href="kontak.css">
+  <link rel="stylesheet" href="assets/css/index.css?v=2">
+  <link rel="stylesheet" href="assets/css/kontak.css">
 </head>
 <body>
 
   <nav class="navbar">
     <a href="index.html" class="nav-logo">
-      <img src="img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
+      <img src="assets/img/LOGO_REFUGIA.png" alt="Logo Kebun Refugia">
     </a>
     <div class="nav-links">
       <a href="index.html">Beranda</a>
@@ -41,7 +52,7 @@
 
       <div class="lapak-grid">
         <div class="lapak-card" data-target="tanaman">
-          <div class="lapak-img" style="background-image:url('img/lapak\ bunga.jpeg');">
+          <div class="lapak-img" style="background-image:url('assets/img/lapak\ bunga.jpeg');">
             <div class="lapak-img-overlay"></div>
           </div>
           <div class="lapak-body">
@@ -52,7 +63,7 @@
         </div>
 
         <div class="lapak-card" data-target="oleh">
-          <div class="lapak-img" style="background-image:url('img/Souvenir dan oleh oleh.JPG');">
+          <div class="lapak-img" style="background-image:url('assets/img/Souvenir dan oleh oleh.JPG');">
             <div class="lapak-img-overlay"></div>
           </div>
           <div class="lapak-body">
@@ -63,7 +74,7 @@
         </div>
 
         <div class="lapak-card" data-target="admin">
-          <div class="lapak-img" style="background-image:url('img/Loket.jpeg');">
+          <div class="lapak-img" style="background-image:url('assets/img/Loket.jpeg');">
             <div class="lapak-img-overlay"></div>
           </div>
           <div class="lapak-body">
@@ -105,7 +116,7 @@
   <footer class="footer">
     <div class="footer-inner inner">
       <div>
-        <img src="img/LOGO_REFUGIA.png" alt="Logo Refugia" class="ft-logo">
+        <img src="assets/img/LOGO_REFUGIA.png" alt="Logo Refugia" class="ft-logo">
         <div class="ft-jam">Buka Setiap Hari: 08.00 - 17.00 WIB</div>
         <p class="ft-tagline">Menyajikan keindahan alam dan edukasi tanaman bagi seluruh keluarga di Magetan.</p>
       </div>
@@ -144,21 +155,9 @@
     </div>
   </footer>
 
-  <script src="kontak.js"></script>
-
-  <script>
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
-    });
-  </script>
+  <script src="assets/js/db.js"></script>
+  <script src="assets/js/tracker.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/kontak.js"></script>
 </body>
 </html>
