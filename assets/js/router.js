@@ -207,8 +207,22 @@ const RefugiaRouter = (() => {
     }
 
     function reinitializePageScripts() {
+        // Core public page reinit (hero, videos, hamburger, hero buttons)
         if (typeof window.reinitPublicPage === 'function') {
             window.reinitPublicPage();
+        }
+        // Module-specific reinit
+        if (typeof window.initHamburger === 'function') {
+            window.initHamburger();
+        }
+        if (typeof RefugiaFasilitas !== 'undefined' && typeof RefugiaFasilitas.init === 'function') {
+            RefugiaFasilitas.init();
+        }
+        if (typeof RefugiaFAQ !== 'undefined' && typeof RefugiaFAQ.init === 'function') {
+            RefugiaFAQ.init();
+        }
+        if (typeof RefugiaKontak !== 'undefined' && typeof RefugiaKontak.init === 'function') {
+            RefugiaKontak.init();
         }
     }
 

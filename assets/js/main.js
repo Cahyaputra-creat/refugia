@@ -25,19 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    window.reinitPublicPage = function() {
-        syncGlobalPublicData();
-        renderPublicHero();
-        renderPublicVideos();
-    };
-
-    window.renderPublicHero = renderPublicHero;
-
-    // Initial Sync & Real-Time DB Event Listeners
-    window.reinitPublicPage();
-    window.addEventListener('storage', window.reinitPublicPage);
-    window.addEventListener('refugia_db_updated', window.reinitPublicPage);
-
     /* =========================================
        1B. RENDER HERO & VIDEO GALLERY DINAMIS
     ========================================= */
@@ -59,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tentangTitle = document.getElementById('tentangTitle');
         const tentangDesc1 = document.getElementById('tentangDesc1');
         const tentangDesc2 = document.getElementById('tentangDesc2');
+        const tentangImg = document.getElementById('tentangImg'); // BUG FIX: was missing
         const tentangTag1 = document.getElementById('tentangTag1');
         const tentangTag2 = document.getElementById('tentangTag2');
         const tentangTag3 = document.getElementById('tentangTag3');
@@ -118,38 +106,41 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
 
             card.addEventListener('click', function() {
-                openModal(v.videoUrl);
+                window.openVideoModal(v.videoUrl);
             });
 
             container.appendChild(card);
         });
     }
 
-    syncGlobalPublicData();
-    window.addEventListener('storage', syncGlobalPublicData);
-    window.addEventListener('refugia_db_updated', syncGlobalPublicData);
-
     /* =========================================
        2. LOGIKA HAMBURGER MENU (MOBILE TOGGLE)
+       - Global init so it can be called after AJAX navigate
     ========================================= */
-    const hamburger = document.querySelector('.hamburger, #hamburger');
-    const navLinks = document.querySelector('.nav-links, .nav-menu');
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', (e) => {
+    function initHamburger() {
+        const hamburger = document.querySelector('.hamburger, #hamburger');
+        const navLinks = document.querySelector('.nav-links, .nav-menu');
+        if (!hamburger || !navLinks) return;
+
+        // Remove previous listener to prevent duplicate bindings
+        const newHamburger = hamburger.cloneNode(true);
+        hamburger.parentNode.replaceChild(newHamburger, hamburger);
+
+        newHamburger.addEventListener('click', (e) => {
             e.stopPropagation();
-            hamburger.classList.toggle('active');
+            newHamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
     }
+    initHamburger();
+    window.initHamburger = initHamburger;
 
     /* =========================================
-       3. LOGIKA VIDEO MODAL POP-UP
+       3. VIDEO MODAL POP-UP (Global scope for post-AJAX access)
     ========================================= */
-    const modal = document.getElementById('videoModal');
-    const popupVideo = document.getElementById('popupVideo');
-    const closeBtn = document.querySelector('.close-btn');
-
-    function openModal(videoSrc) {
+    function openVideoModal(videoSrc) {
+        const modal = document.getElementById('videoModal');
+        const popupVideo = document.getElementById('popupVideo');
         if (!modal || !popupVideo) return;
 
         popupVideo.src = videoSrc;
@@ -168,7 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function closeModal() {
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const popupVideo = document.getElementById('popupVideo');
         if (!modal || !popupVideo) return;
 
         modal.classList.remove('show');
@@ -182,21 +175,75 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     }
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
-    }
+    // Expose globally for post-AJAX usage
+    window.openVideoModal = openVideoModal;
+    window.closeVideoModal = closeVideoModal;
 
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-    }
-
-    window.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal && modal.classList.contains('show')) {
-            closeModal();
+    // Modal event delegation (works after AJAX navigate)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.close-btn')) {
+            closeVideoModal();
+            return;
+        }
+        const modal = document.getElementById('videoModal');
+        if (modal && e.target === modal) {
+            closeVideoModal();
         }
     });
+
+    window.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('videoModal');
+        if (e.key === 'Escape' && modal && modal.classList.contains('show')) {
+            closeVideoModal();
+        }
+    });
+
+    /* =========================================
+       4. HERO BUTTONS — USE ROUTER (not window.location.href)
+    ========================================= */
+    function initHeroButtons() {
+        const btnPesan = document.querySelector('.btn-gold[onclick]');
+        const btnLokasi = document.querySelector('.btn-ghost[onclick]');
+        if (btnPesan) {
+            btnPesan.removeAttribute('onclick');
+            btnPesan.addEventListener('click', () => {
+                if (typeof RefugiaRouter !== 'undefined') {
+                    RefugiaRouter.navigateTo('pemesanan.html');
+                } else {
+                    window.location.href = 'pemesanan.html';
+                }
+            });
+        }
+        if (btnLokasi) {
+            btnLokasi.removeAttribute('onclick');
+            btnLokasi.addEventListener('click', () => {
+                if (typeof RefugiaRouter !== 'undefined') {
+                    RefugiaRouter.navigateTo('lokasi.html');
+                } else {
+                    window.location.href = 'lokasi.html';
+                }
+            });
+        }
+    }
+    initHeroButtons();
+    window.initHeroButtons = initHeroButtons;
+
+    /* =========================================
+       5. REINIT PUBLIC PAGE (called by router after each navigate)
+    ========================================= */
+    window.reinitPublicPage = function() {
+        syncGlobalPublicData();
+        renderPublicHero();
+        renderPublicVideos();
+        initHamburger();
+        initHeroButtons();
+    };
+
+    window.renderPublicHero = renderPublicHero;
+
+    // Initial Sync & Real-Time DB Event Listeners
+    window.reinitPublicPage();
+    window.addEventListener('storage', window.reinitPublicPage);
+    window.addEventListener('refugia_db_updated', window.reinitPublicPage);
 });
+
