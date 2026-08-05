@@ -132,10 +132,30 @@ const RefugiaRouter = (() => {
 
             const parser = new DOMParser();
             const newDoc = parser.parseFromString(htmlText, 'text/html');
+
+            // 1. Sync missing head stylesheets
+            newDoc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !document.querySelector(`link[href="${href}"]`)) {
+                    const newLink = document.createElement('link');
+                    newLink.rel = 'stylesheet';
+                    newLink.href = href;
+                    document.head.appendChild(newLink);
+                }
+            });
+
             const newMain = newDoc.querySelector('main') || newDoc.querySelector('.section') || newDoc.body;
 
             if (newMain && mainContainer) {
                 mainContainer.innerHTML = newMain.innerHTML;
+
+                // Re-execute scripts inside swapped main
+                mainContainer.querySelectorAll('script').forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
             }
             if (newDoc.title) {
                 document.title = newDoc.title;
