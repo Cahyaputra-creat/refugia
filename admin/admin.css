@@ -254,7 +254,7 @@ body {
 .sidebar-menu a.active {
   background: linear-gradient(135deg, var(--gold), var(--gold-hover));
   color: var(--primary-green);
-  font-weight: 800;
+  font-weight: 600;
   box-shadow: 0 4px 18px rgba(226, 179, 80, 0.35);
 }
 
