@@ -117,10 +117,15 @@ const RefugiaRouter = (() => {
                 ? Promise.resolve(pageCache.get(pathname))
                 : fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(res => res.text());
 
-            // Animate fade out
+            // Animate fade out — also fade hero if present
+            const currentHero = document.querySelector('header.hero');
             if (mainContainer) {
                 mainContainer.classList.add('page-transition-wrapper');
                 mainContainer.classList.add('page-fade-out');
+            }
+            if (currentHero) {
+                currentHero.classList.add('page-transition-wrapper');
+                currentHero.classList.add('page-fade-out');
             }
 
             const [htmlText] = await Promise.all([
@@ -144,19 +149,51 @@ const RefugiaRouter = (() => {
                 }
             });
 
-            const newMain = newDoc.querySelector('main') || newDoc.querySelector('.section') || newDoc.body;
+            // 2. CRITICAL FIX: Sync hero section (exists on Beranda/index only)
+            const newHero = newDoc.querySelector('header.hero');
+            const existingHero = document.querySelector('header.hero');
+            const navbar = document.querySelector('.navbar, nav.navbar');
 
-            if (newMain && mainContainer) {
-                mainContainer.innerHTML = newMain.innerHTML;
+            if (newHero && !existingHero) {
+                // Navigating TO Beranda: insert hero before the main section
+                const heroClone = newHero.cloneNode(true);
+                if (navbar && navbar.nextSibling) {
+                    navbar.parentNode.insertBefore(heroClone, navbar.nextSibling);
+                } else if (mainContainer) {
+                    mainContainer.parentNode.insertBefore(heroClone, mainContainer);
+                }
+            } else if (!newHero && existingHero) {
+                // Navigating AWAY from Beranda: remove hero
+                existingHero.remove();
+            } else if (newHero && existingHero) {
+                // Both exist: update hero content (e.g. admin changed hero image)
+                existingHero.innerHTML = newHero.innerHTML;
+            }
+
+            // 3. Also swap videoModal if present in new page
+            const newVideoModal = newDoc.getElementById('videoModal');
+            const existingVideoModal = document.getElementById('videoModal');
+            if (newVideoModal && !existingVideoModal) {
+                document.body.insertBefore(newVideoModal.cloneNode(true), document.querySelector('.footer, footer'));
+            }
+
+            // 4. Swap main section content
+            const newMain = newDoc.querySelector('main') || newDoc.querySelector('.section') || newDoc.body;
+            // Re-find mainContainer after possible DOM changes
+            const updatedContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
+
+            if (newMain && updatedContainer) {
+                updatedContainer.innerHTML = newMain.innerHTML;
 
                 // Re-execute scripts inside swapped main
-                mainContainer.querySelectorAll('script').forEach(oldScript => {
+                updatedContainer.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement('script');
                     Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
                     newScript.appendChild(document.createTextNode(oldScript.innerHTML));
                     oldScript.parentNode.replaceChild(newScript, oldScript);
                 });
             }
+
             if (newDoc.title) {
                 document.title = newDoc.title;
             }
@@ -168,15 +205,23 @@ const RefugiaRouter = (() => {
             updateActiveNavbarLinks(url);
             window.scrollTo({ top: 0, behavior: 'instant' });
 
-            if (mainContainer) {
-                mainContainer.classList.remove('page-fade-out');
-                mainContainer.classList.add('page-fade-in');
+            // Animate fade in — on updated containers
+            const freshContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
+            const freshHero = document.querySelector('header.hero');
+            if (freshContainer) {
+                freshContainer.classList.remove('page-fade-out');
+                freshContainer.classList.add('page-transition-wrapper', 'page-fade-in');
+            }
+            if (freshHero) {
+                freshHero.classList.remove('page-fade-out');
+                freshHero.classList.add('page-transition-wrapper', 'page-fade-in');
             }
 
             reinitializePageScripts();
 
             setTimeout(() => {
-                if (mainContainer) mainContainer.classList.remove('page-transition-wrapper', 'page-fade-in');
+                if (freshContainer) freshContainer.classList.remove('page-transition-wrapper', 'page-fade-in');
+                if (freshHero) freshHero.classList.remove('page-transition-wrapper', 'page-fade-in');
             }, 200);
 
         } catch (err) {
