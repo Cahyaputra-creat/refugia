@@ -1,29 +1,37 @@
-// Logika Toggle Accordion FAQ & Form Saran
+// Logika Toggle Accordion FAQ & Form Saran (Robust & Duplicate-Safe)
+
 function toggleFaq(element) {
     if (!element) return;
-    const isActive = element.classList.contains('active');
-    const allFaqs = document.querySelectorAll('.faq-item, [data-faq]');
+    const item = element.classList.contains('faq-item') ? element : element.closest('.faq-item');
+    if (!item) return;
+
+    const isActive = item.classList.contains('active');
     
-    allFaqs.forEach(item => {
-        item.classList.remove('active');
+    // Remove active state from all FAQ items
+    document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('active');
     });
-    
+
+    // Toggle current item if it wasn't active
     if (!isActive) {
-        element.classList.add('active');
+        item.classList.add('active');
     }
 }
+
+window.toggleFaq = toggleFaq;
 
 function renderPublicFaqs() {
     const faqContainer = document.querySelector('.faq-container');
     if (!faqContainer || typeof RefugiaDB === 'undefined') return;
 
     const faqs = RefugiaDB.getFaqs();
-    if (faqs.length === 0) return;
+    if (!faqs || faqs.length === 0) return;
 
     faqContainer.innerHTML = '';
     faqs.forEach(f => {
         const item = document.createElement('div');
         item.className = 'faq-item';
+        item.onclick = function() { toggleFaq(this); };
         item.innerHTML = `
             <div class="faq-q">${f.question}</div>
             <div class="faq-a">${f.answer}</div>
@@ -35,6 +43,7 @@ function renderPublicFaqs() {
 function syncPublicSettings() {
     if (typeof RefugiaDB === 'undefined') return;
     const settings = RefugiaDB.getSettings();
+    if (!settings) return;
 
     const jamEls = document.querySelectorAll('.ft-jam, .jam-info span');
     jamEls.forEach(el => {
@@ -42,15 +51,18 @@ function syncPublicSettings() {
     });
 }
 
-// Global Event Delegation for Accordion & Saran Form
+// Global Event Delegation for Accordion (Prevent duplicate execution via e._faqHandled)
 document.addEventListener('click', function(e) {
+    if (e._faqHandled) return;
     const faqHeader = e.target.closest('.faq-q, .faq-item');
     if (faqHeader && !e.target.closest('.faq-a')) {
+        e._faqHandled = true;
         const item = faqHeader.classList.contains('faq-item') ? faqHeader : faqHeader.closest('.faq-item');
         if (item) toggleFaq(item);
     }
 });
 
+// Form submission handler
 document.addEventListener('submit', function(e) {
     if (e.target && e.target.id === 'saranForm') {
         e.preventDefault();
