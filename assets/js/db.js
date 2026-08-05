@@ -40,7 +40,8 @@ const RefugiaDB = (() => {
     const DEFAULT_HERO = {
         heroBgImg: 'assets/img/Gambar Beranda.jpg',
         heroBadge: 'Selamat Datang di',
-        heroTitle: 'Kebun Refugia <br><em>Magetan</em>',
+        heroTitle1: 'Kebun Refugia',
+        heroTitle2: 'Magetan',
         heroTagline: 'Nikmati keindahan hamparan bunga yang memukau dengan latar megah Gunung Lawu, serta berbagai spot wisata menarik yang cocok untuk dinikmati bersama seluruh keluarga.',
         stat1Val: '200+',
         stat1Label: 'Koleksi Bunga',
@@ -52,6 +53,9 @@ const RefugiaDB = (() => {
         tentangDesc1: 'Kebun Refugia Magetan awalnya merupakan inisiatif lahan untuk menanam bunga hias yang berfungsi sebagai pengalih hama tanaman. Namun, berkat keindahannya, kini bertransformasi menjadi destinasi agrowisata favorit yang memanjakan mata.',
         tentangDesc2: 'Dengan latar belakang Gunung Lawu yang megah dan udara sejuk pegunungan, tempat ini menjadi lokasi yang sempurna untuk melepas penat dan berkreasi dengan fotografi.',
         tentangImg: 'assets/img/Tentang kami.jpeg',
+        tentangTag1: 'Wisata Alam',
+        tentangTag2: 'Edukasi Botani',
+        tentangTag3: 'Ramah Keluarga',
         galeriTitle: 'Keseruan di Kebun Refugia Magetan'
     };
 

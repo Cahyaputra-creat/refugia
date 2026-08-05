@@ -52,12 +52,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const tentangTitle = document.getElementById('tentangTitle');
         const tentangDesc1 = document.getElementById('tentangDesc1');
         const tentangDesc2 = document.getElementById('tentangDesc2');
-        const tentangImg = document.getElementById('tentangImg');
+        const tentangTag1 = document.getElementById('tentangTag1');
+        const tentangTag2 = document.getElementById('tentangTag2');
+        const tentangTag3 = document.getElementById('tentangTag3');
         const galeriTitle = document.getElementById('galeriTitle');
 
         if (heroBgImg && hero.heroBgImg) heroBgImg.src = hero.heroBgImg;
         if (heroBadge && hero.heroBadge) heroBadge.textContent = hero.heroBadge;
-        if (heroTitle && hero.heroTitle) heroTitle.innerHTML = hero.heroTitle;
+        if (heroTitle) {
+            const title1 = hero.heroTitle1 || 'Kebun Refugia';
+            const title2 = hero.heroTitle2 || 'Magetan';
+            heroTitle.innerHTML = `${title1} <br><em>${title2}</em>`;
+        }
         if (heroTagline && hero.heroTagline) heroTagline.textContent = hero.heroTagline;
         if (stat1Val && hero.stat1Val) stat1Val.textContent = hero.stat1Val;
         if (stat1Label && hero.stat1Label) stat1Label.textContent = hero.stat1Label;
@@ -69,6 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tentangDesc1 && hero.tentangDesc1) tentangDesc1.textContent = hero.tentangDesc1;
         if (tentangDesc2 && hero.tentangDesc2) tentangDesc2.textContent = hero.tentangDesc2;
         if (tentangImg && hero.tentangImg) tentangImg.src = hero.tentangImg;
+        if (tentangTag1 && hero.tentangTag1) tentangTag1.textContent = hero.tentangTag1;
+        if (tentangTag2 && hero.tentangTag2) tentangTag2.textContent = hero.tentangTag2;
+        if (tentangTag3 && hero.tentangTag3) tentangTag3.textContent = hero.tentangTag3;
         if (galeriTitle && hero.galeriTitle) galeriTitle.textContent = hero.galeriTitle;
     }
 

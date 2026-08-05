@@ -240,7 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const heroBgImg = document.getElementById('heroBgImgInput') ? document.getElementById('heroBgImgInput').value : '';
             const heroBadge = document.getElementById('heroBadgeInput') ? document.getElementById('heroBadgeInput').value : '';
-            const heroTitle = document.getElementById('heroTitleInput') ? document.getElementById('heroTitleInput').value : '';
+            const heroTitle1 = document.getElementById('heroTitle1Input') ? document.getElementById('heroTitle1Input').value : '';
+            const heroTitle2 = document.getElementById('heroTitle2Input') ? document.getElementById('heroTitle2Input').value : '';
             const heroTagline = document.getElementById('heroTaglineInput') ? document.getElementById('heroTaglineInput').value : '';
             
             const stat1Val = document.getElementById('stat1ValInput') ? document.getElementById('stat1ValInput').value : '';
@@ -254,12 +255,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const tentangDesc1 = document.getElementById('tentangDesc1Input') ? document.getElementById('tentangDesc1Input').value : '';
             const tentangDesc2 = document.getElementById('tentangDesc2Input') ? document.getElementById('tentangDesc2Input').value : '';
             const tentangImg = document.getElementById('tentangImgInput') ? document.getElementById('tentangImgInput').value : '';
+            const tentangTag1 = document.getElementById('tentangTag1Input') ? document.getElementById('tentangTag1Input').value : '';
+            const tentangTag2 = document.getElementById('tentangTag2Input') ? document.getElementById('tentangTag2Input').value : '';
+            const tentangTag3 = document.getElementById('tentangTag3Input') ? document.getElementById('tentangTag3Input').value : '';
             const galeriTitle = document.getElementById('galeriTitleInput') ? document.getElementById('galeriTitleInput').value : '';
 
             RefugiaDB.saveHeroSettings({
-                heroBgImg, heroBadge, heroTitle, heroTagline,
+                heroBgImg, heroBadge, heroTitle1, heroTitle2, heroTagline,
                 stat1Val, stat1Label, stat2Val, stat2Label, stat3Val, stat3Label,
-                tentangTitle, tentangDesc1, tentangDesc2, tentangImg, galeriTitle
+                tentangTitle, tentangDesc1, tentangDesc2, tentangImg,
+                tentangTag1, tentangTag2, tentangTag3, galeriTitle
             });
             alert('✓ Pengaturan Beranda (Hero, Statistik, Pesona Alam, & Galeri) Berhasil Disimpan!');
         });
@@ -904,7 +909,8 @@ function loadHeroSettings() {
         }
     }
     if (document.getElementById('heroBadgeInput')) document.getElementById('heroBadgeInput').value = hero.heroBadge || 'Selamat Datang di';
-    if (document.getElementById('heroTitleInput')) document.getElementById('heroTitleInput').value = hero.heroTitle || '';
+    if (document.getElementById('heroTitle1Input')) document.getElementById('heroTitle1Input').value = hero.heroTitle1 || 'Kebun Refugia';
+    if (document.getElementById('heroTitle2Input')) document.getElementById('heroTitle2Input').value = hero.heroTitle2 || 'Magetan';
     if (document.getElementById('heroTaglineInput')) document.getElementById('heroTaglineInput').value = hero.heroTagline || '';
 
     if (document.getElementById('stat1ValInput')) document.getElementById('stat1ValInput').value = hero.stat1Val || '200+';
@@ -917,6 +923,9 @@ function loadHeroSettings() {
     if (document.getElementById('tentangTitleInput')) document.getElementById('tentangTitleInput').value = hero.tentangTitle || '';
     if (document.getElementById('tentangDesc1Input')) document.getElementById('tentangDesc1Input').value = hero.tentangDesc1 || '';
     if (document.getElementById('tentangDesc2Input')) document.getElementById('tentangDesc2Input').value = hero.tentangDesc2 || '';
+    if (document.getElementById('tentangTag1Input')) document.getElementById('tentangTag1Input').value = hero.tentangTag1 || 'Wisata Alam';
+    if (document.getElementById('tentangTag2Input')) document.getElementById('tentangTag2Input').value = hero.tentangTag2 || 'Edukasi Botani';
+    if (document.getElementById('tentangTag3Input')) document.getElementById('tentangTag3Input').value = hero.tentangTag3 || 'Ramah Keluarga';
     if (document.getElementById('tentangImgInput')) {
         document.getElementById('tentangImgInput').value = hero.tentangImg || '';
         const prev = document.getElementById('previewTentangImg');

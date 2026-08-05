@@ -385,13 +385,13 @@
               </div>
 
               <div class="form-group" style="margin:0;">
-                <label>Teks Badge ("Selamat Datang di")</label>
-                <input type="text" id="heroBadgeInput" class="form-control" placeholder="Selamat Datang di" required>
+                <label>Judul Utama Baris 1</label>
+                <input type="text" id="heroTitle1Input" class="form-control" placeholder="Kebun Refugia" required>
               </div>
 
               <div class="form-group" style="margin:0;">
-                <label>Judul Utama Beranda (HTML: &lt;br&gt;, &lt;em&gt;)</label>
-                <input type="text" id="heroTitleInput" class="form-control" placeholder="Kebun Refugia &lt;br&gt;&lt;em&gt;Magetan&lt;/em&gt;" required>
+                <label>Judul Utama Baris 2 (Cetak Miring)</label>
+                <input type="text" id="heroTitle2Input" class="form-control" placeholder="Magetan" required>
               </div>
 
               <div class="form-group" style="grid-column: span 2; margin:0;">
@@ -466,6 +466,23 @@
               <div class="form-group" style="grid-column: span 2; margin:0;">
                 <label>Paragraf 2 Deskripsi Pesona Alam</label>
                 <textarea id="tentangDesc2Input" class="form-control" rows="2"></textarea>
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label>Teks Badge Beranda ("Selamat Datang di")</label>
+                <input type="text" id="heroBadgeInput" class="form-control" placeholder="Selamat Datang di" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Tag 1 Pesona Alam (Misal: Wisata Alam)</label>
+                <input type="text" id="tentangTag1Input" class="form-control" placeholder="Wisata Alam" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Tag 2 Pesona Alam (Misal: Edukasi Botani)</label>
+                <input type="text" id="tentangTag2Input" class="form-control" placeholder="Edukasi Botani" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Tag 3 Pesona Alam (Misal: Ramah Keluarga)</label>
+                <input type="text" id="tentangTag3Input" class="form-control" placeholder="Ramah Keluarga" required>
               </div>
 
               <div style="grid-column: span 2; margin-top: 12px; padding-top: 16px; border-top: 1px dashed var(--border-light, #E1E9E0);">
@@ -627,8 +644,20 @@
           <textarea id="facDesc" class="form-control" placeholder="Deskripsi singkat fasilitas/lapak..." rows="2" required></textarea>
         </div>
         <div class="form-group">
-          <label>URL Gambar Katalog / Menu (Pisahkan dengan Koma jika > 1)</label>
-          <textarea id="facImages" class="form-control" placeholder="Contoh: assets/img/MenuMakanan_BERGAMBAR.jpeg, assets/img/MenuMakanan_Teks.jpeg" rows="2"></textarea>
+          <label>Gambar Katalog / Menu Fasilitas</label>
+          <input type="text" id="facImages" class="form-control" placeholder="URL atau pilih file gambar..." style="margin-bottom:8px;">
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div>
+              <label class="btn-file-upload">
+                📁 Pilih File Gambar Katalog
+                <input type="file" accept="image/*" class="file-picker" data-target-input="facImages" data-target-preview="previewFacImg" style="display:none;">
+              </label>
+            </div>
+            <div class="media-preview-card" id="cardFacImg" style="display:none;">
+              <img id="previewFacImg" src="" alt="Preview Katalog">
+              <span style="font-size:12px; color:#555; font-weight:600;">✓ Gambar Katalog Siap</span>
+            </div>
+          </div>
         </div>
         <div style="display:flex; gap:10px;">
           <button type="submit" class="btn-primary">💾 Simpan Fasilitas & Katalog</button>
