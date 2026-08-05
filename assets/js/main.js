@@ -8,28 +8,35 @@ document.addEventListener("DOMContentLoaded", () => {
         const settings = RefugiaDB.getSettings();
 
         if (settings) {
-            // Jam Operasional
             const ftJamEls = document.querySelectorAll('.ft-jam, .jam-info span');
             ftJamEls.forEach(el => {
                 if (settings.jamBuka) el.textContent = settings.jamBuka;
             });
 
-            // Nomor HP Admin
             const ftPhoneEls = document.querySelectorAll('.ft-phone');
             ftPhoneEls.forEach(el => {
                 if (settings.phoneAdmin) el.textContent = settings.phoneAdmin;
             });
 
-            // Tagline Footer
             const ftTaglineEls = document.querySelectorAll('.ft-tagline');
             ftTaglineEls.forEach(el => {
                 if (settings.tagline) el.textContent = settings.tagline;
             });
         }
+    }
 
+    window.reinitPublicPage = function() {
+        syncGlobalPublicData();
         renderPublicHero();
         renderPublicVideos();
-    }
+    };
+
+    window.renderPublicHero = renderPublicHero;
+
+    // Initial Sync & Real-Time DB Event Listeners
+    window.reinitPublicPage();
+    window.addEventListener('storage', window.reinitPublicPage);
+    window.addEventListener('refugia_db_updated', window.reinitPublicPage);
 
     /* =========================================
        1B. RENDER HERO & VIDEO GALLERY DINAMIS

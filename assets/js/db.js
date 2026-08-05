@@ -323,6 +323,7 @@ const RefugiaDB = (() => {
         saveHeroSettings: (heroData) => {
             const current = getItem(STORAGE_KEYS.HERO, DEFAULT_HERO);
             const updated = { ...current, ...heroData };
+            delete updated.heroTitle; // Remove legacy heroTitle string to prevent override bugs
             setItem(STORAGE_KEYS.HERO, updated);
             return updated;
         }

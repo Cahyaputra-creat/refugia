@@ -258,7 +258,14 @@
       renderDynamicTickets();
       window.addEventListener('storage', renderDynamicTickets);
       window.addEventListener('refugia_db_updated', renderDynamicTickets);
+      
+      const prevReinit = window.reinitPublicPage;
+      window.reinitPublicPage = function() {
+        if (typeof prevReinit === 'function') prevReinit();
+        renderDynamicTickets();
+      };
     });
   </script>
+  <script src="assets/js/router.js"></script>
 </body>
 </html>
