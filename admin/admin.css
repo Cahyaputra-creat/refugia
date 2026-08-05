@@ -584,3 +584,50 @@ table.admin-table tbody tr:hover {
     padding: 20px;
   }
 }
+
+/* UPLOAD BUTTON & MEDIA PREVIEWS */
+.btn-file-upload {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: var(--primary-green, #184432) !important;
+  color: #FFFFFF !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(24, 68, 50, 0.25) !important;
+  transition: all 0.25s ease !important;
+  text-decoration: none !important;
+  user-select: none;
+  width: auto !important;
+}
+
+.btn-file-upload:hover {
+  background: #246B4F !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(24, 68, 50, 0.35) !important;
+}
+
+.media-preview-card {
+  margin-top: 10px;
+  padding: 12px;
+  background: #F4F7F3;
+  border: 1.5px dashed var(--border-light, #E1E9E0);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.media-preview-card img,
+.media-preview-card video {
+  max-height: 120px;
+  max-width: 220px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

@@ -369,15 +369,18 @@
             <form id="berandaForm" style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <div class="form-group" style="grid-column: span 2; margin:0;">
                 <label>Foto Latar Utama Beranda (Hero Background Image)</label>
-                <div style="display:flex; gap:12px; align-items:center;">
-                  <input type="text" id="heroBgImgInput" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required style="flex:1;">
-                  <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
-                    📁 Pilih File Gambar
-                    <input type="file" accept="image/*" class="file-picker" data-target-input="heroBgImgInput" data-target-preview="previewHeroBg" style="display:none;">
-                  </label>
-                </div>
-                <div style="margin-top:8px;">
-                  <img id="previewHeroBg" src="" alt="Preview Hero Background" style="max-height:120px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:cover;">
+                <input type="hidden" id="heroBgImgInput">
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <div>
+                    <label class="btn-file-upload">
+                      📁 Pilih Foto Latar Beranda
+                      <input type="file" accept="image/*" class="file-picker" data-target-input="heroBgImgInput" data-target-preview="previewHeroBg" style="display:none;">
+                    </label>
+                  </div>
+                  <div class="media-preview-card" id="cardHeroBg" style="display:none;">
+                    <img id="previewHeroBg" src="" alt="Preview Hero Background">
+                    <span style="font-size:12px; color:#555; font-weight:600;">✓ Foto Latar Beranda Aktif</span>
+                  </div>
                 </div>
               </div>
 
@@ -439,16 +442,19 @@
               </div>
 
               <div class="form-group" style="margin:0;">
-                <label>Foto Seksi ("Tentang kami.jpeg")</label>
-                <div style="display:flex; gap:12px; align-items:center;">
-                  <input type="text" id="tentangImgInput" class="form-control" placeholder="assets/img/Tentang kami.jpeg" required style="flex:1;">
-                  <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
-                    📁 Pilih File Gambar
-                    <input type="file" accept="image/*" class="file-picker" data-target-input="tentangImgInput" data-target-preview="previewTentangImg" style="display:none;">
-                  </label>
-                </div>
-                <div style="margin-top:8px;">
-                  <img id="previewTentangImg" src="" alt="Preview tentang kami" style="max-height:100px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:cover;">
+                <label>Foto Seksi ("Tentang kami")</label>
+                <input type="hidden" id="tentangImgInput">
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <div>
+                    <label class="btn-file-upload">
+                      📁 Pilih Foto Seksi Alam
+                      <input type="file" accept="image/*" class="file-picker" data-target-input="tentangImgInput" data-target-preview="previewTentangImg" style="display:none;">
+                    </label>
+                  </div>
+                  <div class="media-preview-card" id="cardTentangImg" style="display:none;">
+                    <img id="previewTentangImg" src="" alt="Preview tentang kami">
+                    <span style="font-size:12px; color:#555; font-weight:600;">✓ Foto Seksi Aktif</span>
+                  </div>
                 </div>
               </div>
 
@@ -643,20 +649,35 @@
           <input type="text" id="vidTitle" class="form-control" placeholder="Contoh: Lihat Liputan Kebun Refugia" required>
         </div>
         <div class="form-group">
-          <label>URL / Path File Video (.mp4 / Link Video)</label>
-          <input type="text" id="vidUrl" class="form-control" placeholder="Contoh: assets/img/video refugia 2.mp4" required>
+          <label>File Video (.mp4)</label>
+          <input type="hidden" id="vidUrl">
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div>
+              <label class="btn-file-upload">
+                🎬 Pilih File Video (.mp4)
+                <input type="file" accept="video/*" class="file-picker" data-target-input="vidUrl" data-target-preview="previewVidUrl" style="display:none;">
+              </label>
+            </div>
+            <div class="media-preview-card" id="cardVidUrl" style="display:none;">
+              <video id="previewVidUrl" controls style="max-height:110px; max-width:220px; border-radius:8px;"></video>
+              <span style="font-size:12px; color:#555; font-weight:600;">✓ Video Siap Diputar</span>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>Gambar Thumbnail Preview Video</label>
-          <div style="display:flex; gap:12px; align-items:center;">
-            <input type="text" id="vidThumb" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required style="flex:1;">
-            <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
-              📁 Pilih File Gambar
-              <input type="file" accept="image/*" class="file-picker" data-target-input="vidThumb" data-target-preview="previewVidThumb" style="display:none;">
-            </label>
-          </div>
-          <div style="margin-top:8px;">
-            <img id="previewVidThumb" src="" alt="Preview thumbnail video" style="max-height:100px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:cover;">
+          <input type="hidden" id="vidThumb">
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div>
+              <label class="btn-file-upload">
+                📁 Pilih Gambar Thumbnail
+                <input type="file" accept="image/*" class="file-picker" data-target-input="vidThumb" data-target-preview="previewVidThumb" style="display:none;">
+              </label>
+            </div>
+            <div class="media-preview-card" id="cardVidThumb" style="display:none;">
+              <img id="previewVidThumb" src="" alt="Preview thumbnail video">
+              <span style="font-size:12px; color:#555; font-weight:600;">✓ Thumbnail Aktif</span>
+            </div>
           </div>
         </div>
         <div style="display:flex; gap:10px; margin-top:20px;">

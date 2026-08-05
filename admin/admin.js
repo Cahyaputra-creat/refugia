@@ -874,10 +874,12 @@ function setupFilePickers() {
                     if (input) input.value = dataUrl;
                 }
                 if (targetPreviewId) {
-                    const img = document.getElementById(targetPreviewId);
-                    if (img) {
-                        img.src = dataUrl;
-                        img.style.display = 'block';
+                    const el = document.getElementById(targetPreviewId);
+                    if (el) {
+                        el.src = dataUrl;
+                        el.style.display = 'block';
+                        const parentCard = el.closest('.media-preview-card');
+                        if (parentCard) parentCard.style.display = 'flex';
                     }
                 }
             };
@@ -894,7 +896,12 @@ function loadHeroSettings() {
     if (document.getElementById('heroBgImgInput')) {
         document.getElementById('heroBgImgInput').value = hero.heroBgImg || '';
         const prev = document.getElementById('previewHeroBg');
-        if (prev && hero.heroBgImg) { prev.src = hero.heroBgImg; prev.style.display = 'block'; }
+        const card = document.getElementById('cardHeroBg');
+        if (prev && hero.heroBgImg) {
+            prev.src = hero.heroBgImg;
+            prev.style.display = 'block';
+            if (card) card.style.display = 'flex';
+        }
     }
     if (document.getElementById('heroBadgeInput')) document.getElementById('heroBadgeInput').value = hero.heroBadge || 'Selamat Datang di';
     if (document.getElementById('heroTitleInput')) document.getElementById('heroTitleInput').value = hero.heroTitle || '';
@@ -913,7 +920,12 @@ function loadHeroSettings() {
     if (document.getElementById('tentangImgInput')) {
         document.getElementById('tentangImgInput').value = hero.tentangImg || '';
         const prev = document.getElementById('previewTentangImg');
-        if (prev && hero.tentangImg) { prev.src = hero.tentangImg; prev.style.display = 'block'; }
+        const card = document.getElementById('cardTentangImg');
+        if (prev && hero.tentangImg) {
+            prev.src = hero.tentangImg;
+            prev.style.display = 'block';
+            if (card) card.style.display = 'flex';
+        }
     }
     if (document.getElementById('galeriTitleInput')) document.getElementById('galeriTitleInput').value = hero.galeriTitle || 'Keseruan di Kebun Refugia Magetan';
 }
@@ -937,7 +949,7 @@ function renderVideosTable() {
                 <img src="${v.thumbUrl}" alt="${v.title}" style="width:70px; height:45px; object-fit:cover; border-radius:6px; border:1px solid #ccc;">
             </td>
             <td><strong>${v.title}</strong></td>
-            <td><code style="font-size:12px; background:#eef4ec; padding:4px 8px; border-radius:4px;">${v.videoUrl}</code></td>
+            <td><code style="font-size:12px; background:#eef4ec; padding:4px 8px; border-radius:4px; max-width:250px; overflow:hidden; text-overflow:ellipsis; display:inline-block;">${v.videoUrl}</code></td>
             <td>
                 <div class="action-btns">
                     <button class="btn-icon btn-edit" title="Edit Video" onclick="openVideoModal('${v.id}')">✏️</button>
@@ -954,6 +966,11 @@ function openVideoModal(id) {
     const title = document.getElementById('videoModalTitle');
     if (!modal) return;
 
+    const cardVidUrl = document.getElementById('cardVidUrl');
+    const prevVidUrl = document.getElementById('previewVidUrl');
+    const cardVidThumb = document.getElementById('cardVidThumb');
+    const prevVidThumb = document.getElementById('previewVidThumb');
+
     if (id) {
         const videos = RefugiaDB.getVideos();
         const v = videos.find(x => String(x.id) === String(id));
@@ -963,11 +980,22 @@ function openVideoModal(id) {
             document.getElementById('vidTitle').value = v.title;
             document.getElementById('vidUrl').value = v.videoUrl;
             document.getElementById('vidThumb').value = v.thumbUrl;
+
+            if (prevVidUrl && v.videoUrl) {
+                prevVidUrl.src = v.videoUrl;
+                if (cardVidUrl) cardVidUrl.style.display = 'flex';
+            }
+            if (prevVidThumb && v.thumbUrl) {
+                prevVidThumb.src = v.thumbUrl;
+                if (cardVidThumb) cardVidThumb.style.display = 'flex';
+            }
         }
     } else {
         title.textContent = 'Tambah Video Galeri Baru';
         document.getElementById('videoForm').reset();
         document.getElementById('vidId').value = '';
+        if (cardVidUrl) cardVidUrl.style.display = 'none';
+        if (cardVidThumb) cardVidThumb.style.display = 'none';
     }
 
     modal.style.display = 'flex';
