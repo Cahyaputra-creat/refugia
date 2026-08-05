@@ -302,14 +302,17 @@ document.addEventListener("DOMContentLoaded", () => {
         videoForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const id = document.getElementById('vidId').value;
-            const title = document.getElementById('vidTitle').value;
-            const videoUrl = document.getElementById('vidUrl').value;
-            const thumbUrl = document.getElementById('vidThumb').value;
+            const title = document.getElementById('vidTitle').value ? document.getElementById('vidTitle').value.trim() : 'Video Galeri Refugia';
+            let videoUrl = document.getElementById('vidUrl').value ? document.getElementById('vidUrl').value.trim() : '';
+            let thumbUrl = document.getElementById('vidThumb').value ? document.getElementById('vidThumb').value.trim() : '';
+
+            if (!videoUrl) videoUrl = 'assets/img/video refugia 2.mp4';
+            if (!thumbUrl) thumbUrl = 'assets/img/Tentang kami.jpeg';
 
             RefugiaDB.saveVideo({ id, title, videoUrl, thumbUrl });
             renderVideosTable();
             closeVideoModal();
-            showToast('✓ Data Video Galeri Berhasil Disimpan!');
+            showToast('✓ Data Video Galeri Berhasil Disimpan & Tersinkronkan!');
         });
     }
 
@@ -902,6 +905,27 @@ function setupFilePickers() {
 
             const targetInputId = this.getAttribute('data-target-input');
             const targetPreviewId = this.getAttribute('data-target-preview');
+
+            // Prevent localStorage quota crash on large files (> 2MB or video files)
+            if (file.type.startsWith('video/') || file.size > 2 * 1024 * 1024) {
+                const objectUrl = URL.createObjectURL(file);
+                const filePath = 'assets/img/' + file.name;
+
+                if (targetInputId) {
+                    const input = document.getElementById(targetInputId);
+                    if (input) input.value = filePath;
+                }
+                if (targetPreviewId) {
+                    const el = document.getElementById(targetPreviewId);
+                    if (el) {
+                        el.src = objectUrl;
+                        el.style.display = 'block';
+                        const parentCard = el.closest('.media-preview-card');
+                        if (parentCard) parentCard.style.display = 'flex';
+                    }
+                }
+                return;
+            }
 
             const reader = new FileReader();
             reader.onload = function(evt) {
