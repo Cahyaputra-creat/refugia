@@ -130,25 +130,17 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('refugia_db_updated', syncGlobalPublicData);
 
     /* =========================================
-       2. LOGIKA HAMBURGER MENU (DOCUMENT-LEVEL AUTO CLOSE)
+       2. LOGIKA HAMBURGER MENU (MOBILE TOGGLE)
     ========================================= */
-    document.addEventListener('click', function(e) {
-        const hamburgerBtn = e.target.closest('.hamburger, #hamburger');
-        const navMenu = document.querySelector('.nav-links, .nav-menu');
-
-        if (hamburgerBtn && navMenu) {
-            hamburgerBtn.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            return;
-        }
-
-        const navItem = e.target.closest('.nav-links a, .nav-menu a');
-        if (navItem) {
-            const hBtn = document.querySelector('.hamburger, #hamburger');
-            if (hBtn) hBtn.classList.remove('active');
-            if (navMenu) navMenu.classList.remove('active');
-        }
-    });
+    const hamburger = document.querySelector('.hamburger, #hamburger');
+    const navLinks = document.querySelector('.nav-links, .nav-menu');
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+    }
 
     /* =========================================
        3. LOGIKA VIDEO MODAL POP-UP

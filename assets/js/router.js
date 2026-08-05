@@ -86,20 +86,20 @@ const RefugiaRouter = (() => {
 
         if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) {
             e.preventDefault();
-            closeMobileNavbar();
+            setTimeout(closeMobileNavbar, 80);
             return;
         }
 
         e.preventDefault();
-        closeMobileNavbar();
         updateActiveNavbarLinks(targetUrl.href); // Instant 0ms visual active highlight
         navigateTo(targetUrl.href);
+        setTimeout(closeMobileNavbar, 80);
     }
 
     function handlePopState() {
-        closeMobileNavbar();
         updateActiveNavbarLinks(window.location.href);
         navigateTo(window.location.href, false);
+        setTimeout(closeMobileNavbar, 80);
     }
 
     async function navigateTo(url, pushHistory = true) {
@@ -188,14 +188,13 @@ const RefugiaRouter = (() => {
     }
 
     function closeMobileNavbar() {
-        const hamburger = document.querySelector('.hamburger, #hamburger, .menu-toggle');
+        const hamburger = document.querySelector('.hamburger, #hamburger');
         const navLinks = document.querySelector('.nav-links, .nav-menu');
         if (hamburger) hamburger.classList.remove('active');
         if (navLinks) navLinks.classList.remove('active');
     }
 
     function updateActiveNavbarLinks(currentUrl) {
-        closeMobileNavbar();
         const currentPath = new URL(currentUrl, window.location.href).pathname;
         document.querySelectorAll('.nav-links a, .nav-menu a').forEach(link => {
             const linkPath = new URL(link.getAttribute('href'), window.location.href).pathname;
