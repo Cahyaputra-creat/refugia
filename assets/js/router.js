@@ -194,7 +194,7 @@ const RefugiaRouter = (() => {
             const parser = new DOMParser();
             const newDoc = parser.parseFromString(htmlText, 'text/html');
 
-            // 1. Sync missing head stylesheets
+            // 1. Sync missing head stylesheets & missing script tags
             newDoc.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
                 const href = link.getAttribute('href');
                 if (href && !document.querySelector(`link[href="${href}"]`)) {
@@ -202,6 +202,15 @@ const RefugiaRouter = (() => {
                     newLink.rel = 'stylesheet';
                     newLink.href = href;
                     document.head.appendChild(newLink);
+                }
+            });
+
+            newDoc.querySelectorAll('script[src]').forEach(script => {
+                const src = script.getAttribute('src');
+                if (src && !document.querySelector(`script[src="${src}"]`) && !src.includes('router.js')) {
+                    const newScript = document.createElement('script');
+                    newScript.src = src;
+                    document.body.appendChild(newScript);
                 }
             });
 
@@ -281,6 +290,12 @@ const RefugiaRouter = (() => {
         }
         if (typeof RefugiaFasilitas !== 'undefined' && typeof RefugiaFasilitas.initSlider === 'function') {
             RefugiaFasilitas.initSlider();
+        }
+        if (typeof renderPublicFaqs === 'function') {
+            renderPublicFaqs();
+        }
+        if (typeof syncPublicSettings === 'function') {
+            syncPublicSettings();
         }
     }
 
