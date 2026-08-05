@@ -10,10 +10,43 @@ const RefugiaDB = (() => {
         FAQS: 'refugia_faqs_db_v2',
         FACILITIES: 'refugia_facilities_db_v2',
         SETTINGS: 'refugia_settings_db_v2',
-        SALES: 'refugia_sales_db_v2'
+        SALES: 'refugia_sales_db_v2',
+        VIDEOS: 'refugia_videos_db_v2',
+        HERO: 'refugia_hero_db_v2'
     };
 
     // Default Seed Data
+    const DEFAULT_VIDEOS = [
+        {
+            id: 'vid-1',
+            title: 'Tonton Keseruan di Instagram',
+            videoUrl: 'assets/img/video refugia 2.mp4',
+            thumbUrl: 'assets/img/Tentang kami.jpeg'
+        },
+        {
+            id: 'vid-2',
+            title: 'Lihat Liputan Kebun Refugia',
+            videoUrl: 'assets/img/video refugia 3.mp4',
+            thumbUrl: 'assets/img/Gambar Beranda.jpg'
+        },
+        {
+            id: 'vid-3',
+            title: 'Suasana Indah Kebun Bunga',
+            videoUrl: 'assets/img/video refugia 2.mp4',
+            thumbUrl: 'assets/img/Tentang kami.jpeg'
+        }
+    ];
+
+    const DEFAULT_HERO = {
+        heroBgImg: 'assets/img/Gambar Beranda.jpg',
+        heroTitle: 'Kebun Refugia <br><em>Magetan</em>',
+        heroTagline: 'Nikmati keindahan hamparan bunga yang memukau dengan latar megah Gunung Lawu, serta berbagai spot wisata menarik yang cocok untuk dinikmati bersama seluruh keluarga.',
+        tentangTitle: 'Pesona Keindahan Alam di Kaki Gunung Lawu',
+        tentangDesc1: 'Kebun Refugia Magetan awalnya merupakan inisiatif lahan untuk menanam bunga hias yang berfungsi sebagai pengalih hama tanaman. Namun, berkat keindahannya, kini bertransformasi menjadi destinasi agrowisata favorit yang memanjakan mata.',
+        tentangDesc2: 'Dengan latar belakang Gunung Lawu yang megah dan udara sejuk pegunungan, tempat ini menjadi lokasi yang sempurna untuk melepas penat dan berkreasi dengan fotografi.',
+        tentangImg: 'assets/img/Tentang kami.jpeg'
+    };
+
     const DEFAULT_TICKETS = [
         { id: '1', type: 'Anak-anak', price: 5000, desc: 'Untuk usia di bawah 12 tahun', status: 'Aktif', category: 'Utama' },
         { id: '2', type: 'Dewasa', price: 10000, desc: 'Untuk usia 12 tahun ke atas', status: 'Aktif', category: 'Utama' },
@@ -245,6 +278,41 @@ const RefugiaDB = (() => {
             let facilities = getItem(STORAGE_KEYS.FACILITIES, DEFAULT_FACILITIES);
             facilities = facilities.filter(f => f.id !== id);
             setItem(STORAGE_KEYS.FACILITIES, facilities);
+        },
+
+        // VIDEOS API
+        getVideos: () => getItem(STORAGE_KEYS.VIDEOS, DEFAULT_VIDEOS),
+        saveVideo: (videoData) => {
+            const videos = getItem(STORAGE_KEYS.VIDEOS, DEFAULT_VIDEOS);
+            if (videoData.id) {
+                const idx = videos.findIndex(v => String(v.id) === String(videoData.id));
+                if (idx !== -1) {
+                    videos[idx] = { ...videos[idx], ...videoData };
+                }
+            } else {
+                const newVid = {
+                    id: 'vid-' + Date.now(),
+                    title: videoData.title || 'Video Keseruan',
+                    videoUrl: videoData.videoUrl || 'assets/img/video refugia 2.mp4',
+                    thumbUrl: videoData.thumbUrl || 'assets/img/Tentang kami.jpeg'
+                };
+                videos.push(newVid);
+            }
+            setItem(STORAGE_KEYS.VIDEOS, videos);
+        },
+        deleteVideo: (id) => {
+            let videos = getItem(STORAGE_KEYS.VIDEOS, DEFAULT_VIDEOS);
+            videos = videos.filter(v => String(v.id) !== String(id));
+            setItem(STORAGE_KEYS.VIDEOS, videos);
+        },
+
+        // HERO MEDIA API
+        getHeroSettings: () => getItem(STORAGE_KEYS.HERO, DEFAULT_HERO),
+        saveHeroSettings: (heroData) => {
+            const current = getItem(STORAGE_KEYS.HERO, DEFAULT_HERO);
+            const updated = { ...current, ...heroData };
+            setItem(STORAGE_KEYS.HERO, updated);
+            return updated;
         }
     };
 })();

@@ -29,6 +29,7 @@
         <li><a href="#" data-tab="tab-transaksi">🧾 Transaksi Loket</a></li>
         <li><a href="#" data-tab="tab-tiket">🎟️ Kelola Tiket</a></li>
         <li><a href="#" data-tab="tab-fasilitas">🌺 Fasilitas & Lapak</a></li>
+        <li><a href="#" data-tab="tab-media">🎬 Kelola Media & Galeri</a></li>
         <li><a href="#" data-tab="tab-faq">❓ Kelola FAQ</a></li>
         <li><a href="#" data-tab="tab-pesan">📩 Pesan Masuk</a></li>
         <li><a href="#" data-tab="tab-pengaturan">⚙️ Pengaturan Website</a></li>
@@ -347,6 +348,72 @@
           </div>
         </section>
 
+        <!-- 8. TAB KELOLA MEDIA & GALERI VIDEO -->
+        <section id="tab-media" class="tab-content">
+          
+          <!-- PENGATURAN HERO & FOTO BERANDA -->
+          <div class="card-panel" style="padding: 24px; margin-bottom: 24px;">
+            <div class="panel-header" style="margin-bottom: 16px; padding:0; border:none;">
+              <div class="panel-title">🖼️ Pengaturan Gambar Latar & Teks Banner Utama (Hero Section)</div>
+            </div>
+            <form id="heroMediaForm" style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group" style="grid-column: span 2; margin:0;">
+                <label>URL / File Gambar Latar Utama (Hero Background)</label>
+                <input type="text" id="heroBgImgInput" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Judul Banner Beranda (HTML Support: &lt;br&gt;, &lt;em&gt;)</label>
+                <input type="text" id="heroTitleInput" class="form-control" placeholder="Contoh: Kebun Refugia &lt;br&gt;&lt;em&gt;Magetan&lt;/em&gt;" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>URL / File Gambar "Tentang kami"</label>
+                <input type="text" id="tentangImgInput" class="form-control" placeholder="Contoh: assets/img/Tentang kami.jpeg" required>
+              </div>
+              <div class="form-group" style="grid-column: span 2; margin:0;">
+                <label>Teks Tagline Sub-Judul Hero</label>
+                <textarea id="heroTaglineInput" class="form-control" rows="2" placeholder="Teks deskripsi singkat beranda..." required></textarea>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Judul Seksi "Pesona Keindahan Alam"</label>
+                <input type="text" id="tentangTitleInput" class="form-control" placeholder="Judul seksi..." required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Paragraf 1 Deskripsi Pesona Alam</label>
+                <textarea id="tentangDesc1Input" class="form-control" rows="2" required></textarea>
+              </div>
+              <div style="grid-column: span 2; margin-top: 8px;">
+                <button type="submit" class="btn-primary" style="width:auto; padding:10px 24px;">💾 Simpan Foto Latar & Teks Banner</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- KELOLA GALERI VIDEO BERANDA -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <div class="panel-title">🎬 Kelola Galeri Video Beranda ("Keseruan di Kebun Refugia")</div>
+              <div class="panel-actions">
+                <button class="btn-add" onclick="openVideoModal()">+ Tambah Video Baru</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Thumbnail Preview</th>
+                    <th>Judul Video</th>
+                    <th>URL / Path File Video (.mp4)</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="videoTbody">
+                  <!-- Rendered via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
   </div>
@@ -470,6 +537,32 @@
         <div style="display:flex; gap:10px;">
           <button type="submit" class="btn-primary">💾 Simpan Fasilitas & Katalog</button>
           <button type="button" class="btn-logout" style="background:#edf2f7; color:#4a5568; border:1px solid #cbd5e0;" onclick="closeFacilityModal()">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT/ADD VIDEO GALERI -->
+  <div id="videoModalAdmin" class="login-page" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6);">
+    <div class="login-card" style="max-width:540px; text-align:left;">
+      <h2 style="font-family:'Playfair Display',serif; color:var(--primary-green); margin-bottom:15px;" id="videoModalTitle">Tambah Video Galeri Baru</h2>
+      <form id="videoForm">
+        <input type="hidden" id="vidId">
+        <div class="form-group">
+          <label>Judul / Teks Kartu Video</label>
+          <input type="text" id="vidTitle" class="form-control" placeholder="Contoh: Lihat Liputan Kebun Refugia" required>
+        </div>
+        <div class="form-group">
+          <label>URL / Path File Video (.mp4 / Link Video)</label>
+          <input type="text" id="vidUrl" class="form-control" placeholder="Contoh: assets/img/video refugia 2.mp4" required>
+        </div>
+        <div class="form-group">
+          <label>URL / Path Gambar Thumbnail Preview</label>
+          <input type="text" id="vidThumb" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button type="submit" class="btn-primary">💾 Simpan Video Galeri</button>
+          <button type="button" class="btn-logout" style="background:#edf2f7; color:#4a5568; border:1px solid #cbd5e0;" onclick="closeVideoModal()">Batal</button>
         </div>
       </form>
     </div>

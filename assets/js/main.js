@@ -26,6 +26,71 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (settings.tagline) el.textContent = settings.tagline;
             });
         }
+
+        renderPublicHero();
+        renderPublicVideos();
+    }
+
+    /* =========================================
+       1B. RENDER HERO & VIDEO GALLERY DINAMIS
+    ========================================= */
+    function renderPublicHero() {
+        if (typeof RefugiaDB === 'undefined') return;
+        const hero = RefugiaDB.getHeroSettings();
+        if (!hero) return;
+
+        const heroBgImg = document.getElementById('heroBgImg');
+        const heroTitle = document.getElementById('heroTitle');
+        const heroTagline = document.getElementById('heroTagline');
+        const tentangTitle = document.getElementById('tentangTitle');
+        const tentangDesc1 = document.getElementById('tentangDesc1');
+        const tentangDesc2 = document.getElementById('tentangDesc2');
+        const tentangImg = document.getElementById('tentangImg');
+
+        if (heroBgImg && hero.heroBgImg) heroBgImg.src = hero.heroBgImg;
+        if (heroTitle && hero.heroTitle) heroTitle.innerHTML = hero.heroTitle;
+        if (heroTagline && hero.heroTagline) heroTagline.textContent = hero.heroTagline;
+        if (tentangTitle && hero.tentangTitle) tentangTitle.textContent = hero.tentangTitle;
+        if (tentangDesc1 && hero.tentangDesc1) tentangDesc1.textContent = hero.tentangDesc1;
+        if (tentangDesc2 && hero.tentangDesc2) tentangDesc2.textContent = hero.tentangDesc2;
+        if (tentangImg && hero.tentangImg) tentangImg.src = hero.tentangImg;
+    }
+
+    function renderPublicVideos() {
+        const container = document.getElementById('videoGalleryContainer');
+        if (!container || typeof RefugiaDB === 'undefined') return;
+
+        const videos = RefugiaDB.getVideos();
+        container.innerHTML = '';
+
+        if (!videos || videos.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666; grid-column:span 3;">Belum ada video galeri yang ditambahkan.</p>';
+            return;
+        }
+
+        videos.forEach(v => {
+            const card = document.createElement('div');
+            card.className = 'instagram-card video-card';
+            card.setAttribute('data-video', v.videoUrl);
+
+            card.innerHTML = `
+              <div class="ig-card-thumbnail">
+                <img src="${v.thumbUrl}" alt="${v.title}">
+                <div class="ig-card-overlay">
+                  <div class="ig-play-btn">
+                    <span class="ig-play-icon">▶</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ig-card-text">${v.title}</div>
+            `;
+
+            card.addEventListener('click', function() {
+                openModal(v.videoUrl);
+            });
+
+            container.appendChild(card);
+        });
     }
 
     syncGlobalPublicData();
@@ -58,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById('videoModal');
     const popupVideo = document.getElementById('popupVideo');
     const closeBtn = document.querySelector('.close-btn');
-    const videoCards = document.querySelectorAll('.instagram-card, .video-card');
 
     function openModal(videoSrc) {
         if (!modal || !popupVideo) return;
@@ -92,15 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.style.display = 'none';
         }, 300);
     }
-
-    videoCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const videoSrc = this.getAttribute('data-video'); 
-            if (videoSrc) {
-                openModal(videoSrc);
-            }
-        });
-    });
 
     if (closeBtn) {
         closeBtn.addEventListener('click', closeModal);

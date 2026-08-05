@@ -232,7 +232,43 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* 11. INITIALIZE ALL TABLES & ANALYTICS */
+    /* 12. HERO MEDIA & VIDEO GALLERY FORM SUBMITS */
+    const heroMediaForm = document.getElementById('heroMediaForm');
+    if (heroMediaForm) {
+        loadHeroSettings();
+        heroMediaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const heroBgImg = document.getElementById('heroBgImgInput').value;
+            const heroTitle = document.getElementById('heroTitleInput').value;
+            const heroTagline = document.getElementById('heroTaglineInput').value;
+            const tentangTitle = document.getElementById('tentangTitleInput').value;
+            const tentangDesc1 = document.getElementById('tentangDesc1Input').value;
+            const tentangImg = document.getElementById('tentangImgInput').value;
+
+            RefugiaDB.saveHeroSettings({
+                heroBgImg, heroTitle, heroTagline, tentangTitle, tentangDesc1, tentangImg
+            });
+            alert('✓ Foto Latar Banner Hero & Deskripsi Beranda Berhasil Disimpan & Tersinkronkan ke Website Publik!');
+        });
+    }
+
+    const videoForm = document.getElementById('videoForm');
+    if (videoForm) {
+        videoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('vidId').value;
+            const title = document.getElementById('vidTitle').value;
+            const videoUrl = document.getElementById('vidUrl').value;
+            const thumbUrl = document.getElementById('vidThumb').value;
+
+            RefugiaDB.saveVideo({ id, title, videoUrl, thumbUrl });
+            renderVideosTable();
+            closeVideoModal();
+            alert('✓ Data Video Galeri Berhasil Disimpan & Tersinkronkan ke Website Publik!');
+        });
+    }
+
+    /* 13. INITIALIZE ALL TABLES & ANALYTICS */
     refreshAllAdminViews();
 
     // Auto Refresh Live & Global Cloud Sync
@@ -258,6 +294,8 @@ function refreshAllAdminViews() {
         renderMessagesTable();
         renderFaqsTable();
         renderFacilitiesTable();
+        renderVideosTable();
+        loadHeroSettings();
     } catch(e) {
         console.warn('Error refreshing views:', e);
     }
@@ -800,5 +838,88 @@ function deleteFacility(id) {
     if (confirm('Hapus fasilitas ini?')) {
         RefugiaDB.deleteFacility(id);
         renderFacilitiesTable();
+    }
+}
+
+// MEDIA & VIDEO GALLERY FUNCTIONS
+function loadHeroSettings() {
+    if (typeof RefugiaDB === 'undefined') return;
+    const hero = RefugiaDB.getHeroSettings();
+    if (!hero) return;
+
+    if (document.getElementById('heroBgImgInput')) document.getElementById('heroBgImgInput').value = hero.heroBgImg || '';
+    if (document.getElementById('heroTitleInput')) document.getElementById('heroTitleInput').value = hero.heroTitle || '';
+    if (document.getElementById('heroTaglineInput')) document.getElementById('heroTaglineInput').value = hero.heroTagline || '';
+    if (document.getElementById('tentangTitleInput')) document.getElementById('tentangTitleInput').value = hero.tentangTitle || '';
+    if (document.getElementById('tentangDesc1Input')) document.getElementById('tentangDesc1Input').value = hero.tentangDesc1 || '';
+    if (document.getElementById('tentangImgInput')) document.getElementById('tentangImgInput').value = hero.tentangImg || '';
+}
+
+function renderVideosTable() {
+    const videoTbody = document.getElementById('videoTbody');
+    if (!videoTbody) return;
+
+    const videos = (typeof RefugiaDB !== 'undefined') ? RefugiaDB.getVideos() : [];
+    videoTbody.innerHTML = '';
+
+    if (videos.length === 0) {
+        videoTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted); padding:30px;">Belum ada video galeri yang ditambahkan.</td></tr>`;
+        return;
+    }
+
+    videos.forEach((v) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>
+                <img src="${v.thumbUrl}" alt="${v.title}" style="width:70px; height:45px; object-fit:cover; border-radius:6px; border:1px solid #ccc;">
+            </td>
+            <td><strong>${v.title}</strong></td>
+            <td><code style="font-size:12px; background:#eef4ec; padding:4px 8px; border-radius:4px;">${v.videoUrl}</code></td>
+            <td>
+                <div class="action-btns">
+                    <button class="btn-icon btn-edit" title="Edit Video" onclick="openVideoModal('${v.id}')">✏️</button>
+                    <button class="btn-icon btn-delete" title="Hapus Video" onclick="deleteVideo('${v.id}')">🗑️</button>
+                </div>
+            </td>
+        `;
+        videoTbody.appendChild(tr);
+    });
+}
+
+function openVideoModal(id) {
+    const modal = document.getElementById('videoModalAdmin');
+    const title = document.getElementById('videoModalTitle');
+    if (!modal) return;
+
+    if (id) {
+        const videos = RefugiaDB.getVideos();
+        const v = videos.find(x => String(x.id) === String(id));
+        if (v) {
+            title.textContent = 'Edit Video Galeri';
+            document.getElementById('vidId').value = v.id;
+            document.getElementById('vidTitle').value = v.title;
+            document.getElementById('vidUrl').value = v.videoUrl;
+            document.getElementById('vidThumb').value = v.thumbUrl;
+        }
+    } else {
+        title.textContent = 'Tambah Video Galeri Baru';
+        document.getElementById('videoForm').reset();
+        document.getElementById('vidId').value = '';
+    }
+
+    modal.style.display = 'flex';
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('videoModalAdmin');
+    if (modal) modal.style.display = 'none';
+    if (document.getElementById('videoForm')) document.getElementById('videoForm').reset();
+}
+
+function deleteVideo(id) {
+    if (confirm('Apakah Anda yakin ingin menghapus video galeri ini?')) {
+        RefugiaDB.deleteVideo(id);
+        renderVideosTable();
+        alert('✓ Video Galeri Berhasil Dihapus!');
     }
 }
