@@ -90,16 +90,19 @@ const RefugiaRouter = (() => {
         }
 
         e.preventDefault();
+        updateActiveNavbarLinks(targetUrl.href); // Instant 0ms visual active highlight
         navigateTo(targetUrl.href);
     }
 
     function handlePopState() {
+        updateActiveNavbarLinks(window.location.href);
         navigateTo(window.location.href, false);
     }
 
     async function navigateTo(url, pushHistory = true) {
         if (isNavigating) return;
         isNavigating = true;
+        updateActiveNavbarLinks(url); // Ensure 0ms instant highlight
 
         const mainContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
         const pathname = new URL(url, window.location.href).pathname;
