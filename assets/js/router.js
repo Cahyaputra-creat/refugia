@@ -86,15 +86,18 @@ const RefugiaRouter = (() => {
 
         if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) {
             e.preventDefault();
+            closeMobileNavbar();
             return;
         }
 
         e.preventDefault();
+        closeMobileNavbar();
         updateActiveNavbarLinks(targetUrl.href); // Instant 0ms visual active highlight
         navigateTo(targetUrl.href);
     }
 
     function handlePopState() {
+        closeMobileNavbar();
         updateActiveNavbarLinks(window.location.href);
         navigateTo(window.location.href, false);
     }
@@ -102,6 +105,7 @@ const RefugiaRouter = (() => {
     async function navigateTo(url, pushHistory = true) {
         if (isNavigating) return;
         isNavigating = true;
+        closeMobileNavbar();
         updateActiveNavbarLinks(url); // Ensure 0ms instant highlight
 
         const mainContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
@@ -163,7 +167,15 @@ const RefugiaRouter = (() => {
         }
     }
 
+    function closeMobileNavbar() {
+        const hamburger = document.querySelector('.hamburger, #hamburger, .menu-toggle');
+        const navLinks = document.querySelector('.nav-links, .nav-menu');
+        if (hamburger) hamburger.classList.remove('active');
+        if (navLinks) navLinks.classList.remove('active');
+    }
+
     function updateActiveNavbarLinks(currentUrl) {
+        closeMobileNavbar();
         const currentPath = new URL(currentUrl, window.location.href).pathname;
         document.querySelectorAll('.nav-links a, .nav-menu a').forEach(link => {
             const linkPath = new URL(link.getAttribute('href'), window.location.href).pathname;

@@ -130,24 +130,25 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('refugia_db_updated', syncGlobalPublicData);
 
     /* =========================================
-       2. LOGIKA HAMBURGER MENU
+       2. LOGIKA HAMBURGER MENU (DOCUMENT-LEVEL AUTO CLOSE)
     ========================================= */
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    document.addEventListener('click', function(e) {
+        const hamburgerBtn = e.target.closest('.hamburger, #hamburger');
+        const navMenu = document.querySelector('.nav-links, .nav-menu');
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+        if (hamburgerBtn && navMenu) {
+            hamburgerBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            return;
+        }
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-    }
+        const navItem = e.target.closest('.nav-links a, .nav-menu a');
+        if (navItem) {
+            const hBtn = document.querySelector('.hamburger, #hamburger');
+            if (hBtn) hBtn.classList.remove('active');
+            if (navMenu) navMenu.classList.remove('active');
+        }
+    });
 
     /* =========================================
        3. LOGIKA VIDEO MODAL POP-UP
