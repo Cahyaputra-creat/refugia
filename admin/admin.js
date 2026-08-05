@@ -1080,3 +1080,107 @@ function deleteVideo(id) {
         alert('✓ Video Galeri Berhasil Dihapus!');
     }
 }
+
+/* =========================================
+   DRAGGABLE MODAL SUPPORT (Admin Panel)
+   Makes all .login-card modals draggable via title/header drag
+========================================= */
+(function initDraggableModals() {
+    function makeDraggable(modalEl) {
+        const card = modalEl.querySelector('.login-card, .modal-card, [class$="-card"]');
+        if (!card) return;
+
+        // Make the card itself draggable via header (h2 or first child)
+        const header = card.querySelector('h2, h3, .modal-header');
+        const handle = header || card;
+        handle.style.cursor = 'move';
+        handle.style.userSelect = 'none';
+
+        // Reset position when modal opens
+        card.style.position = 'relative';
+
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+
+        handle.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            const rect = card.getBoundingClientRect();
+            startLeft = rect.left;
+            startTop = rect.top;
+            card.style.position = 'fixed';
+            card.style.left = startLeft + 'px';
+            card.style.top = startTop + 'px';
+            card.style.margin = '0';
+            card.style.zIndex = '10001';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            card.style.left = (startLeft + dx) + 'px';
+            card.style.top = (startTop + dy) + 'px';
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+
+        // Touch support for mobile
+        handle.addEventListener('touchstart', function(e) {
+            const touch = e.touches[0];
+            isDragging = true;
+            startX = touch.clientX;
+            startY = touch.clientY;
+            const rect = card.getBoundingClientRect();
+            startLeft = rect.left;
+            startTop = rect.top;
+            card.style.position = 'fixed';
+            card.style.left = startLeft + 'px';
+            card.style.top = startTop + 'px';
+            card.style.margin = '0';
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            const touch = e.touches[0];
+            const dx = touch.clientX - startX;
+            const dy = touch.clientY - startY;
+            card.style.left = (startLeft + dx) + 'px';
+            card.style.top = (startTop + dy) + 'px';
+        }, { passive: true });
+
+        document.addEventListener('touchend', function() {
+            isDragging = false;
+        });
+    }
+
+    // Initialize draggable for all known modals when DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Observe new modals becoming visible
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1 && node.classList && (node.classList.contains('login-page') || node.querySelector('.login-card'))) {
+                        makeDraggable(node);
+                    }
+                });
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const target = mutation.target;
+                    if (target.style.display !== 'none' && target.querySelector && target.querySelector('.login-card')) {
+                        makeDraggable(target);
+                    }
+                }
+            });
+        });
+
+        // Watch for modal display changes
+        document.querySelectorAll('[id$="Modal"], [id$="modal"], .login-page').forEach(function(modal) {
+            makeDraggable(modal);
+            observer.observe(modal, { attributes: true, attributeFilter: ['style'] });
+        });
+    });
+})();

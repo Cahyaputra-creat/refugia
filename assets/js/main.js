@@ -202,28 +202,22 @@ document.addEventListener("DOMContentLoaded", () => {
        4. HERO BUTTONS — USE ROUTER (not window.location.href)
     ========================================= */
     function initHeroButtons() {
-        const btnPesan = document.querySelector('.btn-gold[onclick]');
-        const btnLokasi = document.querySelector('.btn-ghost[onclick]');
-        if (btnPesan) {
-            btnPesan.removeAttribute('onclick');
-            btnPesan.addEventListener('click', () => {
+        // Clone nodes to safely remove any existing listeners before adding new ones
+        ['.btn-gold', '.btn-ghost'].forEach((sel, idx) => {
+            const btn = document.querySelector(sel);
+            if (!btn) return;
+            const target = idx === 0 ? 'pemesanan.html' : 'lokasi.html';
+            const newBtn = btn.cloneNode(true);
+            newBtn.removeAttribute('onclick');
+            newBtn.addEventListener('click', () => {
                 if (typeof RefugiaRouter !== 'undefined') {
-                    RefugiaRouter.navigateTo('pemesanan.html');
+                    RefugiaRouter.navigateTo(target);
                 } else {
-                    window.location.href = 'pemesanan.html';
+                    window.location.href = target;
                 }
             });
-        }
-        if (btnLokasi) {
-            btnLokasi.removeAttribute('onclick');
-            btnLokasi.addEventListener('click', () => {
-                if (typeof RefugiaRouter !== 'undefined') {
-                    RefugiaRouter.navigateTo('lokasi.html');
-                } else {
-                    window.location.href = 'lokasi.html';
-                }
-            });
-        }
+            btn.parentNode.replaceChild(newBtn, btn);
+        });
     }
     initHeroButtons();
     window.initHeroButtons = initHeroButtons;
