@@ -102,9 +102,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 const sidebar = document.querySelector('.sidebar');
                 if (sidebar) sidebar.classList.remove('active');
 
-                if (targetTab === 'tab-dashboard') {
-                    setTimeout(renderDashboardAnalytics, 50);
-                }
+                // Instant lazy render for active tab
+                if (targetTab === 'tab-dashboard') renderDashboardAnalytics();
+                else if (targetTab === 'tab-beranda') loadHeroSettings();
+                else if (targetTab === 'tab-transaksi') renderSalesTable();
+                else if (targetTab === 'tab-tiket') renderTicketTable();
+                else if (targetTab === 'tab-fasilitas') renderFacilitiesTable();
+                else if (targetTab === 'tab-faq') renderFaqsTable();
+                else if (targetTab === 'tab-pesan') renderMessagesTable();
             });
         });
     }
@@ -316,26 +321,33 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('refugia_db_updated', refreshAllAdminViews);
     window.addEventListener('resize', renderDashboardAnalytics);
 
-    // Auto Poll Global Cloud Analytics setiap 3 detik dari HP/semua visitor
+    // Auto Poll Global Cloud Analytics setiap 5 detik (hanya merender jika tab aktif)
     setInterval(async () => {
         if (typeof RefugiaTracker !== 'undefined' && RefugiaTracker.syncGlobalCloudData) {
             await RefugiaTracker.syncGlobalCloudData();
-            renderDashboardAnalytics();
+            const dashTab = document.getElementById('tab-dashboard');
+            if (dashTab && dashTab.classList.contains('active')) {
+                renderDashboardAnalytics();
+            }
         }
-        renderMessagesTable();
-    }, 3000);
+        const pesanTab = document.getElementById('tab-pesan');
+        if (pesanTab && pesanTab.classList.contains('active')) {
+            renderMessagesTable();
+        }
+    }, 5000);
 });
 
 function refreshAllAdminViews() {
     try {
-        renderDashboardAnalytics();
-        renderSalesTable();
-        renderTicketTable();
-        renderMessagesTable();
-        renderFaqsTable();
-        renderFacilitiesTable();
-        renderVideosTable();
-        loadHeroSettings();
+        const activeTab = document.querySelector('.tab-content.active');
+        const activeId = activeTab ? activeTab.id : 'tab-dashboard';
+        if (activeId === 'tab-dashboard') renderDashboardAnalytics();
+        else if (activeId === 'tab-beranda') { loadHeroSettings(); renderVideosTable(); }
+        else if (activeId === 'tab-transaksi') renderSalesTable();
+        else if (activeId === 'tab-tiket') renderTicketTable();
+        else if (activeId === 'tab-fasilitas') renderFacilitiesTable();
+        else if (activeId === 'tab-faq') renderFaqsTable();
+        else if (activeId === 'tab-pesan') renderMessagesTable();
     } catch(e) {
         console.warn('Error refreshing views:', e);
     }
