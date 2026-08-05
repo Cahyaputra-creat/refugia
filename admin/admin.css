@@ -631,3 +631,42 @@ table.admin-table tbody tr:hover {
   object-fit: cover;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+/* ADMIN TOAST NOTIFICATION SYSTEM */
+#toastContainer {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.admin-toast {
+  pointer-events: auto;
+  min-width: 280px;
+  padding: 14px 22px;
+  background: var(--primary-green, #184432);
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 13.5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease;
+  border-left: 5px solid #2ECC71;
+}
+
+.admin-toast.toast-error {
+  border-left-color: #E74C3C;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-16px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

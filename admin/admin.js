@@ -4,6 +4,26 @@
 
 let salesChartInstance = null;
 
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `admin-toast ${type === 'error' ? 'toast-error' : ''}`;
+    toast.innerHTML = `<span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-12px)';
+        setTimeout(() => toast.remove(), 250);
+    }, 3000);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     /* 1. SESSION & AUTHENTICATION CHECK */
@@ -228,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const current = RefugiaDB.getSettings();
             RefugiaDB.saveSettings({ ...current, qrisAccount, qrisUrl });
-            alert('✓ Pengaturan QRIS & Barcode E-Pembayaran Berhasil Disimpan & Tersinkronkan ke Website Publik!');
+            showToast('✓ Pengaturan QRIS & Barcode E-Pembayaran Berhasil Disimpan!');
         });
     }
 
@@ -266,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tentangTitle, tentangDesc1, tentangDesc2, tentangImg,
                 tentangTag1, tentangTag2, tentangTag3, galeriTitle
             });
-            alert('✓ Pengaturan Beranda (Hero, Statistik, Pesona Alam, & Galeri) Berhasil Disimpan!');
+            showToast('✓ Pengaturan Beranda (Hero, Statistik, Pesona Alam, & Galeri) Berhasil Disimpan!');
         });
     }
 
@@ -284,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
             RefugiaDB.saveVideo({ id, title, videoUrl, thumbUrl });
             renderVideosTable();
             closeVideoModal();
-            alert('✓ Data Video Galeri Berhasil Disimpan & Tersinkronkan ke Website Publik!');
+            showToast('✓ Data Video Galeri Berhasil Disimpan!');
         });
     }
 

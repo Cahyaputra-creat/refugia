@@ -1,15 +1,13 @@
-// Logika Toggle Accordion FAQ
+// Logika Toggle Accordion FAQ & Form Saran
 function toggleFaq(element) {
     if (!element) return;
     const isActive = element.classList.contains('active');
     const allFaqs = document.querySelectorAll('.faq-item, [data-faq]');
     
-    // Tutup semua FAQ terlebih dahulu
     allFaqs.forEach(item => {
         item.classList.remove('active');
     });
     
-    // Jika yang di-klik belum aktif, buka
     if (!isActive) {
         element.classList.add('active');
     }
@@ -30,11 +28,6 @@ function renderPublicFaqs() {
             <div class="faq-q">${f.question}</div>
             <div class="faq-a">${f.answer}</div>
         `;
-        item.addEventListener('click', function(e) {
-            if (!e.target.closest('.faq-a')) {
-                toggleFaq(this);
-            }
-        });
         faqContainer.appendChild(item);
     });
 }
@@ -43,54 +36,58 @@ function syncPublicSettings() {
     if (typeof RefugiaDB === 'undefined') return;
     const settings = RefugiaDB.getSettings();
 
-    // Update Jam Operasional Teks di Footer & Header jika ada
     const jamEls = document.querySelectorAll('.ft-jam, .jam-info span');
     jamEls.forEach(el => {
         if (settings.jamBuka) el.textContent = settings.jamBuka;
     });
 }
 
+// Global Event Delegation for Accordion & Saran Form
+document.addEventListener('click', function(e) {
+    const faqHeader = e.target.closest('.faq-q, .faq-item');
+    if (faqHeader && !e.target.closest('.faq-a')) {
+        const item = faqHeader.classList.contains('faq-item') ? faqHeader : faqHeader.closest('.faq-item');
+        if (item) toggleFaq(item);
+    }
+});
+
+document.addEventListener('submit', function(e) {
+    if (e.target && e.target.id === 'saranForm') {
+        e.preventDefault();
+        const nama = document.getElementById('saranNama') ? document.getElementById('saranNama').value.trim() : '';
+        const nohp = document.getElementById('saranNoHP') ? document.getElementById('saranNoHP').value.trim() : '';
+        const pesan = document.getElementById('saranPesan') ? document.getElementById('saranPesan').value.trim() : '';
+
+        if (typeof RefugiaDB !== 'undefined') {
+            RefugiaDB.addMessage({
+                name: nama,
+                phone: nohp,
+                message: pesan
+            });
+        }
+
+        e.target.reset();
+        const saranNotif = document.getElementById('saranNotif');
+        if (saranNotif) {
+            saranNotif.style.display = 'block';
+            setTimeout(() => {
+                saranNotif.style.display = 'none';
+            }, 6000);
+        }
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     renderPublicFaqs();
     syncPublicSettings();
 
-    // Listener Real-Time Sync
-    window.addEventListener('storage', () => {
+    const prevReinit = window.reinitPublicPage;
+    window.reinitPublicPage = function() {
+        if (typeof prevReinit === 'function') prevReinit();
         renderPublicFaqs();
         syncPublicSettings();
-    });
+    };
 
-    window.addEventListener('refugia_db_updated', () => {
-        renderPublicFaqs();
-        syncPublicSettings();
-    });
-
-    // Form Masukan / Saran Ke Database Admin
-    const saranForm = document.getElementById('saranForm');
-    const saranNotif = document.getElementById('saranNotif');
-
-    if (saranForm) {
-        saranForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const nama = document.getElementById('saranNama').value.trim();
-            const nohp = document.getElementById('saranNoHP').value.trim();
-            const pesan = document.getElementById('saranPesan').value.trim();
-
-            if (typeof RefugiaDB !== 'undefined') {
-                RefugiaDB.addMessage({
-                    name: nama,
-                    phone: nohp,
-                    message: pesan
-                });
-            }
-
-            saranForm.reset();
-            if (saranNotif) {
-                saranNotif.style.display = 'block';
-                setTimeout(() => {
-                    saranNotif.style.display = 'none';
-                }, 6000);
-            }
-        });
-    }
+    window.addEventListener('storage', window.reinitPublicPage);
+    window.addEventListener('refugia_db_updated', window.reinitPublicPage);
 });

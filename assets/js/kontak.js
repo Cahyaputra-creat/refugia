@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+/* =========================================
+   REFUGIA KONTAK & LAPAK PETANI MODULE
+   ========================================= */
+
+const RefugiaKontak = (() => {
     const mData = {
       tanaman: {
         icon: '🌸', title: 'Bursa Tanaman Hias', sub: 'Tersedia berbagai bibit bunga',
@@ -32,59 +36,67 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
 
-    const overlay = document.getElementById('contactModal');
-    const mIcon = document.getElementById('mIcon');
-    const mTitle = document.getElementById('mTitle');
-    const mSub = document.getElementById('mSub');
-    const mDesc = document.getElementById('mDesc');
-    const mItems = document.getElementById('mItems');
-    const waLink = document.getElementById('waLink');
-
     function openModal(id) {
-      const data = mData[id];
-      if(!data) return;
-      
-      mIcon.textContent = data.icon;
-      mTitle.textContent = data.title;
-      mSub.textContent = data.sub;
-      mDesc.textContent = data.desc;
-      
-      mItems.innerHTML = '';
-      data.items.forEach(it => {
-        mItems.innerHTML += `
-          <div class="mitem">
-            <div class="mitem-ico">${it.i}</div>
-            <h4>${it.t}</h4>
-            <p>${it.p}</p>
-          </div>
-        `;
-      });
+        const overlay = document.getElementById('contactModal');
+        const mIcon = document.getElementById('mIcon');
+        const mTitle = document.getElementById('mTitle');
+        const mSub = document.getElementById('mSub');
+        const mDesc = document.getElementById('mDesc');
+        const mItems = document.getElementById('mItems');
+        const waLink = document.getElementById('waLink');
 
-      waLink.href = `https://api.whatsapp.com/send?phone=${data.phone}&text=${encodeURIComponent(data.waText)}`;
-      
-      overlay.classList.add('open');
+        if (!overlay) return;
+
+        const data = mData[id];
+        if (!data) return;
+        
+        if (mIcon) mIcon.textContent = data.icon;
+        if (mTitle) mTitle.textContent = data.title;
+        if (mSub) mSub.textContent = data.sub;
+        if (mDesc) mDesc.textContent = data.desc;
+        
+        if (mItems) {
+            mItems.innerHTML = '';
+            data.items.forEach(it => {
+                mItems.innerHTML += `
+                    <div class="mitem">
+                        <div class="mitem-ico">${it.i}</div>
+                        <h4>${it.t}</h4>
+                        <p>${it.p}</p>
+                    </div>
+                `;
+            });
+        }
+
+        if (waLink) {
+            waLink.href = `https://api.whatsapp.com/send?phone=${data.phone}&text=${encodeURIComponent(data.waText)}`;
+        }
+        
+        overlay.classList.add('open');
     }
     
     function closeModal() {
-      overlay.classList.remove('open');
+        const overlay = document.getElementById('contactModal');
+        if (overlay) overlay.classList.remove('open');
     }
 
-    // Pemasangan Event Listener untuk membuka Modal
-    document.querySelectorAll('.lapak-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-target');
-            openModal(targetId);
-        });
+    // Event Delegation
+    document.addEventListener('click', function(e) {
+        const card = e.target.closest('.lapak-card');
+        if (card) {
+            const targetId = card.getAttribute('data-target');
+            if (targetId) openModal(targetId);
+            return;
+        }
+
+        const closeBtn = e.target.closest('.modal-close, #contactModal');
+        if (closeBtn && (e.target === closeBtn || closeBtn.classList.contains('mclose') || closeBtn.classList.contains('btn-back'))) {
+            closeModal();
+        }
     });
 
-    // Pemasangan Event Listener untuk menutup Modal
-    document.querySelectorAll('.modal-close').forEach(elem => {
-        elem.addEventListener('click', function(e) {
-            // Hanya menutup jika yang diklik benar-benar elemen dengan class .modal-close 
-            // (misal: background gelap atau tombol close, bukan isi dalam pop-up)
-            if(e.target === this) {
-                closeModal();
-            }
-        });
-    });
-});
+    return {
+        openModal,
+        closeModal
+    };
+})();

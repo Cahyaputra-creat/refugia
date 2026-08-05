@@ -2,15 +2,17 @@
    REFUGIA REAL-TIME WEATHER WIDGET (Open-Meteo API)
    Location: Plaosan, Magetan (Kaki Gunung Lawu)
    Coordinates: -7.659, 111.325
-========================================= */
+   Includes 10-minute sessionStorage caching for 0ms instant load
+   ========================================= */
 
 const RefugiaWeather = (() => {
 
     const LAT = -7.659;
     const LON = 111.325;
     const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true`;
+    const CACHE_KEY = 'refugia_weather_cache_v1';
+    const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
 
-    // Map Weather Codes (WMO) to Indonesian Descriptions & Emojis
     const WMO_MAP = {
         0: { text: 'Cerah Pegunungan', icon: '☀️' },
         1: { text: 'Cerah Berawan', icon: '🌤️' },
@@ -33,6 +35,18 @@ const RefugiaWeather = (() => {
     };
 
     const fetchWeather = async () => {
+        // 1. Check Session Cache
+        try {
+            const cachedData = sessionStorage.getItem(CACHE_KEY);
+            if (cachedData) {
+                const parsed = JSON.parse(cachedData);
+                if (Date.now() - parsed.timestamp < CACHE_TTL) {
+                    return parsed.data;
+                }
+            }
+        } catch (e) {}
+
+        // 2. Fetch Fresh Data
         try {
             const res = await fetch(API_URL);
             if (!res.ok) throw new Error('API response error');
@@ -42,13 +56,19 @@ const RefugiaWeather = (() => {
                 const temp = Math.round(data.current_weather.temperature);
                 const code = data.current_weather.weathercode;
                 const cond = getCondition(code);
-                return {
+                const result = {
                     success: true,
                     temp: temp,
                     text: cond.text,
                     icon: cond.icon,
                     wind: data.current_weather.windspeed
                 };
+
+                try {
+                    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: result }));
+                } catch (e) {}
+
+                return result;
             }
         } catch (e) {
             console.warn('Gagal memuat API cuaca, menggunakan data sejuk pegunungan.', e);
