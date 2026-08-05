@@ -3,6 +3,7 @@
    - Zero-delay instant navigation (Link Prefetching)
    - Parallel fetch & GPU-accelerated page transitions
    - Full pushState history & live DOM re-binding
+   - Swaps ALL content between navbar and footer
    ========================================= */
 
 const RefugiaRouter = (() => {
@@ -18,10 +19,7 @@ const RefugiaRouter = (() => {
 
         // Cache current page
         const currentPath = window.location.pathname;
-        const mainContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
-        if (mainContainer) {
-            pageCache.set(currentPath, document.documentElement.outerHTML);
-        }
+        pageCache.set(currentPath, document.documentElement.outerHTML);
     }
 
     function injectTransitionStyles() {
@@ -29,20 +27,83 @@ const RefugiaRouter = (() => {
         const style = document.createElement('style');
         style.id = 'router-transition-styles';
         style.textContent = `
-            .page-transition-wrapper {
-                transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            #app-wrapper {
+                transition: opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
                 will-change: opacity, transform;
             }
-            .page-fade-out {
+            #app-wrapper.fade-out {
                 opacity: 0 !important;
                 transform: translateY(-6px) scale(0.998) !important;
             }
-            .page-fade-in {
+            #app-wrapper.fade-in {
                 opacity: 1 !important;
                 transform: translateY(0) scale(1) !important;
             }
         `;
         document.head.appendChild(style);
+    }
+
+    /* =========================================
+       Get or create the #app-wrapper div which
+       wraps ALL page content between navbar & footer.
+       This is created dynamically if not in HTML.
+    ========================================= */
+    function getOrCreateWrapper() {
+        let wrapper = document.getElementById('app-wrapper');
+        if (wrapper) return wrapper;
+
+        // Create wrapper and move all body content between nav and footer into it
+        wrapper = document.createElement('div');
+        wrapper.id = 'app-wrapper';
+
+        const navbar = document.querySelector('nav.navbar, .navbar');
+        const footer = document.querySelector('footer.footer, footer');
+
+        if (!navbar || !footer) return null;
+
+        // Collect elements between navbar and footer (exclude scripts at body end)
+        const toMove = [];
+        let node = navbar.nextSibling;
+        while (node && node !== footer) {
+            toMove.push(node);
+            node = node.nextSibling;
+        }
+
+        // Move elements into wrapper
+        toMove.forEach(el => wrapper.appendChild(el));
+
+        // Insert wrapper before footer
+        footer.parentNode.insertBefore(wrapper, footer);
+        return wrapper;
+    }
+
+    /* =========================================
+       Extract page content from parsed HTML doc:
+       All elements between navbar and footer.
+    ========================================= */
+    function extractPageContent(doc) {
+        const navbar = doc.querySelector('nav.navbar, .navbar');
+        const footer = doc.querySelector('footer.footer, footer');
+
+        if (!navbar || !footer) {
+            // Fallback: return body content
+            return doc.body.innerHTML;
+        }
+
+        const fragment = doc.createDocumentFragment();
+        let node = navbar.nextSibling;
+        while (node && node !== footer) {
+            const next = node.nextSibling;
+            // Skip trailing scripts
+            if (node.tagName !== 'SCRIPT') {
+                fragment.appendChild(node.cloneNode(true));
+            }
+            node = next;
+        }
+
+        const temp = doc.createElement('div');
+        temp.appendChild(fragment);
+        return temp.innerHTML;
     }
 
     // Prefetch HTML on hover/touch for 0ms delay
@@ -106,31 +167,26 @@ const RefugiaRouter = (() => {
         if (isNavigating) return;
         isNavigating = true;
         closeMobileNavbar();
-        updateActiveNavbarLinks(url); // Ensure 0ms instant highlight
+        updateActiveNavbarLinks(url);
 
-        const mainContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
         const pathname = new URL(url, window.location.href).pathname;
 
         try {
             // Start fetch IN PARALLEL with fade out
-            const fetchPromise = pageCache.has(pathname) 
+            const fetchPromise = pageCache.has(pathname)
                 ? Promise.resolve(pageCache.get(pathname))
                 : fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(res => res.text());
 
-            // Animate fade out — also fade hero if present
-            const currentHero = document.querySelector('header.hero');
-            if (mainContainer) {
-                mainContainer.classList.add('page-transition-wrapper');
-                mainContainer.classList.add('page-fade-out');
-            }
-            if (currentHero) {
-                currentHero.classList.add('page-transition-wrapper');
-                currentHero.classList.add('page-fade-out');
+            // Ensure wrapper exists and animate fade out
+            const wrapper = getOrCreateWrapper();
+            if (wrapper) {
+                wrapper.classList.remove('fade-in');
+                wrapper.classList.add('fade-out');
             }
 
             const [htmlText] = await Promise.all([
                 fetchPromise,
-                new Promise(r => setTimeout(r, 120)) // Fast 120ms max transition
+                new Promise(r => setTimeout(r, 150)) // 150ms fade out
             ]);
 
             pageCache.set(pathname, htmlText);
@@ -149,44 +205,15 @@ const RefugiaRouter = (() => {
                 }
             });
 
-            // 2. CRITICAL FIX: Sync hero section (exists on Beranda/index only)
-            const newHero = newDoc.querySelector('header.hero');
-            const existingHero = document.querySelector('header.hero');
-            const navbar = document.querySelector('.navbar, nav.navbar');
+            // 2. Swap ALL page content (hero + all sections + modals) between nav and footer
+            const newContent = extractPageContent(newDoc);
+            const currentWrapper = getOrCreateWrapper();
 
-            if (newHero && !existingHero) {
-                // Navigating TO Beranda: insert hero before the main section
-                const heroClone = newHero.cloneNode(true);
-                if (navbar && navbar.nextSibling) {
-                    navbar.parentNode.insertBefore(heroClone, navbar.nextSibling);
-                } else if (mainContainer) {
-                    mainContainer.parentNode.insertBefore(heroClone, mainContainer);
-                }
-            } else if (!newHero && existingHero) {
-                // Navigating AWAY from Beranda: remove hero
-                existingHero.remove();
-            } else if (newHero && existingHero) {
-                // Both exist: update hero content (e.g. admin changed hero image)
-                existingHero.innerHTML = newHero.innerHTML;
-            }
+            if (currentWrapper) {
+                currentWrapper.innerHTML = newContent;
 
-            // 3. Also swap videoModal if present in new page
-            const newVideoModal = newDoc.getElementById('videoModal');
-            const existingVideoModal = document.getElementById('videoModal');
-            if (newVideoModal && !existingVideoModal) {
-                document.body.insertBefore(newVideoModal.cloneNode(true), document.querySelector('.footer, footer'));
-            }
-
-            // 4. Swap main section content
-            const newMain = newDoc.querySelector('main') || newDoc.querySelector('.section') || newDoc.body;
-            // Re-find mainContainer after possible DOM changes
-            const updatedContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
-
-            if (newMain && updatedContainer) {
-                updatedContainer.innerHTML = newMain.innerHTML;
-
-                // Re-execute scripts inside swapped main
-                updatedContainer.querySelectorAll('script').forEach(oldScript => {
+                // Re-execute any inline scripts inside swapped content
+                currentWrapper.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement('script');
                     Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
                     newScript.appendChild(document.createTextNode(oldScript.innerHTML));
@@ -194,6 +221,7 @@ const RefugiaRouter = (() => {
                 });
             }
 
+            // 3. Update title
             if (newDoc.title) {
                 document.title = newDoc.title;
             }
@@ -205,24 +233,15 @@ const RefugiaRouter = (() => {
             updateActiveNavbarLinks(url);
             window.scrollTo({ top: 0, behavior: 'instant' });
 
-            // Animate fade in — on updated containers
-            const freshContainer = document.querySelector('main') || document.querySelector('.section') || document.body;
-            const freshHero = document.querySelector('header.hero');
-            if (freshContainer) {
-                freshContainer.classList.remove('page-fade-out');
-                freshContainer.classList.add('page-transition-wrapper', 'page-fade-in');
-            }
-            if (freshHero) {
-                freshHero.classList.remove('page-fade-out');
-                freshHero.classList.add('page-transition-wrapper', 'page-fade-in');
+            // Animate fade in
+            const freshWrapper = document.getElementById('app-wrapper');
+            if (freshWrapper) {
+                freshWrapper.classList.remove('fade-out');
+                freshWrapper.classList.add('fade-in');
+                setTimeout(() => freshWrapper.classList.remove('fade-in'), 250);
             }
 
             reinitializePageScripts();
-
-            setTimeout(() => {
-                if (freshContainer) freshContainer.classList.remove('page-transition-wrapper', 'page-fade-in');
-                if (freshHero) freshHero.classList.remove('page-transition-wrapper', 'page-fade-in');
-            }, 200);
 
         } catch (err) {
             console.error('Router navigation fallback:', err);
