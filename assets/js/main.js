@@ -40,20 +40,36 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!hero) return;
 
         const heroBgImg = document.getElementById('heroBgImg');
+        const heroBadge = document.getElementById('heroBadge');
         const heroTitle = document.getElementById('heroTitle');
         const heroTagline = document.getElementById('heroTagline');
+        const stat1Val = document.getElementById('stat1Val');
+        const stat1Label = document.getElementById('stat1Label');
+        const stat2Val = document.getElementById('stat2Val');
+        const stat2Label = document.getElementById('stat2Label');
+        const stat3Val = document.getElementById('stat3Val');
+        const stat3Label = document.getElementById('stat3Label');
         const tentangTitle = document.getElementById('tentangTitle');
         const tentangDesc1 = document.getElementById('tentangDesc1');
         const tentangDesc2 = document.getElementById('tentangDesc2');
         const tentangImg = document.getElementById('tentangImg');
+        const galeriTitle = document.getElementById('galeriTitle');
 
         if (heroBgImg && hero.heroBgImg) heroBgImg.src = hero.heroBgImg;
+        if (heroBadge && hero.heroBadge) heroBadge.textContent = hero.heroBadge;
         if (heroTitle && hero.heroTitle) heroTitle.innerHTML = hero.heroTitle;
         if (heroTagline && hero.heroTagline) heroTagline.textContent = hero.heroTagline;
+        if (stat1Val && hero.stat1Val) stat1Val.textContent = hero.stat1Val;
+        if (stat1Label && hero.stat1Label) stat1Label.textContent = hero.stat1Label;
+        if (stat2Val && hero.stat2Val) stat2Val.textContent = hero.stat2Val;
+        if (stat2Label && hero.stat2Label) stat2Label.textContent = hero.stat2Label;
+        if (stat3Val && hero.stat3Val) stat3Val.textContent = hero.stat3Val;
+        if (stat3Label && hero.stat3Label) stat3Label.textContent = hero.stat3Label;
         if (tentangTitle && hero.tentangTitle) tentangTitle.textContent = hero.tentangTitle;
         if (tentangDesc1 && hero.tentangDesc1) tentangDesc1.textContent = hero.tentangDesc1;
         if (tentangDesc2 && hero.tentangDesc2) tentangDesc2.textContent = hero.tentangDesc2;
         if (tentangImg && hero.tentangImg) tentangImg.src = hero.tentangImg;
+        if (galeriTitle && hero.galeriTitle) galeriTitle.textContent = hero.galeriTitle;
     }
 
     function renderPublicVideos() {

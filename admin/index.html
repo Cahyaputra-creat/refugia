@@ -26,13 +26,13 @@
 
       <ul class="sidebar-menu">
         <li><a href="#" class="active" data-tab="tab-dashboard">📊 Ringkasan Analytics</a></li>
+        <li><a href="#" data-tab="tab-beranda">🏠 Pengaturan Beranda</a></li>
         <li><a href="#" data-tab="tab-transaksi">🧾 Transaksi Loket</a></li>
-        <li><a href="#" data-tab="tab-tiket">🎟️ Kelola Tiket</a></li>
+        <li><a href="#" data-tab="tab-tiket">🎟️ Kelola Tiket & QRIS</a></li>
         <li><a href="#" data-tab="tab-fasilitas">🌺 Fasilitas & Lapak</a></li>
-        <li><a href="#" data-tab="tab-media">🎬 Kelola Media & Galeri</a></li>
         <li><a href="#" data-tab="tab-faq">❓ Kelola FAQ</a></li>
         <li><a href="#" data-tab="tab-pesan">📩 Pesan Masuk</a></li>
-        <li><a href="#" data-tab="tab-pengaturan">⚙️ Pengaturan Website</a></li>
+        <li><a href="#" data-tab="tab-pengaturan">⚙️ Pengaturan Umum</a></li>
       </ul>
 
       <div class="sidebar-footer">
@@ -189,8 +189,17 @@
                 <input type="text" id="qrisAccountInput" class="form-control" placeholder="Contoh: TAMAN REFUGIA MAGETAN" required>
               </div>
               <div class="form-group" style="margin:0;">
-                <label>URL / File Barcode QRIS</label>
-                <input type="text" id="qrisUrlInput" class="form-control" placeholder="Contoh: assets/img/Qrish Kebun Refugia Magetan.png" required>
+                <label>Gambar Barcode QRIS</label>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <input type="text" id="qrisUrlInput" class="form-control" placeholder="Contoh: assets/img/Qrish Kebun Refugia Magetan.png" required style="flex:1;">
+                  <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
+                    📁 Pilih File Barcode
+                    <input type="file" accept="image/*" class="file-picker" data-target-input="qrisUrlInput" data-target-preview="previewQris" style="display:none;">
+                  </label>
+                </div>
+                <div style="margin-top:8px;">
+                  <img id="previewQris" src="" alt="Preview QRIS Barcode" style="max-height:100px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:contain;">
+                </div>
               </div>
               <div style="grid-column: span 2; margin-top: 8px;">
                 <button type="submit" class="btn-primary" style="width:auto; padding:10px 24px;">💾 Simpan Pengaturan QRIS</button>
@@ -348,41 +357,122 @@
           </div>
         </section>
 
-        <!-- 8. TAB KELOLA MEDIA & GALERI VIDEO -->
-        <section id="tab-media" class="tab-content">
+        <!-- 2. TAB PENGATURAN BERANDA (MODEL FARA COLLECTION ADMIN) -->
+        <section id="tab-beranda" class="tab-content">
           
-          <!-- PENGATURAN HERO & FOTO BERANDA -->
+          <!-- PENGATURAN HERO BANNER UTAMA -->
           <div class="card-panel" style="padding: 24px; margin-bottom: 24px;">
             <div class="panel-header" style="margin-bottom: 16px; padding:0; border:none;">
-              <div class="panel-title">🖼️ Pengaturan Gambar Latar & Teks Banner Utama (Hero Section)</div>
+              <div class="panel-title">🖼️ Hero Banner & Teks Beranda Utama</div>
             </div>
-            <form id="heroMediaForm" style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+            <form id="berandaForm" style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <div class="form-group" style="grid-column: span 2; margin:0;">
-                <label>URL / File Gambar Latar Utama (Hero Background)</label>
-                <input type="text" id="heroBgImgInput" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required>
+                <label>Foto Latar Utama Beranda (Hero Background Image)</label>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <input type="text" id="heroBgImgInput" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required style="flex:1;">
+                  <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
+                    📁 Pilih File Gambar
+                    <input type="file" accept="image/*" class="file-picker" data-target-input="heroBgImgInput" data-target-preview="previewHeroBg" style="display:none;">
+                  </label>
+                </div>
+                <div style="margin-top:8px;">
+                  <img id="previewHeroBg" src="" alt="Preview Hero Background" style="max-height:120px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:cover;">
+                </div>
               </div>
+
               <div class="form-group" style="margin:0;">
-                <label>Judul Banner Beranda (HTML Support: &lt;br&gt;, &lt;em&gt;)</label>
-                <input type="text" id="heroTitleInput" class="form-control" placeholder="Contoh: Kebun Refugia &lt;br&gt;&lt;em&gt;Magetan&lt;/em&gt;" required>
+                <label>Teks Badge ("Selamat Datang di")</label>
+                <input type="text" id="heroBadgeInput" class="form-control" placeholder="Selamat Datang di" required>
               </div>
+
               <div class="form-group" style="margin:0;">
-                <label>URL / File Gambar "Tentang kami"</label>
-                <input type="text" id="tentangImgInput" class="form-control" placeholder="Contoh: assets/img/Tentang kami.jpeg" required>
+                <label>Judul Utama Beranda (HTML: &lt;br&gt;, &lt;em&gt;)</label>
+                <input type="text" id="heroTitleInput" class="form-control" placeholder="Kebun Refugia &lt;br&gt;&lt;em&gt;Magetan&lt;/em&gt;" required>
               </div>
+
               <div class="form-group" style="grid-column: span 2; margin:0;">
-                <label>Teks Tagline Sub-Judul Hero</label>
-                <textarea id="heroTaglineInput" class="form-control" rows="2" placeholder="Teks deskripsi singkat beranda..." required></textarea>
+                <label>Teks Sub-Judul / Tagline Hero</label>
+                <textarea id="heroTaglineInput" class="form-control" rows="2" placeholder="Nikmati keindahan hamparan bunga..." required></textarea>
+              </div>
+
+              <!-- PENGATURAN STATISTIK COUNTER BERANDA -->
+              <div style="grid-column: span 2; margin-top: 12px; padding-top: 16px; border-top: 1px dashed var(--border-light, #E1E9E0);">
+                <h4 style="color:var(--primary-green); margin-bottom:12px; font-family:'Playfair Display', serif;">📊 Pengaturan 3 Statistik Counter Beranda</h4>
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label>Stat 1 - Angka (Misal: 200+)</label>
+                <input type="text" id="stat1ValInput" class="form-control" placeholder="200+" required>
               </div>
               <div class="form-group" style="margin:0;">
-                <label>Judul Seksi "Pesona Keindahan Alam"</label>
-                <input type="text" id="tentangTitleInput" class="form-control" placeholder="Judul seksi..." required>
+                <label>Stat 1 - Label (Misal: Koleksi Bunga)</label>
+                <input type="text" id="stat1LabelInput" class="form-control" placeholder="Koleksi Bunga" required>
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label>Stat 2 - Angka (Misal: 3.5Ha)</label>
+                <input type="text" id="stat2ValInput" class="form-control" placeholder="3.5Ha" required>
               </div>
               <div class="form-group" style="margin:0;">
+                <label>Stat 2 - Label (Misal: Area Lahan)</label>
+                <input type="text" id="stat2LabelInput" class="form-control" placeholder="Area Lahan" required>
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label>Stat 3 - Angka (Misal: 12M)</label>
+                <input type="text" id="stat3ValInput" class="form-control" placeholder="12M" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label>Stat 3 - Label (Misal: Menara Pandang)</label>
+                <input type="text" id="stat3LabelInput" class="form-control" placeholder="Menara Pandang" required>
+              </div>
+
+              <!-- PENGATURAN SEKSI PESONA KEINDAHAN ALAM (TENTANG KAMI) -->
+              <div style="grid-column: span 2; margin-top: 12px; padding-top: 16px; border-top: 1px dashed var(--border-light, #E1E9E0);">
+                <h4 style="color:var(--primary-green); margin-bottom:12px; font-family:'Playfair Display', serif;">🌿 Seksi Pesona Keindahan Alam (Tentang Kami)</h4>
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label>Judul Seksi</label>
+                <input type="text" id="tentangTitleInput" class="form-control" placeholder="Pesona Keindahan Alam di Kaki Gunung Lawu" required>
+              </div>
+
+              <div class="form-group" style="margin:0;">
+                <label>Foto Seksi ("Tentang kami.jpeg")</label>
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <input type="text" id="tentangImgInput" class="form-control" placeholder="assets/img/Tentang kami.jpeg" required style="flex:1;">
+                  <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
+                    📁 Pilih File Gambar
+                    <input type="file" accept="image/*" class="file-picker" data-target-input="tentangImgInput" data-target-preview="previewTentangImg" style="display:none;">
+                  </label>
+                </div>
+                <div style="margin-top:8px;">
+                  <img id="previewTentangImg" src="" alt="Preview tentang kami" style="max-height:100px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:cover;">
+                </div>
+              </div>
+
+              <div class="form-group" style="grid-column: span 2; margin:0;">
                 <label>Paragraf 1 Deskripsi Pesona Alam</label>
                 <textarea id="tentangDesc1Input" class="form-control" rows="2" required></textarea>
               </div>
-              <div style="grid-column: span 2; margin-top: 8px;">
-                <button type="submit" class="btn-primary" style="width:auto; padding:10px 24px;">💾 Simpan Foto Latar & Teks Banner</button>
+
+              <div class="form-group" style="grid-column: span 2; margin:0;">
+                <label>Paragraf 2 Deskripsi Pesona Alam</label>
+                <textarea id="tentangDesc2Input" class="form-control" rows="2"></textarea>
+              </div>
+
+              <div style="grid-column: span 2; margin-top: 12px; padding-top: 16px; border-top: 1px dashed var(--border-light, #E1E9E0);">
+                <h4 style="color:var(--primary-green); margin-bottom:12px; font-family:'Playfair Display', serif;">🎬 Judul Seksi Galeri Video</h4>
+              </div>
+
+              <div class="form-group" style="grid-column: span 2; margin:0;">
+                <label>Judul Seksi Galeri Video Beranda</label>
+                <input type="text" id="galeriTitleInput" class="form-control" placeholder="Keseruan di Kebun Refugia Magetan" required>
+              </div>
+
+              <div style="grid-column: span 2; margin-top: 16px;">
+                <button type="submit" class="btn-primary" style="width:auto; padding:12px 32px; font-size:14px;">💾 Simpan Seluruh Pengaturan Beranda</button>
               </div>
             </form>
           </div>
@@ -390,7 +480,7 @@
           <!-- KELOLA GALERI VIDEO BERANDA -->
           <div class="card-panel">
             <div class="panel-header">
-              <div class="panel-title">🎬 Kelola Galeri Video Beranda ("Keseruan di Kebun Refugia")</div>
+              <div class="panel-title">🎬 Daftar Kartu Video Galeri Beranda</div>
               <div class="panel-actions">
                 <button class="btn-add" onclick="openVideoModal()">+ Tambah Video Baru</button>
               </div>
@@ -557,8 +647,17 @@
           <input type="text" id="vidUrl" class="form-control" placeholder="Contoh: assets/img/video refugia 2.mp4" required>
         </div>
         <div class="form-group">
-          <label>URL / Path Gambar Thumbnail Preview</label>
-          <input type="text" id="vidThumb" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required>
+          <label>Gambar Thumbnail Preview Video</label>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <input type="text" id="vidThumb" class="form-control" placeholder="Contoh: assets/img/Gambar Beranda.jpg" required style="flex:1;">
+            <label class="btn-primary" style="padding:9px 16px; cursor:pointer; font-size:12px; width:auto; white-space:nowrap; margin:0; display:inline-flex; align-items:center; gap:6px;">
+              📁 Pilih File Gambar
+              <input type="file" accept="image/*" class="file-picker" data-target-input="vidThumb" data-target-preview="previewVidThumb" style="display:none;">
+            </label>
+          </div>
+          <div style="margin-top:8px;">
+            <img id="previewVidThumb" src="" alt="Preview thumbnail video" style="max-height:100px; border-radius:8px; border:1px solid #ccc; display:none; object-fit:cover;">
+          </div>
         </div>
         <div style="display:flex; gap:10px; margin-top:20px;">
           <button type="submit" class="btn-primary">💾 Simpan Video Galeri</button>

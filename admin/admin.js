@@ -232,25 +232,40 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* 12. HERO MEDIA & VIDEO GALLERY FORM SUBMITS */
-    const heroMediaForm = document.getElementById('heroMediaForm');
-    if (heroMediaForm) {
+    /* 12. PENGATURAN BERANDA (MODEL FARA COLLECTION ADMIN) */
+    const berandaForm = document.getElementById('berandaForm') || document.getElementById('heroMediaForm');
+    if (berandaForm) {
         loadHeroSettings();
-        heroMediaForm.addEventListener('submit', (e) => {
+        berandaForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const heroBgImg = document.getElementById('heroBgImgInput').value;
-            const heroTitle = document.getElementById('heroTitleInput').value;
-            const heroTagline = document.getElementById('heroTaglineInput').value;
-            const tentangTitle = document.getElementById('tentangTitleInput').value;
-            const tentangDesc1 = document.getElementById('tentangDesc1Input').value;
-            const tentangImg = document.getElementById('tentangImgInput').value;
+            const heroBgImg = document.getElementById('heroBgImgInput') ? document.getElementById('heroBgImgInput').value : '';
+            const heroBadge = document.getElementById('heroBadgeInput') ? document.getElementById('heroBadgeInput').value : '';
+            const heroTitle = document.getElementById('heroTitleInput') ? document.getElementById('heroTitleInput').value : '';
+            const heroTagline = document.getElementById('heroTaglineInput') ? document.getElementById('heroTaglineInput').value : '';
+            
+            const stat1Val = document.getElementById('stat1ValInput') ? document.getElementById('stat1ValInput').value : '';
+            const stat1Label = document.getElementById('stat1LabelInput') ? document.getElementById('stat1LabelInput').value : '';
+            const stat2Val = document.getElementById('stat2ValInput') ? document.getElementById('stat2ValInput').value : '';
+            const stat2Label = document.getElementById('stat2LabelInput') ? document.getElementById('stat2LabelInput').value : '';
+            const stat3Val = document.getElementById('stat3ValInput') ? document.getElementById('stat3ValInput').value : '';
+            const stat3Label = document.getElementById('stat3LabelInput') ? document.getElementById('stat3LabelInput').value : '';
+
+            const tentangTitle = document.getElementById('tentangTitleInput') ? document.getElementById('tentangTitleInput').value : '';
+            const tentangDesc1 = document.getElementById('tentangDesc1Input') ? document.getElementById('tentangDesc1Input').value : '';
+            const tentangDesc2 = document.getElementById('tentangDesc2Input') ? document.getElementById('tentangDesc2Input').value : '';
+            const tentangImg = document.getElementById('tentangImgInput') ? document.getElementById('tentangImgInput').value : '';
+            const galeriTitle = document.getElementById('galeriTitleInput') ? document.getElementById('galeriTitleInput').value : '';
 
             RefugiaDB.saveHeroSettings({
-                heroBgImg, heroTitle, heroTagline, tentangTitle, tentangDesc1, tentangImg
+                heroBgImg, heroBadge, heroTitle, heroTagline,
+                stat1Val, stat1Label, stat2Val, stat2Label, stat3Val, stat3Label,
+                tentangTitle, tentangDesc1, tentangDesc2, tentangImg, galeriTitle
             });
-            alert('✓ Foto Latar Banner Hero & Deskripsi Beranda Berhasil Disimpan & Tersinkronkan ke Website Publik!');
+            alert('✓ Pengaturan Beranda (Hero, Statistik, Pesona Alam, & Galeri) Berhasil Disimpan!');
         });
     }
+
+    setupFilePickers();
 
     const videoForm = document.getElementById('videoForm');
     if (videoForm) {
@@ -842,17 +857,65 @@ function deleteFacility(id) {
 }
 
 // MEDIA & VIDEO GALLERY FUNCTIONS
+function setupFilePickers() {
+    document.querySelectorAll('.file-picker').forEach(picker => {
+        picker.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const targetInputId = this.getAttribute('data-target-input');
+            const targetPreviewId = this.getAttribute('data-target-preview');
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const dataUrl = evt.target.result;
+                if (targetInputId) {
+                    const input = document.getElementById(targetInputId);
+                    if (input) input.value = dataUrl;
+                }
+                if (targetPreviewId) {
+                    const img = document.getElementById(targetPreviewId);
+                    if (img) {
+                        img.src = dataUrl;
+                        img.style.display = 'block';
+                    }
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+}
+
 function loadHeroSettings() {
     if (typeof RefugiaDB === 'undefined') return;
     const hero = RefugiaDB.getHeroSettings();
     if (!hero) return;
 
-    if (document.getElementById('heroBgImgInput')) document.getElementById('heroBgImgInput').value = hero.heroBgImg || '';
+    if (document.getElementById('heroBgImgInput')) {
+        document.getElementById('heroBgImgInput').value = hero.heroBgImg || '';
+        const prev = document.getElementById('previewHeroBg');
+        if (prev && hero.heroBgImg) { prev.src = hero.heroBgImg; prev.style.display = 'block'; }
+    }
+    if (document.getElementById('heroBadgeInput')) document.getElementById('heroBadgeInput').value = hero.heroBadge || 'Selamat Datang di';
     if (document.getElementById('heroTitleInput')) document.getElementById('heroTitleInput').value = hero.heroTitle || '';
     if (document.getElementById('heroTaglineInput')) document.getElementById('heroTaglineInput').value = hero.heroTagline || '';
+
+    if (document.getElementById('stat1ValInput')) document.getElementById('stat1ValInput').value = hero.stat1Val || '200+';
+    if (document.getElementById('stat1LabelInput')) document.getElementById('stat1LabelInput').value = hero.stat1Label || 'Koleksi Bunga';
+    if (document.getElementById('stat2ValInput')) document.getElementById('stat2ValInput').value = hero.stat2Val || '3.5Ha';
+    if (document.getElementById('stat2LabelInput')) document.getElementById('stat2LabelInput').value = hero.stat2Label || 'Area Lahan';
+    if (document.getElementById('stat3ValInput')) document.getElementById('stat3ValInput').value = hero.stat3Val || '12M';
+    if (document.getElementById('stat3LabelInput')) document.getElementById('stat3LabelInput').value = hero.stat3Label || 'Menara Pandang';
+
     if (document.getElementById('tentangTitleInput')) document.getElementById('tentangTitleInput').value = hero.tentangTitle || '';
     if (document.getElementById('tentangDesc1Input')) document.getElementById('tentangDesc1Input').value = hero.tentangDesc1 || '';
-    if (document.getElementById('tentangImgInput')) document.getElementById('tentangImgInput').value = hero.tentangImg || '';
+    if (document.getElementById('tentangDesc2Input')) document.getElementById('tentangDesc2Input').value = hero.tentangDesc2 || '';
+    if (document.getElementById('tentangImgInput')) {
+        document.getElementById('tentangImgInput').value = hero.tentangImg || '';
+        const prev = document.getElementById('previewTentangImg');
+        if (prev && hero.tentangImg) { prev.src = hero.tentangImg; prev.style.display = 'block'; }
+    }
+    if (document.getElementById('galeriTitleInput')) document.getElementById('galeriTitleInput').value = hero.galeriTitle || 'Keseruan di Kebun Refugia Magetan';
 }
 
 function renderVideosTable() {
