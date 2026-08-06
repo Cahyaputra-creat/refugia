@@ -100,7 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 const sidebar = document.querySelector('.sidebar');
+                const sidebarOverlay = document.querySelector('.sidebar-overlay');
                 if (sidebar) sidebar.classList.remove('active');
+                if (sidebarOverlay) sidebarOverlay.classList.remove('active');
 
                 // Instant lazy render for active tab
                 if (targetTab === 'tab-dashboard') renderDashboardAnalytics();
@@ -114,14 +116,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* 5. TOGGLE SIDEBAR MOBILE */
+    /* 5. TOGGLE SIDEBAR MOBILE WITH BACKDROP OVERLAY */
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.querySelector('.sidebar');
+    let sidebarOverlay = document.querySelector('.sidebar-overlay');
+
+    if (!sidebarOverlay && sidebar) {
+        sidebarOverlay = document.createElement('div');
+        sidebarOverlay.className = 'sidebar-overlay';
+        document.body.appendChild(sidebarOverlay);
+    }
+
+    function closeMobileSidebar() {
+        if (sidebar) sidebar.classList.remove('active');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    }
 
     if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             sidebar.classList.toggle('active');
+            if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
         });
+    }
+
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
     }
 
     /* 6. SETTINGS & SECURITY FORM SUBMIT */
