@@ -1,20 +1,9 @@
-// Logika Toggle Accordion FAQ & Form Saran (Robust & Duplicate-Safe)
-
-let lastToggleTime = 0;
-let lastToggleItem = null;
+// Logika Accordion FAQ & Form Saran (Clean & 100% Reliable Event Delegation)
 
 function toggleFaq(element) {
     if (!element) return;
     const item = element.classList.contains('faq-item') ? element : element.closest('.faq-item');
     if (!item) return;
-
-    // Debounce double execution on the same item within 100ms
-    const now = Date.now();
-    if (lastToggleItem === item && (now - lastToggleTime) < 100) {
-        return;
-    }
-    lastToggleItem = item;
-    lastToggleTime = now;
 
     const isActive = item.classList.contains('active');
     
@@ -42,7 +31,6 @@ function renderPublicFaqs() {
     faqs.forEach(f => {
         const item = document.createElement('div');
         item.className = 'faq-item';
-        item.onclick = function() { toggleFaq(this); };
         item.innerHTML = `
             <div class="faq-q">${f.question}</div>
             <div class="faq-a">${f.answer}</div>
@@ -62,16 +50,18 @@ function syncPublicSettings() {
     });
 }
 
-// Global Event Delegation for Accordion
+// Single, clean Event Delegation for FAQ Accordion
 document.addEventListener('click', function(e) {
-    const faqHeader = e.target.closest('.faq-q, .faq-item');
-    if (faqHeader && !e.target.closest('.faq-a')) {
-        const item = faqHeader.classList.contains('faq-item') ? faqHeader : faqHeader.closest('.faq-item');
-        if (item) toggleFaq(item);
-    }
+    const item = e.target.closest('.faq-item');
+    if (!item) return;
+
+    // Do not toggle if clicking inside the answer text area
+    if (e.target.closest('.faq-a')) return;
+
+    toggleFaq(item);
 });
 
-// Form submission handler
+// Form submission handler for Saran & Masukan
 document.addEventListener('submit', function(e) {
     if (e.target && e.target.id === 'saranForm') {
         e.preventDefault();
