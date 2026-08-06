@@ -350,7 +350,10 @@
               </div>
               <div class="form-group">
                 <label for="adminPasswordInput">Password Baru Admin</label>
-                <input type="password" id="adminPasswordInput" class="form-control" placeholder="Masukkan password baru admin..." required minlength="6">
+                <div class="password-toggle-wrapper">
+                  <input type="password" id="adminPasswordInput" class="form-control" placeholder="Masukkan password baru admin..." required minlength="6">
+                  <button type="button" class="btn-toggle-password" title="Lihat Password" aria-label="Toggle Password Visibility">👁️</button>
+                </div>
               </div>
               <button type="submit" class="btn-primary" style="width: auto; padding: 12px 28px; background: #0D261C;">🔐 Ubah Password Admin</button>
             </form>

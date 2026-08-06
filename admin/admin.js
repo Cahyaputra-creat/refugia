@@ -1184,3 +1184,27 @@ function deleteVideo(id) {
         });
     });
 })();
+
+/* =========================================
+   UNIVERSAL PASSWORD SHOW/HIDE TOGGLE
+========================================= */
+document.addEventListener('click', function(e) {
+    const toggleBtn = e.target.closest('.btn-toggle-password');
+    if (!toggleBtn) return;
+
+    const wrapper = toggleBtn.closest('.password-toggle-wrapper, .form-group');
+    if (!wrapper) return;
+
+    const input = wrapper.querySelector('input');
+    if (!input) return;
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        toggleBtn.textContent = '🙈';
+        toggleBtn.title = 'Sembunyikan Password';
+    } else {
+        input.type = 'password';
+        toggleBtn.textContent = '👁️';
+        toggleBtn.title = 'Lihat Password';
+    }
+});
