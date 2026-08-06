@@ -1,5 +1,6 @@
 /* =========================================
    REFUGIA KONTAK & LAPAK PETANI MODULE
+   - Dynamically synced with RefugiaDB Settings
    ========================================= */
 
 const RefugiaKontak = (() => {
@@ -30,7 +31,7 @@ const RefugiaKontak = (() => {
         phone: '6285931486608',
         waText: 'Halo Admin Refugia, saya ingin mendapatkan informasi lebih lanjut mengenai fasilitas.',
         items: [
-          {i: '🟢', t: 'Setiap Hari', p: '08.30 - 16.30 WIB'},
+          {i: '🟢', t: 'Setiap Hari', p: '08.00 - 17.00 WIB'},
           {i: '⚡', t: 'Respon Cepat', p: 'Di Jam Kerja'}
         ]
       }
@@ -49,6 +50,33 @@ const RefugiaKontak = (() => {
 
         const data = mData[id];
         if (!data) return;
+
+        // Dynamically sync Admin phone & operating hours from RefugiaDB settings if available
+        let targetPhone = data.phone;
+        let itemsList = data.items.map(item => ({ ...item }));
+
+        if (typeof RefugiaDB !== 'undefined') {
+            const settings = RefugiaDB.getSettings();
+            if (settings) {
+                if (settings.phoneAdmin) {
+                    let cleanedPhone = settings.phoneAdmin.replace(/[^0-9]/g, '');
+                    if (cleanedPhone.startsWith('0')) {
+                        cleanedPhone = '62' + cleanedPhone.substring(1);
+                    }
+                    if (cleanedPhone) targetPhone = cleanedPhone;
+                }
+
+                if (settings.jamBuka) {
+                    let jamText = settings.jamBuka;
+                    if (jamText.includes(':')) {
+                        jamText = jamText.split(':')[1].trim();
+                    }
+                    if (id === 'admin' && itemsList.length > 0) {
+                        itemsList[0].p = jamText;
+                    }
+                }
+            }
+        }
         
         if (mIcon) mIcon.textContent = data.icon;
         if (mTitle) mTitle.textContent = data.title;
@@ -57,7 +85,7 @@ const RefugiaKontak = (() => {
         
         if (mItems) {
             mItems.innerHTML = '';
-            data.items.forEach(it => {
+            itemsList.forEach(it => {
                 mItems.innerHTML += `
                     <div class="mitem">
                         <div class="mitem-ico">${it.i}</div>
@@ -69,7 +97,7 @@ const RefugiaKontak = (() => {
         }
 
         if (waLink) {
-            waLink.href = `https://api.whatsapp.com/send?phone=${data.phone}&text=${encodeURIComponent(data.waText)}`;
+            waLink.href = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(data.waText)}`;
         }
         
         overlay.classList.add('open');
