@@ -1,6 +1,6 @@
 /* =========================================
    REFUGIA KONTAK & LAPAK PETANI MODULE
-   - Dynamically synced with RefugiaDB Settings
+   - Dynamically synced with RefugiaDB Settings for ALL lapak modals
    ========================================= */
 
 const RefugiaKontak = (() => {
@@ -11,8 +11,8 @@ const RefugiaKontak = (() => {
         phone: '6285931486608',
         waText: 'Halo Petani Refugia, saya ingin bertanya tentang ketersediaan bibit tanaman hias.',
         items: [
-          {i: '🟢', t: 'Senin - Jumat', p: '08.00 - 16.00 WIB'},
-          {i: '🟡', t: 'Akhir Pekan', p: '09.00 - 15.00 WIB'}
+          {i: '🟢', t: 'Setiap Hari', p: '08.00 - 17.00 WIB'},
+          {i: '⚡', t: 'Respon Cepat', p: 'Di Jam Kerja'}
         ]
       },
       oleh: {
@@ -21,8 +21,8 @@ const RefugiaKontak = (() => {
         phone: '6285931486608',
         waText: 'Halo Toko Refugia, saya ingin bertanya tentang oleh-oleh khas Magetan.',
         items: [
-          {i: '🟢', t: 'Senin - Jumat', p: '08.00 - 16.00 WIB'},
-          {i: '🟡', t: 'Akhir Pekan', p: '09.00 - 15.00 WIB'}
+          {i: '🟢', t: 'Setiap Hari', p: '08.00 - 17.00 WIB'},
+          {i: '⚡', t: 'Respon Cepat', p: 'Di Jam Kerja'}
         ]
       },
       admin: {
@@ -51,7 +51,7 @@ const RefugiaKontak = (() => {
         const data = mData[id];
         if (!data) return;
 
-        // Dynamically sync Admin phone & operating hours from RefugiaDB settings if available
+        // Dynamically sync Admin phone & operating hours from RefugiaDB settings for ALL lapak modals
         let targetPhone = data.phone;
         let itemsList = data.items.map(item => ({ ...item }));
 
@@ -71,7 +71,7 @@ const RefugiaKontak = (() => {
                     if (jamText.includes(':')) {
                         jamText = jamText.split(':')[1].trim();
                     }
-                    if (id === 'admin' && itemsList.length > 0) {
+                    if (itemsList.length > 0) {
                         itemsList[0].p = jamText;
                     }
                 }
