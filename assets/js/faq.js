@@ -1,9 +1,20 @@
 // Logika Toggle Accordion FAQ & Form Saran (Robust & Duplicate-Safe)
 
+let lastToggleTime = 0;
+let lastToggleItem = null;
+
 function toggleFaq(element) {
     if (!element) return;
     const item = element.classList.contains('faq-item') ? element : element.closest('.faq-item');
     if (!item) return;
+
+    // Debounce double execution on the same item within 100ms
+    const now = Date.now();
+    if (lastToggleItem === item && (now - lastToggleTime) < 100) {
+        return;
+    }
+    lastToggleItem = item;
+    lastToggleTime = now;
 
     const isActive = item.classList.contains('active');
     
@@ -51,12 +62,10 @@ function syncPublicSettings() {
     });
 }
 
-// Global Event Delegation for Accordion (Prevent duplicate execution via e._faqHandled)
+// Global Event Delegation for Accordion
 document.addEventListener('click', function(e) {
-    if (e._faqHandled) return;
     const faqHeader = e.target.closest('.faq-q, .faq-item');
     if (faqHeader && !e.target.closest('.faq-a')) {
-        e._faqHandled = true;
         const item = faqHeader.classList.contains('faq-item') ? faqHeader : faqHeader.closest('.faq-item');
         if (item) toggleFaq(item);
     }
