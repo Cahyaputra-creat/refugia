@@ -38,10 +38,9 @@ const RefugiaFasilitas = (() => {
         icon:'🍜', title:'Pujasera & Kuliner', sub:'Area Makan Nyaman',
         desc:'Nikmati berbagai hidangan lezat dan minuman hangat setelah lelah berkeliling taman bunga yang asri.',
         items: [
-          {i:'🍲', t:'Mie Rebus Lawu', p:'Rp 15.000'},
-          {i:'☕', t:'Kopi & Wedang', p:'Rp 8.000'},
-          {i:'🍗', t:'Ayam Geprek', p:'Rp 20.000'},
-          {i:'🍢', t:'Camilan Hangat', p:'Rp 10.000'}
+          {i:'🍲', t:'Mie Rebus Lawu', p:'Rp 10.000'},
+          {i:'☕', t:'Kopi & Wedang', p:'Rp 5.000'},
+          {i:'🍗', t:'Ayam Geprek', p:'Rp 13.000'}
         ],
         images: [
           'assets/img/MenuMakanan_BERGAMBAR.jpeg',
