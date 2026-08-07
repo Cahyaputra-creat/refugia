@@ -10,6 +10,7 @@ const RefugiaFasilitas = (() => {
       souvenir: {
         icon:'🛍️', title:'Pusat Oleh-Oleh', sub:'Lapak Souvenir & Kerajinan',
         desc:'Menyediakan berbagai macam souvenir eksklusif, kerajinan tangan lokal, kaos, topi, dan pernak-pernik khas Magetan.',
+        waText: 'Halo Admin Refugia, saya ingin menanyakan tentang produk Lapak Souvenir & Kerajinan.',
         items: [
           {i:'👕', t:'Kaos Refugia', p:'Mulai Rp 50.000'},
           {i:'👜', t:'Tas Rajut', p:'Mulai Rp 35.000'},
@@ -25,6 +26,7 @@ const RefugiaFasilitas = (() => {
       sayur: {
         icon:'🥬', title:'Lapak Sayur & Bunga', sub:'Hasil Tani Sehat',
         desc:'Beli sayuran segar organik yang dipanen langsung dari kebun Refugia dan bibit bunga tanaman hias.',
+        waText: 'Halo Admin Refugia, saya ingin menanyakan tentang ketersediaan sayur dan bunga di Lapak Sayur & Bunga.',
         items: [
           {i:'🥕', t:'Sayur Segar', p:'Paket Rp 10.000'},
           {i:'🍓', t:'Buah Segar', p:'Sesuai Musim'},
@@ -37,6 +39,7 @@ const RefugiaFasilitas = (() => {
       makan: {
         icon:'🍜', title:'Pujasera & Kuliner', sub:'Area Makan Nyaman',
         desc:'Nikmati berbagai hidangan lezat dan minuman hangat setelah lelah berkeliling taman bunga yang asri.',
+        waText: 'Halo Admin Refugia, saya ingin menanyakan tentang menu dan ketersediaan di Lapak Makanan & Pujasera.',
         items: [
           {i:'🍲', t:'Mie Rebus Lawu', p:'Rp 10.000'},
           {i:'☕', t:'Kopi & Wedang', p:'Rp 5.000'},
@@ -93,6 +96,7 @@ const RefugiaFasilitas = (() => {
         const mDesc = document.getElementById('mDesc');
         const mItems = document.getElementById('mItems');
         const mediaContainer = document.getElementById('mMediaContainer');
+        const waBtn = document.getElementById('mWaBtn') || (overlay ? overlay.querySelector('.btn-wa') : null);
 
         if (!overlay) return;
 
@@ -106,6 +110,7 @@ const RefugiaFasilitas = (() => {
                     title: found.name,
                     sub: found.category,
                     desc: found.desc,
+                    waText: d ? d.waText : `Halo Admin Refugia, saya ingin bertanya tentang ${found.name}.`,
                     items: found.items || (d ? d.items : []),
                     images: (found.images && found.images.length > 0) ? found.images : (d ? d.images : [])
                 };
@@ -133,6 +138,30 @@ const RefugiaFasilitas = (() => {
                     `;
                 });
             }
+        }
+
+        // Configure WhatsApp link for "Hubungi Admin Penjualan"
+        if (waBtn) {
+            let phone = '6285931486608';
+            if (typeof RefugiaDB !== 'undefined') {
+                const settings = RefugiaDB.getSettings();
+                if (settings && settings.phoneAdmin) {
+                    let cleaned = settings.phoneAdmin.replace(/[^0-9]/g, '');
+                    if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1);
+                    if (cleaned) phone = cleaned;
+                }
+            }
+            const text = d.waText || `Halo Admin Refugia, saya ingin bertanya tentang ${d.title}.`;
+            const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
+
+            if (waBtn.tagName === 'A') {
+                waBtn.href = waUrl;
+                waBtn.target = '_blank';
+            }
+            waBtn.onclick = function(e) {
+                if (waBtn.tagName !== 'A') e.preventDefault();
+                window.open(waUrl, '_blank');
+            };
         }
 
         if (d.images && d.images.length > 1) {
@@ -201,6 +230,27 @@ const RefugiaFasilitas = (() => {
 
     // Document-level event delegation for dynamically loaded DOM
     document.addEventListener('click', function(e) {
+        const waBtn = e.target.closest('.btn-wa, #mWaBtn');
+        if (waBtn && document.getElementById('mOverlay') && document.getElementById('mOverlay').classList.contains('open')) {
+            const mTitle = document.getElementById('mTitle');
+            const titleText = mTitle ? mTitle.textContent : 'Lapak';
+            
+            let phone = '6285931486608';
+            if (typeof RefugiaDB !== 'undefined') {
+                const settings = RefugiaDB.getSettings();
+                if (settings && settings.phoneAdmin) {
+                    let cleaned = settings.phoneAdmin.replace(/[^0-9]/g, '');
+                    if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1);
+                    if (cleaned) phone = cleaned;
+                }
+            }
+            
+            const text = `Halo Admin Refugia, saya ingin menanyakan tentang ${titleText}.`;
+            const waUrl = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
+            window.open(waUrl, '_blank');
+            return;
+        }
+
         const card = e.target.closest('.lapak-card');
         if (card) {
             const targetId = card.getAttribute('data-target');

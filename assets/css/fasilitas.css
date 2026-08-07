@@ -402,10 +402,12 @@
   gap: 8px; 
   transition: background .2s; 
   margin-bottom: 10px; 
+  text-decoration: none;
 }
 
 .btn-wa:hover { 
   background: #1ebc59; 
+  color: #fff;
 }
 
 .btn-back { 
