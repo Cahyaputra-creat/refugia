@@ -269,6 +269,53 @@
         renderDynamicTickets();
       };
     });
+
+    // Global QRIS Barcode Download Event Listener
+    document.addEventListener('click', function(e) {
+      const qBtn = e.target.closest('#qrisDownloadBtn, .btn-download-qr');
+      if (qBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const qImg = document.getElementById('qrisImgDisplay');
+        const imgSrc = (qBtn.getAttribute('href') && qBtn.getAttribute('href') !== '#')
+          ? qBtn.getAttribute('href')
+          : (qImg ? qImg.src : 'assets/img/Qrish Kebun Refugia Magetan.png');
+
+        if (!imgSrc) return;
+
+        if (imgSrc.startsWith('data:')) {
+          const a = document.createElement('a');
+          a.href = imgSrc;
+          a.download = 'QRIS_Kebun_Refugia.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } else {
+          fetch(imgSrc)
+            .then(res => res.blob())
+            .then(blob => {
+              const blobUrl = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = blobUrl;
+              a.download = 'QRIS_Kebun_Refugia.png';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+            })
+            .catch(() => {
+              const a = document.createElement('a');
+              a.href = imgSrc;
+              a.download = 'QRIS_Kebun_Refugia.png';
+              a.target = '_blank';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            });
+        }
+      }
+    });
   </script>
   <script src="assets/js/fasilitas.js"></script>
   <script src="assets/js/kontak.js"></script>

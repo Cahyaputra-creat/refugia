@@ -111,7 +111,7 @@ const RefugiaRouter = (() => {
         const link = e.target.closest('a');
         if (!link) return;
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') return;
+        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank' || link.hasAttribute('download')) return;
         if (href.includes('admin/')) return;
 
         try {
@@ -137,7 +137,7 @@ const RefugiaRouter = (() => {
         const link = e.target.closest('a');
         if (!link) return;
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') return;
+        if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank' || link.hasAttribute('download') || link.id === 'qrisDownloadBtn' || link.classList.contains('btn-download-qr')) return;
         if (href.includes('admin/') || href.startsWith('http://') || href.startsWith('https://')) {
             if (!href.includes(window.location.origin)) return;
         }
