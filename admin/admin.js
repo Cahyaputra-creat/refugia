@@ -1103,16 +1103,20 @@ function deleteVideo(id) {
 
 /* =========================================
    DRAGGABLE MODAL SUPPORT (Admin Panel)
-   Makes all .login-card modals draggable via title/header drag
+   Makes floating dialog modals draggable via title/header drag
 ========================================= */
 (function initDraggableModals() {
     function makeDraggable(modalEl) {
-        const card = modalEl.querySelector('.login-card, .modal-card, [class$="-card"]');
+        if (!modalEl || modalEl.classList.contains('login-page') || modalEl.querySelector('.login-card') || modalEl.classList.contains('login-card')) return;
+
+        const card = modalEl.querySelector('.modal-card, [class$="-card"]');
         if (!card) return;
 
-        // Make the card itself draggable via header (h2 or first child)
+        // Make the card draggable ONLY via header (h2, h3, or .modal-header)
         const header = card.querySelector('h2, h3, .modal-header');
-        const handle = header || card;
+        if (!header) return;
+
+        const handle = header;
         handle.style.cursor = 'move';
         handle.style.userSelect = 'none';
 
@@ -1123,6 +1127,8 @@ function deleteVideo(id) {
         let startX, startY, startLeft, startTop;
 
         handle.addEventListener('mousedown', function(e) {
+            if (e.target.closest('input, textarea, select, button, label, a, .form-control, .password-toggle-wrapper')) return;
+
             isDragging = true;
             startX = e.clientX;
             startY = e.clientY;
@@ -1151,6 +1157,8 @@ function deleteVideo(id) {
 
         // Touch support for mobile
         handle.addEventListener('touchstart', function(e) {
+            if (e.target.closest('input, textarea, select, button, label, a, .form-control, .password-toggle-wrapper')) return;
+
             const touch = e.touches[0];
             isDragging = true;
             startX = touch.clientX;
@@ -1178,29 +1186,24 @@ function deleteVideo(id) {
         });
     }
 
-    // Initialize draggable for all known modals when DOM ready
+    // Initialize draggable for floating dialog modals when DOM ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Observe new modals becoming visible
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 mutation.addedNodes.forEach(function(node) {
-                    if (node.nodeType === 1 && node.classList && (node.classList.contains('login-page') || node.querySelector('.login-card'))) {
+                    if (node.nodeType === 1 && node.classList && !node.classList.contains('login-page') && (node.id.endsWith('Modal') || node.id.endsWith('modal'))) {
                         makeDraggable(node);
                     }
                 });
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    const target = mutation.target;
-                    if (target.style.display !== 'none' && target.querySelector && target.querySelector('.login-card')) {
-                        makeDraggable(target);
-                    }
-                }
             });
         });
 
-        // Watch for modal display changes
-        document.querySelectorAll('[id$="Modal"], [id$="modal"], .login-page').forEach(function(modal) {
-            makeDraggable(modal);
-            observer.observe(modal, { attributes: true, attributeFilter: ['style'] });
+        // Watch for dialog modal display changes
+        document.querySelectorAll('[id$="Modal"], [id$="modal"]').forEach(function(modal) {
+            if (!modal.classList.contains('login-page')) {
+                makeDraggable(modal);
+                observer.observe(modal, { attributes: true, attributeFilter: ['style'] });
+            }
         });
     });
 })();
