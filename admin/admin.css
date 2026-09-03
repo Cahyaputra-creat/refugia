@@ -225,10 +225,10 @@ body {
 }
 
 .sidebar-header {
-  padding: 16px 18px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   transition: background 0.2s ease;
   text-decoration: none !important;
@@ -241,9 +241,9 @@ body {
 }
 
 .sidebar-logo-img {
-  height: 42px;
-  width: 42px;
-  min-width: 42px;
+  height: 44px;
+  width: 44px;
+  min-width: 44px;
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
   transition: transform 0.2s ease;
@@ -253,36 +253,18 @@ body {
   transform: scale(1.06);
 }
 
-.sidebar-brand-group {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  overflow: hidden;
-}
-
-.sidebar-title-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.5px;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
 .sidebar-brand {
   font-family: 'Inter', sans-serif;
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 800;
   color: var(--gold, #E2B350);
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.5px;
   background: rgba(226, 179, 80, 0.12);
-  padding: 3px 8px;
+  padding: 5px 14px;
   border-radius: 20px;
   border: 1px solid rgba(226, 179, 80, 0.25);
   white-space: nowrap;
-  align-self: flex-start;
 }
 
 .btn-view-website {
